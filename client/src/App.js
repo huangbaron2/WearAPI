@@ -5,7 +5,7 @@ import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 function App() {
-  
+  //basename={process.env.PUBLIC_URL}
   return (
     <div >
         <Router>

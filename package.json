@@ -2,14 +2,13 @@
   "name": "ClothingAPI",
   "version": "1.0.0",
   "description": "",
-  "homepage": "http://baronhua-ub.github.io/Wearables",
   "main": "index.js",
   
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "devStart": "nodemon server.js",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -b master -d build",
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "keywords": [],
