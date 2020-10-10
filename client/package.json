@@ -20,7 +20,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "reactstrap": "^8.6.0",
-    "homepage": "http://baronhua-ub.github.io/Wearables"
+    "homepage": "https://huangbaron2.github.io/WearAPI/"
   },
   "proxy": "http://localhost:9000",
   "scripts": {
