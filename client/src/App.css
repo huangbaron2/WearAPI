@@ -1,0 +1,200 @@
+ul{ list-style-type: none; }
+
+.headerBox {
+  font-size: 10px;
+  margin-top: 0px;
+  padding-top: 0.25px;
+  display: inline-block;
+  width: 100%;
+  height: 3%
+}
+
+.postForm {
+  align-self: center;
+  align-content: center;
+  margin-left: 40%;
+  margin-right: 40%;
+  align-items: center;
+}
+
+.postList {
+  position: relative;
+  cursor: pointer;
+  display: inline;
+  margin-left: 70%;
+  text-decoration: none;
+}
+.postLi {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  background-color: rgba(200, 200, 200, 0.25);
+  margin-top: -16px;
+  text-decoration: none;
+}.postLi:hover {
+  cursor: default;
+  text-decoration: none;
+}
+.postButton {
+  font-size: 20px;
+  margin-left: 5%;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 10%;
+  text-decoration: none;
+}
+.postButton:hover {
+  text-decoration: none;
+  color: rgb(20, 170, 0);
+}
+
+.paginationBox {
+  text-decoration: none;
+  position: relative;
+  text-align: center;
+  margin-left: -40px;
+}
+.paginationList {
+  text-decoration: none;
+  display: inline;
+}
+.paginationNumbers {
+  background-color: rgba(179, 240, 255, 0.822);
+  font-size: 25px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 20%;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+}
+
+.paginationNumbers:hover {
+  color: yellow;
+  text-decoration: none;
+}
+
+.postBox {
+  background-color: rgba(112, 112, 112, 0.274);
+  margin-top: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  max-height: 500px;
+  min-height: 500px;
+  max-width: 1000px;
+  min-width: 1000px;
+  align-self: center;
+  align-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+}
+
+#btnAll{
+  font-weight: 500;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  color: black;
+  width: 6%;
+  background-color: rgba(195, 241, 255, 0.25);
+
+}
+
+.allBox {
+  background-color: black;
+  width: 100%;
+  margin: auto;
+  position: absolute;
+  background: url("./img/hookshirts.jpg");
+  height: 180%;
+  background-position: center;
+  background-size: cover;
+}
+
+.filterBox {
+  align-items: center;
+  text-align: center;
+  align-content: center;
+}
+
+#imageMap {
+  height: 70px;
+}
+
+.listBox {
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+  text-align: center;
+  align-content: center;
+  min-height: 840px;
+  max-height: 840px; 
+  width: 80%;
+}
+
+.bundles {
+  margin-left: 7px;
+  margin-right: 7px;
+  background-color: rgba(255, 255, 255, 0.733);
+  margin-top: 10px;
+  width: 35%;
+  position: relative;
+  display: inline-block;
+  border: solid 2px black;
+}
+
+#inputButton {
+  width: 6.5%;
+  background-color: white;
+  color: black;
+  transition: background-color 0.2s ease-out;
+  transition: transform 0.2s ease-out;
+  margin-bottom: 15px;
+}
+
+#inputButton:hover{
+  background-color:rgba(155, 255, 172, 0.2);
+  transform: scale(1.05);
+}
+
+
+#dropdown {
+  margin: auto;
+  border: solid 3px rgba(0, 0, 255, 0);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100px;
+  color: black;
+  background-color: #0059ff46;
+  font-size: 15px;
+  border-radius: 15%;
+}
+
+.selection {
+  align-content: center;
+  border: solid 1px blue;
+  border-radius: 10%;
+  background: rgba(148, 255, 246, 0.144);;
+  text-overflow: ellipsis;
+  margin-left: 10px;
+  margin-right: 10px;
+  display: inline-block;
+  font-size: 2px;
+  margin-top: 10px;
+  margin-bottom: -5px;
+}
+
+#label {
+  margin-top: -5px;
+  font-weight: 500;
+  display: inline-block;
+  font-size: 40px;
+}
+
+.selectTitle {
+  font-size: 20px;
+}
