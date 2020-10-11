@@ -44,7 +44,7 @@ export class Filter extends Component {
       var newL = []
       newL.push("Any")
       for (var i of value){
-        if (i !=== "Any"){
+        if (i !== "Any"){
           newL.push(i)
         }
       }
@@ -108,14 +108,12 @@ export class Filter extends Component {
         .then(res => res.json())
         .then(
           (result) => {
-            if (result !=== "NO"){}
-            this.setState({
-              items: result.results,
-              totalPages: result.totalPages
-            },
-            console.log("not obj?", result),
-            this.doPageArray);
-          },
+            if (result !== "NO"){
+              this.setState({
+                items: result.results,
+                totalPages: result.totalPages
+              },
+            this.doPageArray)}},
           (error) => {
             this.setState({
               items: [],
@@ -150,14 +148,11 @@ export class Filter extends Component {
         .then(res => res.json())
         .then(
           (result) => {
-            if (result !=== "NO"){}
+            if (result !== "NO"){
             this.setState({
               items: result.results,
               totalPages: result.totalPages
-            },
-            console.log("not obj?", result),
-            this.doPageArray);
-          },
+            }, this.doPageArray)}},
           (error) => {
             this.setState({
               items: [],
@@ -240,7 +235,7 @@ export class Filter extends Component {
     }
 
     paginate (e) {
-      if (e !=== this.state.page){
+      if (e !== this.state.page){
         this.setState ({
           page: e
         }, () => {
