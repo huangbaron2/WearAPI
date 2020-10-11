@@ -68,13 +68,14 @@ client.connect(err => {
     const mongoResult = collection.find().toArray()
     console.log("connected to MongoDB!", collection.find().toArray(function(err, result) {
         if (err) throw err;
+        console.log(result)
     }));
     // perform actions on the collection object
 });
 
 
 app.post('/Post', async (req, res) => {
-
+    console.log("Post Arrived with ", req.body)
     await client.connect(err => {
         const data =  new Clothings({
             brand: req.body[0].brand,
@@ -147,10 +148,12 @@ function removeAny(value){
 }
 
 app.get('/allDB', async (req, res) => {
+    console.log("allDB arrived")
     await client.connect(err => {
         const collection = client.db("MyAPI").collection("Clothing");
         collection.find().toArray(function(err, result) {
             if (err) throw err;
+            console.log("allDB result is ", result)
             res.send(result);
         });
     });
