@@ -9,7 +9,7 @@ class Header extends Component {
         return(
             <div className = "headerBox">
                 <ul className = "postList">
-                    <li className = "postLi"><a href = "/#/Post"><button className = "postButton">Post</button></a></li>
+                    <li className = "postLi"><a href = "/#/Post"><button className = "postButton">Add to the database!</button></a></li>
                 </ul>
             </div>
         );

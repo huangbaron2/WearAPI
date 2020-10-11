@@ -10,6 +10,7 @@
     "cheerio": "^1.0.0-rc.3",
     "cors": "^2.8.5",
     "gh-pages": "^3.1.0",
+    "homepage": "https://huangbaron2.github.io/WearAPI/",
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",
     "react": "^16.13.1",
@@ -18,18 +19,18 @@
     "react-paginate": "^6.5.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3",
+    "react-scripts": "^3.4.3",
     "reactstrap": "^8.6.0",
-    "homepage": "https://huangbaron2.github.io/WearAPI/"
+    "styled-components": "^5.2.0"
   },
   "proxy": "http://localhost:9000",
   "scripts": {
-    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "start": "react-scripts start"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -48,5 +49,10 @@
   },
   "devDependencies": {
     "gh-pages-deploy": "^0.5.1"
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

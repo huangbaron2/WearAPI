@@ -34,6 +34,7 @@ app.get('/', async (req, res) => {
 })
 
 const path = require('path');
+const { url } = require('inspector');
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files
   app.use(express.static(path.join(__dirname, 'client/build')));
@@ -58,23 +59,35 @@ const corsOptions = {
 }
 app.use(cors(corsOptions))
 
-mongoose.connect(process.env.DATABASE_URL, {useUnifiedTopology: true,
-    useNewUrlParser: true})
-    const db = mongoose.connection
-    db.on('error', error => console.log("error on"))
-    db.once('open', () => console.log('Connected to mongoose'))
+const MongoClient = require('mongodb').MongoClient;
+const uri = process.env.DATABASE_URL;
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+    const collection = client.db("MyAPI").collection("Clothing");
+    const mongoResult = collection.find().toArray()
+    console.log("connected to MongoDB!", collection.find().toArray(function(err, result) {
+        if (err) throw err;
+        console.log(result);
+    }));
+    // perform actions on the collection object
+});
+
 
 app.post('/Post', async (req, res) => {
-    const data =  new Clothings({
-        brand: req.body[0].brand,
-        model: req.body[0].model,
-        color: req.body[0].color,
-        article: req.body[0].article,
-        category: req.body[0].category,
-        image: req.body[0].image
-    })
-        await data.save()
+
+    await client.connect(err => {
+        const data =  new Clothings({
+            brand: req.body[0].brand,
+            model: req.body[0].model,
+            color: req.body[0].color,
+            article: req.body[0].article,
+            category: req.body[0].category,
+            image: req.body[0].image
+        })
+        const collection = client.db("MyAPI").collection("Clothing");
+        collection.insertOne(data)
         console.log("saved!")
+    });
 })
 
 app.post('/Link', async (req, res) => {
@@ -134,57 +147,59 @@ function removeAny(value){
 }
 
 app.get('/allDB', async (req, res) => {
-    await Clothings.find({}, function(err, result) {
-        if (err) {
-          res.send(err);
-        }
-        else {
-          res.send(result);
-        }
+    await client.connect(err => {
+        const collection = client.db("MyAPI").collection("Clothing");
+        collection.find().toArray(function(err, result) {
+            if (err) throw err;
+            res.send(result);
+        });
     });
 })
 
 //http://localhost:9000/brand=Any&model=Any&color=Any&article=Any&category=Any?page=1&limit=5
 app.get('/brand=:brands&model=:models&color=:colors&article=:articles&category=:categories', async (req, res) => {
-    await Clothings.find({}, function(err, result) {
-        const page = parseInt(req.query.page)
-        const limit = parseInt(req.query.limit)
-        const startIndex = (page - 1) * limit
-        const endIndex = page * limit
-        const results = {}
-        if (err) {
-          res.send(err);
-        } 
-        else {
-            var clothingResult = []
-            for (var i of result){
-                if (((i.brand.includes(req.params.brands) || req.params.brands == "Any") && (i.model.includes(req.params.models) || req.params.models == "Any") && (i.color.includes(req.params.colors) || req.params.colors == "Any") && (i.article.includes(req.params.articles) || req.params.articles == "Any") && (i.category.includes(req.params.categories) || req.params.categories == "Any"))){
-                    clothingResult.push({brand: removeAny(Object.values(i.brand)), model: removeAny(Object.values(i.model)), color: removeAny(Object.values(i.color)), image: i.image});
+    await client.connect(err => {
+        const collection = client.db("MyAPI").collection("Clothing");
+        collection.find().toArray(function(err, result) {
+            const page = parseInt(req.query.page)
+            const limit = parseInt(req.query.limit)
+            const startIndex = (page - 1) * limit
+            const endIndex = page * limit
+            const results = {}
+            if (err) {
+            res.send(err);
+            } 
+            else {
+                var clothingResult = []
+                for (var i of result){
+                    if (((i.brand.includes(req.params.brands) || req.params.brands == "Any") && (i.model.includes(req.params.models) || req.params.models == "Any") && (i.color.includes(req.params.colors) || req.params.colors == "Any") && (i.article.includes(req.params.articles) || req.params.articles == "Any") && (i.category.includes(req.params.categories) || req.params.categories == "Any"))){
+                        clothingResult.push({brand: removeAny(Object.values(i.brand)), model: removeAny(Object.values(i.model)), color: removeAny(Object.values(i.color)), image: i.image});
+                    }
+                }
+                const totalP = Math.ceil(clothingResult.length / limit)
+                results.totalPages = totalP
+                if (endIndex <= clothingResult.length + 7){
+                    results.next = {
+                        page: page + 1,
+                        limit: limit
+                    }
+                }
+                if (startIndex > 0){
+                    results.prev = {
+                        page: page - 1,
+                        limit: limit
+                    }
+                }
+                if (clothingResult.length == 0){
+                    res.send(err)
+                }
+                else{
+                    const slicedClothing = clothingResult.slice(startIndex, endIndex)
+                    results.results = slicedClothing
+                    res.send(results);
                 }
             }
-            const totalP = Math.ceil(clothingResult.length / limit)
-            results.totalPages = totalP
-            if (endIndex <= clothingResult.length + 7){
-                results.next = {
-                    page: page + 1,
-                    limit: limit
-                }
-            }
-            if (startIndex > 0){
-                results.prev = {
-                    page: page - 1,
-                    limit: limit
-                }
-            }
-            if (clothingResult.length == 0){
-                res.send(err)
-            }
-            else{
-                const slicedClothing = clothingResult.slice(startIndex, endIndex)
-                results.results = slicedClothing
-                res.send(results);
-            }
-        }
+        }); 
     });
 });
 

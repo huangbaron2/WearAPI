@@ -35,6 +35,7 @@ export class Filter extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.updateArrays = this.updateArrays.bind(this);
         this.paginate = this.paginate.bind(this);
+        this.isColor = this.isColor.bind(this);
         this.updateHandler = this.updateHandler.bind(this);
     };
 
@@ -168,13 +169,12 @@ export class Filter extends Component {
     }
 
     componentDidMount () {
-        window.addEventListener('load', this.updateArrays);
+        window.addEventListener('load', this.updateArrays, this.updateHandler);
         this.setState({
           page: "1",
         })
     }
 
-    
     handleBrand(event) {
       this.setState({
         page: "1"
@@ -229,6 +229,15 @@ export class Filter extends Component {
       }
     }
 
+    isColor(e) {
+      if (String(e) == this.state.page){
+        return "green"
+      }
+      else{
+        return "#9370DB"
+      }
+    }
+
     render(){
         if (this.state.items === undefined){
             return (
@@ -238,32 +247,32 @@ export class Filter extends Component {
                         <br/>
                         <div className = "selection">
                         <h4 className = "selectTitle">Brand</h4>
-                        <DropdownButton id="dropdown" title= {this.state.brand}>
-                            { this.state.brandAll && this.state.brandAll.map(item => <Dropdown.Item  onClick = {() => this.handleBrand(item)}> {item} </Dropdown.Item> )}
+                        <DropdownButton id="dropdown"  title= {this.state.brand}>
+                            { this.state.brandAll && this.state.brandAll.map(item => <Dropdown.Item  onClick = {() => this.handleBrand(item)} > {item} <Dropdown.Divider/></Dropdown.Item>  )}
                         </DropdownButton>
                         </div>
                         <div className = "selection">
                         <h4 className = "selectTitle">Model</h4>
                         <DropdownButton id="dropdown" title= {this.state.model}>
-                            { this.state.modelAll && this.state.modelAll.map(item => <Dropdown.Item  onClick = {() => this.handleModel(item)}> {item} </Dropdown.Item> )}
+                            { this.state.modelAll && this.state.modelAll.map(item => <Dropdown.Item  onClick = {() => this.handleModel(item)}> {item} <Dropdown.Divider/></Dropdown.Item> )}
                         </DropdownButton>
                         </div>
                         <div className = "selection">
                         <h4 className = "selectTitle">Color</h4>
                         <DropdownButton id="dropdown" title= {this.state.color}>
-                          { this.state.colorAll && this.state.colorAll.map(item => <Dropdown.Item  onClick = {() => this.handleColor(item)}> {item} </Dropdown.Item> )}
+                          { this.state.colorAll && this.state.colorAll.map(item => <Dropdown.Item  onClick = {() => this.handleColor(item)}> {item} <Dropdown.Divider/></Dropdown.Item> )}
                         </DropdownButton>
                         </div>
                         <div className = "selection">
                         <h4 className = "selectTitle">Article</h4>
                         <DropdownButton id="dropdown" title= {this.state.article}>
-                          { this.state.articleAll && this.state.articleAll.map(item => <Dropdown.Item  onClick = {() => this.handleArticle(item)}> {item} </Dropdown.Item> )}
+                          { this.state.articleAll && this.state.articleAll.map(item => <Dropdown.Item  onClick = {() => this.handleArticle(item)}> {item} <Dropdown.Divider/></Dropdown.Item> )}
                         </DropdownButton>
                         </div>
                         <div className = "selection">
                         <h4 className = "selectTitle">Category</h4>
                         <DropdownButton id="dropdown" title= {this.state.category}>
-                          { this.state.categoryAll && this.state.categoryAll.map(item => <Dropdown.Item  onClick = {() => this.handleCategory(item)}> {item} </Dropdown.Item> )}
+                          { this.state.categoryAll && this.state.categoryAll.map(item => <Dropdown.Item  onClick = {() => this.handleCategory(item)}> {item} <Dropdown.Divider/></Dropdown.Item> )}
                         </DropdownButton>
                         </div>
                        
@@ -285,31 +294,31 @@ export class Filter extends Component {
                     <div className = "selection">
                     <h4 className = "selectTitle">Brand</h4>
                         <DropdownButton id="dropdown" title= {this.state.brand}>
-                            { this.state.brandAll && this.state.brandAll.map(item => <Dropdown.Item  onClick = {() => this.handleBrand(item)}> {item} </Dropdown.Item> )}
+                            { this.state.brandAll && this.state.brandAll.map(item => <Dropdown.Item  onClick = {() => this.handleBrand(item)}> {item} <Dropdown.Divider/></Dropdown.Item> )}
                         </DropdownButton>
                         </div>
                         <div className = "selection">
                         <h4 className = "selectTitle">Model</h4>
                         <DropdownButton id="dropdown" title= {this.state.model}>
-                            { this.state.modelAll && this.state.modelAll.map(item => <Dropdown.Item  onClick = {() => this.handleModel(item)}> {item} </Dropdown.Item> )}
+                            { this.state.modelAll && this.state.modelAll.map(item => <Dropdown.Item  onClick = {() => this.handleModel(item)}> {item} <Dropdown.Divider/></Dropdown.Item> )}
                         </DropdownButton>
                         </div>
                         <div className = "selection">
                         <h4 className = "selectTitle">Color</h4>
                         <DropdownButton id="dropdown" title= {this.state.color}>
-                          { this.state.colorAll && this.state.colorAll.map(item => <Dropdown.Item  onClick = {() => this.handleColor(item)}> {item} </Dropdown.Item> )}
+                          { this.state.colorAll && this.state.colorAll.map(item => <Dropdown.Item  onClick = {() => this.handleColor(item)}> {item} <Dropdown.Divider/></Dropdown.Item> )}
                         </DropdownButton>
                         </div>
                         <div className = "selection">
                         <h4 className = "selectTitle">Article</h4>
                         <DropdownButton id="dropdown" title= {this.state.article}>
-                          { this.state.articleAll && this.state.articleAll.map(item => <Dropdown.Item  onClick = {() => this.handleArticle(item)}> {item} </Dropdown.Item> )}
+                          { this.state.articleAll && this.state.articleAll.map(item => <Dropdown.Item  onClick = {() => this.handleArticle(item)}> {item} <Dropdown.Divider/></Dropdown.Item> )}
                         </DropdownButton>
                         </div>
                         <div className = "selection">
                         <h4 className = "selectTitle">Category</h4>
                         <DropdownButton id="dropdown" title= {this.state.category}>
-                          { this.state.categoryAll && this.state.categoryAll.map(item => <Dropdown.Item  onClick = {() => this.handleCategory(item)}> {item} </Dropdown.Item> )}
+                          { this.state.categoryAll && this.state.categoryAll.map(item => <Dropdown.Item  onClick = {() => this.handleCategory(item)}> {item} <Dropdown.Divider/></Dropdown.Item> )}
                         </DropdownButton>
                         </div>
                     </label>
@@ -320,15 +329,15 @@ export class Filter extends Component {
                 <div className="listBox">
                     {this.state.items.map((clothes, index) => (
                     <div key={index} className = "bundles">
-                        <h3>{clothes.brand}</h3>
-                        <p>{clothes.model}</p>
-                        <p>{clothes.color}</p>
-                        <img id = "imageMap" src = {clothes.image}/>
+                        <img className = "imageTitle" src = {clothes.image}/>
+                        <h3 className = "brandTitle">{clothes.brand}</h3>
+                        <p className = "modelTitle">{clothes.model}</p>
+                        <p className = "colorTitle">{clothes.color}</p>
                     </div>
                     ))}
                 </div>
             </div>
-            <Pagination totalPages = {this.state.totalPages} paginate = {this.paginate}/>
+            <Pagination totalPages = {this.state.totalPages} paginate = {this.paginate} isColor = {this.isColor}/>
             </div>
           );
         }

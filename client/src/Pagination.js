@@ -1,7 +1,7 @@
 import React from 'react'
 import { Filter } from './Filter'
 
-export const Pagination = ({ totalPages, paginate }) => {
+export const Pagination = ({ totalPages, paginate, isColor }) => {
     const pageNumbers = []
     for (let i = 1; i <= totalPages; i++){
         pageNumbers.push(i)
@@ -12,7 +12,7 @@ export const Pagination = ({ totalPages, paginate }) => {
             <ul className = "paginationBox">
                 {pageNumbers.map(number => (
                 <li key = {number} className = "paginationList">
-                    <button onClick = {() => paginate(number)} className = "paginationNumbers">
+                    <button onClick = {() => paginate(number)} className = "paginationNumbers" style={{backgroundColor: isColor(number)}}>
                         {number}
                     </button>
                 </li>

@@ -27,7 +27,7 @@ ul{ list-style-type: none; }
 .postLi {
   padding-top: 2px;
   padding-bottom: 2px;
-  background-color: rgba(200, 200, 200, 0.25);
+  background-color: rgba(200, 200, 200, 0);
   margin-top: -16px;
   text-decoration: none;
 }.postLi:hover {
@@ -35,19 +35,22 @@ ul{ list-style-type: none; }
   text-decoration: none;
 }
 .postButton {
+  color: white;
   font-size: 20px;
   margin-left: 5%;
   padding-left: 15px;
   padding-right: 15px;
-  border-radius: 10%;
+  border-radius: 10px;
   text-decoration: none;
+  background-color: rebeccapurple;
 }
 .postButton:hover {
   text-decoration: none;
-  color: rgb(20, 170, 0);
+  background-color: rgb(60, 0, 170);
 }
 
 .paginationBox {
+  margin-top: 25px;
   text-decoration: none;
   position: relative;
   text-align: center;
@@ -58,7 +61,6 @@ ul{ list-style-type: none; }
   display: inline;
 }
 .paginationNumbers {
-  background-color: rgba(179, 240, 255, 0.822);
   font-size: 25px;
   padding-left: 15px;
   padding-right: 15px;
@@ -67,11 +69,12 @@ ul{ list-style-type: none; }
   border-radius: 20%;
   cursor: pointer;
   text-decoration: none;
-  color: black;
+  color: white;
 }
 
 .paginationNumbers:hover {
-  color: yellow;
+  background-color: rgb(60, 0, 170);
+  color: rgb(11, 255, 105);
   text-decoration: none;
 }
 
@@ -98,7 +101,7 @@ ul{ list-style-type: none; }
   margin-right: auto;
   margin-top: 8px;
   margin-bottom: 8px;
-  color: black;
+  color: white;
   width: 6%;
   background-color: rgba(195, 241, 255, 0.25);
 
@@ -109,7 +112,7 @@ ul{ list-style-type: none; }
   width: 100%;
   margin: auto;
   position: absolute;
-  background: url("./img/hookshirts.jpg");
+  background: url("./img/purpleCave.jpg");
   height: 180%;
   background-position: center;
   background-size: cover;
@@ -121,8 +124,23 @@ ul{ list-style-type: none; }
   align-content: center;
 }
 
-#imageMap {
-  height: 70px;
+.imageTitle {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  max-height: 100px;
+  min-height: 100px;
+  margin-bottom: 10px;
+}
+.brandTitle {
+  font-size: 15px;
+  margin-bottom: -2px;
+}
+.modelTitle {
+  font-size: 25px;
+  margin-bottom: -2px;
+}
+.colorTitle {
+  font-size: 15px;
 }
 
 .listBox {
@@ -133,45 +151,52 @@ ul{ list-style-type: none; }
   align-content: center;
   min-height: 840px;
   max-height: 840px; 
-  width: 80%;
+  width: 50%;
 }
 
 .bundles {
-  margin-left: 7px;
-  margin-right: 7px;
-  background-color: rgba(255, 255, 255, 0.733);
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: rgb(255, 255, 255, 1);
   margin-top: 10px;
-  width: 35%;
+  width: 40%;
   position: relative;
   display: inline-block;
   border: solid 2px black;
+  border-radius: 10px;
 }
 
 #inputButton {
   width: 6.5%;
-  background-color: white;
-  color: black;
+  background-color:rgba(155, 255, 172, 0.2);
+  color: white;
   transition: background-color 0.2s ease-out;
   transition: transform 0.2s ease-out;
   margin-bottom: 15px;
 }
 
 #inputButton:hover{
-  background-color:rgba(155, 255, 172, 0.2);
+  background-color:rgba(138, 0, 180, 0.76);
   transform: scale(1.05);
 }
 
 
 #dropdown {
+  border: solid 3px rgba(195, 0, 255, 0.11);
   margin: auto;
-  border: solid 3px rgba(0, 0, 255, 0);
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100px;
-  color: black;
+  color: white;
   background-color: #0059ff46;
   font-size: 15px;
   border-radius: 15%;
+  background-color: rgba(77, 1, 77, 0.233);
+}
+
+div.dropdown-menu\ show{
+  background-color: rgba(0, 0, 0, 0);
+  font-size: 50px;
 }
 
 .selection {
@@ -193,8 +218,10 @@ ul{ list-style-type: none; }
   font-weight: 500;
   display: inline-block;
   font-size: 40px;
+  color: white;
 }
 
 .selectTitle {
   font-size: 20px;
+  color: white;
 }
