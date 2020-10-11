@@ -26,7 +26,6 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
   });
-app.options('*', cors())
 
 app.get('/', async (req, res) => {
     res.send("INDEX")
@@ -44,17 +43,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const whitelist = ['http://localhost:3000', 'http://localhost:9000', 'https://shrouded-journey-38552.heroku...']
-const corsOptions = {
-  origin: function (origin, callback) {
-    console.log("** Origin of request " + origin)
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
-      console.log("Origin acceptable")
-      callback(null, true)
-    } else {
-      console.log("Origin rejected")
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
+var corsOptions = {
+    origin: '*'
 }
 app.use(cors(corsOptions))
 
