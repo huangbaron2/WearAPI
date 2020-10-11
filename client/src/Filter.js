@@ -105,7 +105,7 @@ export class Filter extends Component {
               this.setState({
                 items: result.results,
                 totalPages: result.totalPages
-              },
+              }, console.log("proper submit"),
             this.doPageArray)}},
           (error) => {
             this.setState({
