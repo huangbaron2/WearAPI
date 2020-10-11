@@ -208,5 +208,5 @@ app.get('/brand=:brands&model=:models&color=:colors&article=:articles&category=:
 
 
 //const port = process.env.PORT || 9000;
-app.listen(9000, 'localhost', () => console.log(`Listening on port 9000...`));
+app.listen(80 || process.env.PORT, 'localhost', () => console.log(`Listening on port 9000...`));
 module.exports = express.router;
