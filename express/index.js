@@ -139,7 +139,7 @@ app.get('/allDB', async (req, res) => {
 })
 
 //http://localhost:9000/brand=Any&model=Any&color=Any&article=Any&?page=1&limit=5
-app.get('/brand=:brands&model=:models&color=:colors&article=:articles&', async (req, res) => {
+app.get('/brand=:brands&model=:models&color=:colors&article=:articles&?page=:page&limit=:limit', async (req, res) => {
     await client.connect(err => {
         const collection = client.db("MyAPI").collection("Clothing");
         collection.find().toArray(function(err, result) {
@@ -155,7 +155,7 @@ app.get('/brand=:brands&model=:models&color=:colors&article=:articles&', async (
                 var clothingResult = []
                 for (var i of result){
                     if (((i.brand.includes(req.params.brands) || req.params.brands == "Any") && (i.model.includes(req.params.models) || req.params.models == "Any") && (i.color.includes(req.params.colors) || req.params.colors == "Any") && (i.article.includes(req.params.articles) || req.params.articles == "Any"))){
-                        clothingResult.push({brand: removeAny(Object.values(i.brand)), model: removeAny(Object.values(i.model)), color: removeAny(Object.values(i.color)), image: i.image});
+                        clothingResult.push({brand: removeAny(Object.values(i.brand)), model: removeAny(Object.values(i.model)), color: removeAny(Object.values(i.color)), article: removeAny(Object.values(i.article)), image: i.image});
                     }
                 }
                 const totalP = Math.ceil(clothingResult.length / limit)
