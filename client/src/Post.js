@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { InputGroup, FormControl, Form } from 'react-bootstrap'
 
 class Post extends Component {
     constructor(props) {
@@ -32,7 +31,7 @@ class Post extends Component {
         }
         else{
             newL = [e.target.value]
-            this.setState(this.state.brand = newL, console.log(this.state.brand))
+            this.setState({brand: newL}, console.log(this.state.brand))
         }
     }
     modelChange (e) {
@@ -42,7 +41,7 @@ class Post extends Component {
         }
         else{
             newL = [e.target.value]
-            this.setState(this.state.model = newL, console.log(this.state.model))
+            this.setState({model: newL}, console.log(this.state.model))
         }
     }
     colorChange (e) {
@@ -52,7 +51,7 @@ class Post extends Component {
         }
         else{
             newL = [e.target.value]
-            this.setState(this.state.color = newL, console.log(this.state.color))
+            this.setState({color: newL}, console.log(this.state.color))
         }
     }
     articleChange (e) {
@@ -83,7 +82,7 @@ class Post extends Component {
     }
 
     nextPost(clothing){
-        fetch('http://localhost:9000/Post', {
+        fetch('http://54.90.119.121:9000/Post', {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -113,7 +112,7 @@ class Post extends Component {
 
     submitLink (event) {
         event.preventDefault()
-        fetch('http://localhost:9000/Link', {
+        fetch('http://54.90.119.121:9000/Link', {
             method: 'POST',
             mode: 'cors',
             headers: {

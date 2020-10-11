@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import Post from "./Post"; 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Router , Route, Switch } from "react-router-dom";
 
 class Header extends Component {
     render(){

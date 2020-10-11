@@ -37,13 +37,14 @@ export class Filter extends Component {
         this.paginate = this.paginate.bind(this);
         this.isColor = this.isColor.bind(this);
         this.updateHandler = this.updateHandler.bind(this);
+        this.makeAny = this.makeAny.bind(this);
     };
 
     insertFront (value) {
       var newL = []
       newL.push("Any")
       for (var i of value){
-        if (i != "Any"){
+        if (i !=== "Any"){
           newL.push(i)
         }
       }
@@ -63,19 +64,19 @@ export class Filter extends Component {
           for (var o of i.brand){
             this.state.brandAll.push(o)
           }
-          for (var o of i.model){
+          for (o of i.model){
             this.state.modelAll.push(o)
           }
-          for (var o of i.color){
+          for (o of i.color){
             this.state.colorAll.push(o)
           }
-          for ( var o of i.article){
+          for (o of i.article){
             this.state.articleAll.push(o)
           }
-          for (var o of i.category){
+          for (o of i.category){
             this.state.categoryAll.push(o)
           }
-          for (var o of i.image){
+          for (o of i.image){
             this.state.imageAll.push(o)
           }
           this.setState({
@@ -101,12 +102,13 @@ export class Filter extends Component {
 
     handleSubmit(event) {
       event.preventDefault();
-      fetch(`http://localhost:9000/brand=${this.state.brand}&model=${this.state.model}&color=${this.state.color}&article=${String(this.state.article)}&category=${this.state.category}?page=${this.state.page}&limit=8`)
-      //http://localhost:9000/brand=Nike&model=Any&color=Any&article=Any&category=Any
+      this.makeAny();
+      fetch(`http://54.90.119.121:9000/brand=${this.state.brand}&model=${this.state.model}&color=${this.state.color}&article=${String(this.state.article)}&category=${this.state.category}?page=${this.state.page}&limit=8`)
+      //http://54.90.119.121:9000/brand=Nike&model=Any&color=Any&article=Any&category=Any
         .then(res => res.json())
         .then(
           (result) => {
-            if (result != "NO"){}
+            if (result !=== "NO"){}
             this.setState({
               items: result.results,
               totalPages: result.totalPages
@@ -123,14 +125,32 @@ export class Filter extends Component {
         )
     }
 
+    makeAny() {
+      if (this.state.brand === undefined){
+        this.setState({brand: "Any"})
+      }
+      if (this.state.model === undefined){
+        this.setState({model: "Any"})
+      }
+      if (this.state.brand === undefined){
+        this.setState({color: "Any"})
+      }
+      if (this.state.brand === undefined){
+        this.setState({article: "Any"})
+      }
+      if (this.state.brand === undefined){
+        this.setState({category: "Any"})
+      }
+    }
+
     updateHandler() {
       console.log("B", this.state.page)
-      fetch(`http://localhost:9000/brand=${this.state.brand}&model=${this.state.model}&color=${this.state.color}&article=${String(this.state.article)}&category=${this.state.category}?page=${this.state.page}&limit=8`)
-      //http://localhost:9000/brand=Nike&model=Any&color=Any&article=Any&category=Any
+      fetch(`http://54.90.119.121:9000/brand=${this.state.brand}&model=${this.state.model}&color=${this.state.color}&article=${String(this.state.article)}&category=${this.state.category}?page=${this.state.page}&limit=8`)
+      //http://54.90.119.121:9000/brand=Nike&model=Any&color=Any&article=Any&category=Any
         .then(res => res.json())
         .then(
           (result) => {
-            if (result != "NO"){}
+            if (result !=== "NO"){}
             this.setState({
               items: result.results,
               totalPages: result.totalPages
@@ -148,7 +168,7 @@ export class Filter extends Component {
     }
 
     updateArrays () {
-          fetch("http://localhost:9000/allDB")
+          fetch("http://54.90.119.121:9000/allDB")
         .then(res => res.json())
           .then(
             (result) => {
@@ -220,7 +240,7 @@ export class Filter extends Component {
     }
 
     paginate (e) {
-      if (e != this.state.page){
+      if (e !=== this.state.page){
         this.setState ({
           page: e
         }, () => {
@@ -230,7 +250,7 @@ export class Filter extends Component {
     }
 
     isColor(e) {
-      if (String(e) == this.state.page){
+      if (String(e) === this.state.page){
         return "green"
       }
       else{
@@ -329,7 +349,7 @@ export class Filter extends Component {
                 <div className="listBox">
                     {this.state.items.map((clothes, index) => (
                     <div key={index} className = "bundles">
-                        <img className = "imageTitle" src = {clothes.image}/>
+                        <img className = "imageTitle" src = {clothes.image}></img>
                         <h3 className = "brandTitle">{clothes.brand}</h3>
                         <p className = "modelTitle">{clothes.model}</p>
                         <p className = "colorTitle">{clothes.color}</p>
@@ -348,7 +368,7 @@ export default Filter;
 
 
 /*
-fetch("http://localhost:9000/all=brand")
+fetch("http://54.90.119.121:9000/all=brand")
         .then(res => res.json())
           .then(
             (result) => {
@@ -365,7 +385,7 @@ fetch("http://localhost:9000/all=brand")
               });
             }
           )
-          fetch("http://localhost:9000/all=model")
+          fetch("http://54.90.119.121:9000/all=model")
         .then(res => res.json())
           .then(
             (result) => {
@@ -381,7 +401,7 @@ fetch("http://localhost:9000/all=brand")
               });
             }
           )
-          fetch("http://localhost:9000/all=color")
+          fetch("http://54.90.119.121:9000/all=color")
         .then(res => res.json())
           .then(
             (result) => {
@@ -397,7 +417,7 @@ fetch("http://localhost:9000/all=brand")
               });
             }
           )
-          fetch("http://localhost:9000/all=article")
+          fetch("http://54.90.119.121:9000/all=article")
         .then(res => res.json())
           .then(
             (result) => {
@@ -413,7 +433,7 @@ fetch("http://localhost:9000/all=brand")
               });
             }
           )
-          fetch("http://localhost:9000/all=category")
+          fetch("http://54.90.119.121:9000/all=category")
         .then(res => res.json())
           .then(
             (result) => {

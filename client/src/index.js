@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter as Router, HashRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 require('dotenv').config()
 
 ReactDOM.render(<HashRouter basename={process.env.PUBLIC_URL}>< App /></HashRouter>, document.getElementById("root"));
