@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser')
 const router = require('./routes');
 const app = express();
-const Scrape = require('./webScrape')
 const mongoose = require('mongoose')
 const https = require('https')
 const fs = require('fs')
@@ -93,7 +92,6 @@ app.post('/Post', async (req, res) => {
 
 app.post('/Link', async (req, res) => {
     module.exports.link = [{link: "link"}]
-    //Scrape.Scrape()
 })
 
 app.get('/all=brand', (req, res) => {
