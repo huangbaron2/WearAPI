@@ -14,13 +14,11 @@ export class Filter extends Component {
                     {model:"Any"},
                     {color:"Any"},
                     {article:"Any"},
-                    {category:"Any"},
                     {items: []},
                     {brandAll: []},
                     {modelAll: []},
                     {colorAll: []},
                     {articleAll: []},
-                    {categoryAll: []},
                     {imageAll: []},
                     {allDB: []},
                     {page: "1"},
@@ -31,7 +29,6 @@ export class Filter extends Component {
         this.handleColor = this.handleColor.bind(this)
         this.handleModel = this.handleModel.bind(this)
         this.handleArticle = this.handleArticle.bind(this)
-        this.handleCategory = this.handleCategory.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this);
         this.updateArrays = this.updateArrays.bind(this);
         this.paginate = this.paginate.bind(this);
@@ -57,7 +54,6 @@ export class Filter extends Component {
         colorAll:[],
         modelAll:[],
         articleAll:[],
-        categoryAll:[],
         imageAll:[]},
         () => {
         for (var i of this.state.allDB){
@@ -73,9 +69,6 @@ export class Filter extends Component {
           for (o of i.article){
             this.state.articleAll.push(o)
           }
-          for (o of i.category){
-            this.state.categoryAll.push(o)
-          }
           for (o of i.image){
             this.state.imageAll.push(o)
           }
@@ -84,7 +77,6 @@ export class Filter extends Component {
             modelAll: this.insertFront(Array.from(new Set(this.state.modelAll)).sort()),
             colorAll: this.insertFront(Array.from(new Set(this.state.colorAll)).sort()),
             articleAll: this.insertFront(Array.from(new Set(this.state.articleAll)).sort()),
-            categoryAll: this.insertFront(Array.from(new Set(this.state.categoryAll)).sort())
           }, () => {
           })
       }
@@ -103,8 +95,9 @@ export class Filter extends Component {
     handleSubmit(event) {
       event.preventDefault();
       this.makeAny();
-      fetch(`http://54.90.119.121:9000/brand=${this.state.brand}&model=${this.state.model}&color=${this.state.color}&article=${String(this.state.article)}&category=${this.state.category}?page=${this.state.page}&limit=8`)
-      //http://54.90.119.121:9000/brand=Nike&model=Any&color=Any&article=Any&category=Any
+      fetch(`http://54.90.119.121:9000/brand=${this.state.brand}&model=${this.state.model}&color=${this.state.color}&article=${this.state.article}&?page=${String(this.state.page)}&limit=8`)
+      //http://54.90.119.121:9000/brand=Any&model=Any&color=Any&article=Any
+      //localhost:9000/brand=Any&model=Any&color=Any&article=Any&?page=1&limit=5
         .then(res => res.json())
         .then(
           (result) => {
@@ -130,21 +123,18 @@ export class Filter extends Component {
       if (this.state.model === undefined){
         this.setState({model: "Any"})
       }
-      if (this.state.brand === undefined){
+      if (this.state.color === undefined){
         this.setState({color: "Any"})
       }
-      if (this.state.brand === undefined){
+      if (this.state.article === undefined){
         this.setState({article: "Any"})
-      }
-      if (this.state.brand === undefined){
-        this.setState({category: "Any"})
       }
     }
 
     updateHandler() {
       console.log("B", this.state.page)
-      fetch(`http://54.90.119.121:9000/brand=${this.state.brand}&model=${this.state.model}&color=${this.state.color}&article=${String(this.state.article)}&category=${this.state.category}?page=${this.state.page}&limit=8`)
-      //http://54.90.119.121:9000/brand=Nike&model=Any&color=Any&article=Any&category=Any
+      fetch(`http://54.90.119.121:9000/brand=${this.state.brand}&model=${this.state.model}&color=${this.state.color}&article=${this.state.article}?page=${String(this.state.page)}&limit=8`)
+      //http://54.90.119.121:9000/brand=Nike&model=Any&color=Any&article=Any
         .then(res => res.json())
         .then(
           (result) => {
@@ -219,19 +209,11 @@ export class Filter extends Component {
         this.setState({article: event})
     }
 
-    handleCategory(event) {
-      this.setState({
-        page: "1"
-      })
-        this.setState({category: event})
-    }
-
     handleAll() {
         this.handleBrand("Any");
         this.handleColor("Any");
         this.handleArticle("Any");
         this.handleModel("Any");
-        this.handleCategory("Any");
     }
 
     paginate (e) {
@@ -283,14 +265,7 @@ export class Filter extends Component {
                         <DropdownButton id="dropdown" title= {this.state.article}>
                           { this.state.articleAll && this.state.articleAll.map(item => <Dropdown.Item  onClick = {() => this.handleArticle(item)}> {item} <Dropdown.Divider/></Dropdown.Item> )}
                         </DropdownButton>
-                        </div>
-                        <div className = "selection">
-                        <h4 className = "selectTitle">Category</h4>
-                        <DropdownButton id="dropdown" title= {this.state.category}>
-                          { this.state.categoryAll && this.state.categoryAll.map(item => <Dropdown.Item  onClick = {() => this.handleCategory(item)}> {item} <Dropdown.Divider/></Dropdown.Item> )}
-                        </DropdownButton>
-                        </div>
-                       
+                        </div>           
                     </label>
                     <br/>
                     <Button id = "btnAll" variant="primary" onClick = {() => this.handleAll()}> All </Button>
@@ -330,12 +305,6 @@ export class Filter extends Component {
                           { this.state.articleAll && this.state.articleAll.map(item => <Dropdown.Item  onClick = {() => this.handleArticle(item)}> {item} <Dropdown.Divider/></Dropdown.Item> )}
                         </DropdownButton>
                         </div>
-                        <div className = "selection">
-                        <h4 className = "selectTitle">Category</h4>
-                        <DropdownButton id="dropdown" title= {this.state.category}>
-                          { this.state.categoryAll && this.state.categoryAll.map(item => <Dropdown.Item  onClick = {() => this.handleCategory(item)}> {item} <Dropdown.Divider/></Dropdown.Item> )}
-                        </DropdownButton>
-                        </div>
                     </label>
                     <br/>
                     <Button id = "btnAll" variant="primary" onClick = {() => this.handleAll()}> All </Button>
@@ -362,86 +331,3 @@ export class Filter extends Component {
 export default Filter;
 
 
-/*
-fetch("http://54.90.119.121:9000/all=brand")
-        .then(res => res.json())
-          .then(
-            (result) => {
-              this.setState({
-                brandAll: result
-              },
-              () => {
-
-              });
-            },
-            (error) => {
-              this.setState({
-                error
-              });
-            }
-          )
-          fetch("http://54.90.119.121:9000/all=model")
-        .then(res => res.json())
-          .then(
-            (result) => {
-              this.setState({
-                modelAll: result
-              },
-              () => {
-              });
-            },
-            (error) => {
-              this.setState({
-                error
-              });
-            }
-          )
-          fetch("http://54.90.119.121:9000/all=color")
-        .then(res => res.json())
-          .then(
-            (result) => {
-              this.setState({
-                colorAll: result
-              },
-              () => {
-              });
-            },
-            (error) => {
-              this.setState({
-                error
-              });
-            }
-          )
-          fetch("http://54.90.119.121:9000/all=article")
-        .then(res => res.json())
-          .then(
-            (result) => {
-              this.setState({
-                articleAll: result
-              },
-              () => {
-              });
-            },
-            (error) => {
-              this.setState({
-                error
-              });
-            }
-          )
-          fetch("http://54.90.119.121:9000/all=category")
-        .then(res => res.json())
-          .then(
-            (result) => {
-              this.setState({
-                categoryAll: result
-              },
-              () => {
-              });
-            },
-            (error) => {
-              this.setState({
-                error
-              });
-            }
-          )
-          */

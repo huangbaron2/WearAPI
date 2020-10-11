@@ -10,14 +10,12 @@ class Post extends Component {
                     {model:"Any"},
                     {color:"Any"},
                     {article:"Any"},
-                    {category:"Any"},
                     {image:"Any"}
                     ];
         this.brandChange = this.brandChange.bind(this)
         this.colorChange = this.colorChange.bind(this)
         this.articleChange = this.articleChange.bind(this)
         this.modelChange = this.modelChange.bind(this)
-        this.categoryChange = this.categoryChange.bind(this)
         this.imageChange = this.imageChange.bind(this)
         this.submitPost = this.submitPost.bind(this)
         this.goatChange = this.goatChange.bind(this)
@@ -64,16 +62,6 @@ class Post extends Component {
             this.setState(this.state.article = newL, console.log(this.state.article))
         }
     }
-    categoryChange (e) {
-        if (e.target.value.includes(",")){
-            var newL = []
-            this.setState({category: (e.target.value.split(','))})
-        }
-        else{
-            newL = [e.target.value]
-            this.setState(this.state.category = newL, console.log(this.state.category))
-        }
-    }
     imageChange (e) {
         this.setState(
             {image: e.target.value},
@@ -100,7 +88,6 @@ class Post extends Component {
             model: this.state.model,
             color: this.state.color,
             article: this.state.article,
-            category: this.state.category,
             image: this.state.image
           }];
         this.nextPost(clothing)
@@ -135,8 +122,6 @@ class Post extends Component {
                         Enter the color <input type="text" id = "colorInput" placeholder = "Color" onChange={ this.colorChange }/>
                         <br/>
                         Enter the article <input type="text" id = "articleInput" placeholder = "Article" onChange={ this.articleChange }/>
-                        <br/>
-                        Enter the category <input type="text" id = "categoryInput" placeholder = "Category" onChange={ this.categoryChange }/>
                         <br/>
                         Enter the image <input type="text" id = "imageInput" placeholder = "Image" onChange={ this.imageChange }/>
                         <button type = "submit" name = "submit">Submit</button>

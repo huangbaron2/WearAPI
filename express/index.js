@@ -13,7 +13,6 @@ module.exports.brand = []
 module.exports.model = []
 module.exports.color = []
 module.exports.article = []
-module.exports.category = []
 
 app.use(cors())
 app.use(bodyParser.json())
@@ -71,7 +70,6 @@ app.post('/Post', async (req, res) => {
             model: req.body[0].model,
             color: req.body[0].color,
             article: req.body[0].article,
-            category: req.body[0].category,
             image: req.body[0].image
         })
         const collection = client.db("MyAPI").collection("Clothing");
@@ -114,13 +112,6 @@ app.get('/all=article', (req, res) => {
     //}
     res.send(this.article)
 });
-app.get('/all=category', (req, res) => {
-    
-    //if (!this.category.includes("Any")){
-        //this.category.unshift("Any")
-    //}
-    res.send(this.category)
-});
 
 function removeAny(value){
     let newList = []
@@ -147,8 +138,8 @@ app.get('/allDB', async (req, res) => {
     });
 })
 
-//http://localhost:9000/brand=Any&model=Any&color=Any&article=Any&category=Any?page=1&limit=5
-app.get('/brand=:brands&model=:models&color=:colors&article=:articles&category=:categories', async (req, res) => {
+//http://localhost:9000/brand=Any&model=Any&color=Any&article=Any&?page=1&limit=5
+app.get('/brand=:brands&model=:models&color=:colors&article=:articles&', async (req, res) => {
     await client.connect(err => {
         const collection = client.db("MyAPI").collection("Clothing");
         collection.find().toArray(function(err, result) {
@@ -163,7 +154,7 @@ app.get('/brand=:brands&model=:models&color=:colors&article=:articles&category=:
             else {
                 var clothingResult = []
                 for (var i of result){
-                    if (((i.brand.includes(req.params.brands) || req.params.brands == "Any") && (i.model.includes(req.params.models) || req.params.models == "Any") && (i.color.includes(req.params.colors) || req.params.colors == "Any") && (i.article.includes(req.params.articles) || req.params.articles == "Any") && (i.category.includes(req.params.categories) || req.params.categories == "Any"))){
+                    if (((i.brand.includes(req.params.brands) || req.params.brands == "Any") && (i.model.includes(req.params.models) || req.params.models == "Any") && (i.color.includes(req.params.colors) || req.params.colors == "Any") && (i.article.includes(req.params.articles) || req.params.articles == "Any"))){
                         clothingResult.push({brand: removeAny(Object.values(i.brand)), model: removeAny(Object.values(i.model)), color: removeAny(Object.values(i.color)), image: i.image});
                     }
                 }
