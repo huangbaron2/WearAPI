@@ -139,7 +139,7 @@ app.get('/allDB', async (req, res) => {
 })
 
 //http://localhost:9000/brand=Any&model=Any&color=Any&article=Any&?page=1&limit=5
-app.get('/brand=:brands&model=:models&color=:colors&article=:articles&?page=:page&limit=:limit', async (req, res) => {
+app.get('/brand=:brands&model=:models&color=:colors&article=:articles', async (req, res) => {
     await client.connect(err => {
         const collection = client.db("MyAPI").collection("Clothing");
         collection.find().toArray(function(err, result) {
