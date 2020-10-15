@@ -70,7 +70,7 @@ class Post extends Component {
     }
 
     nextPost(clothing){
-        fetch('http://54.90.119.121:9000/Post', {
+        fetch('http://35.170.149.7:9000/Post', {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -99,7 +99,7 @@ class Post extends Component {
 
     submitLink (event) {
         event.preventDefault()
-        fetch('http://54.90.119.121:9000/Link', {
+        fetch('http://35.170.149.7:9000/Link', {
             method: 'POST',
             mode: 'cors',
             headers: {

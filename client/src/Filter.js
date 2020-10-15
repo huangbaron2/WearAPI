@@ -95,7 +95,7 @@ export class Filter extends Component {
     handleSubmit(event) {
       event.preventDefault();
       this.makeAny();
-      fetch(`http://54.90.119.121:9000/brand=${this.state.brand}&model=${this.state.model}&color=${this.state.color}&article=${this.state.article}?page=${this.state.page}&limit=8`)
+      fetch(`http://35.170.149.7:9000/brand=${this.state.brand}&model=${this.state.model}&color=${this.state.color}&article=${this.state.article}?page=${this.state.page}&limit=8`)
       //http://54.90.119.121:9000/brand=Any&model=Any&color=Any&article=Any
       //localhost:9000/brand=Any&model=Any&color=Any&article=Any&?page=1&limit=5
         .then(res => res.json())
@@ -133,7 +133,7 @@ export class Filter extends Component {
 
     updateHandler() {
       console.log("B", this.state.page)
-      fetch(`http://54.90.119.121:9000/brand=${this.state.brand}&model=${this.state.model}&color=${this.state.color}&article=${this.state.article}?page=${this.state.page}&limit=8`)
+      fetch(`http://35.170.149.7:9000/brand=${this.state.brand}&model=${this.state.model}&color=${this.state.color}&article=${this.state.article}?page=${this.state.page}&limit=8`)
       //http://54.90.119.121:9000/brand=Nike&model=Any&color=Any&article=Any
         .then(res => res.json())
         .then(
@@ -153,7 +153,7 @@ export class Filter extends Component {
     }
 
     updateArrays () {
-          fetch("http://54.90.119.121:9000/allDB")
+          fetch("http://35.170.149.7:9000/allDB")
         .then(res => res.json())
           .then(
             (result) => {
