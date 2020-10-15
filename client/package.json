@@ -7,7 +7,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "bootstrap": "^4.5.2",
-    "homepage": "http://baronswearapi.com/#",
+    "homepage": "http://baronswearapi.com:8080/#",
     "react": "^16.13.1",
     "react-bootstrap": "^1.3.0",
     "react-dom": "^16.13.1",
@@ -16,7 +16,7 @@
   },
   "scripts": {
     "build": "react-scripts build",
-    "start": "PORT=80 HOST=http://baronswearapi.com/# react-scripts start",
+    "start": "PORT=8080 HOST=http://baronswearapi.com:8080/# react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "gh-pages -d build"
