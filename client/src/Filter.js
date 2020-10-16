@@ -35,6 +35,8 @@ export class Filter extends Component {
         this.isColor = this.isColor.bind(this);
         this.updateHandler = this.updateHandler.bind(this);
         this.makeAny = this.makeAny.bind(this);
+        this.dynamicSelection = this.dynamicSelection.bind(this)
+        this.dynamicFetch = this.dynamicFetch.bind(this)
     };
 
     insertFront (value) {
@@ -81,8 +83,50 @@ export class Filter extends Component {
           })
       }
     })
-  
     }
+
+    
+    dynamicFetch() {
+      console.log("YIKES", this.state.brand, this.state.model, this.state.color, this.state.article)
+      fetch(`http://35.170.149.7:9000/brand=${this.state.brand}&model=${this.state.model}&color=${this.state.color}&article=${this.state.article}?page=${this.state.page}&limit=8`)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          if (result !== "NO"){
+            console.log("dynamics fetch", result.results)
+            this.setState({
+              allDB: result.results,
+              totalPages: result.totalPages
+            },
+          this.doPageArray, this.sortallDB())}},
+        (error) => {
+          this.setState({
+            items: [],
+            error
+          });
+        }
+      )
+    }
+
+    dynamicSelection() {
+      console.log("dynamicSelection")
+      if (this.state.brand === undefined){
+        this.setState({brand: "Any"}, () => this.dynamicFetch())
+      }
+      if (this.state.model === undefined){
+        this.setState({model: "Any"}, () => this.dynamicFetch())
+      }
+      if (this.state.color === undefined){
+        this.setState({color: "Any"}, () => this.dynamicFetch())
+      }
+      if (this.state.article === undefined){
+        this.setState({article: "Any"}, () => this.dynamicFetch())
+      }
+      else {
+        this.setState({}, () => {this.dynamicFetch()})
+      }
+    }
+
 
     resultArray (value) {
       var listing = []
@@ -184,21 +228,27 @@ export class Filter extends Component {
       this.setState({
         page: "1"
       })
-        this.setState({brand: event})
+        this.setState({brand: event}, () => {
+          this.dynamicSelection()
+        })
     }
 
     handleColor(event) {
       this.setState({
         page: "1"
       })
-        this.setState({color: event})
+        this.setState({color: event}, () => {
+          this.dynamicSelection()
+        })
     }
 
     handleModel(event) {
       this.setState({
         page: "1"
       })
-        this.setState({model: event})
+        this.setState({model: event}, () => {
+          this.dynamicSelection()
+        })
     }
 
 
@@ -206,7 +256,9 @@ export class Filter extends Component {
       this.setState({
         page: "1"
       })
-        this.setState({article: event})
+        this.setState({article: event}, () => {
+          this.dynamicSelection()
+        })
     }
 
     handleAll() {
