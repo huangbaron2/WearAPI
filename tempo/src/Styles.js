@@ -5,7 +5,7 @@ import './App.css';
 import 'antd/dist/antd.css';
 import 'semantic-ui-css/semantic.min.css'
 import { Menu, Drawer, Space} from 'antd';
-//import { Pagination, Segment, Dimmer, Loader, Image, Icon } from 'semantic-ui-react'
+import { Pagination } from 'semantic-ui-react'
 import { Grommet, Box, Button} from 'grommet';
 
 const { SubMenu } = Menu;
@@ -269,7 +269,12 @@ class Styles extends React.Component {
                   ))}
             </div>
           <div className = "paging">
-          
+          <Pagination
+            activePage={this.state.page}
+            onPageChange={this.handlePaginationChange}
+            totalPages={this.state.totalPages}
+            color="red"
+          />
           </div>
         </div>  
       );
