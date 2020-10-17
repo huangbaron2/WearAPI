@@ -7,9 +7,6 @@ import 'semantic-ui-css/semantic.min.css'
 import { Menu, Drawer, Space} from 'antd';
 import { Pagination, Segment, Dimmer, Loader, Image, Icon } from 'semantic-ui-react'
 import { Grommet, Box, Button} from 'grommet';
-import {
-  UserOutlined,
-} from '@ant-design/icons';
 
 const { SubMenu } = Menu;
 
@@ -221,7 +218,7 @@ class Styles extends React.Component {
           >
               <Menu style = {{paddingLeft: "20px", paddingRight: "20px", paddingTop: "20px"}} theme="light" defaultSelectedKeys={['1']} mode="inline">
                 
-                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} icon={<UserOutlined />} title="Brands">
+                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} title="Brands">
                 <Grommet>
                     <Box>
                     {/* <CheckBox toggle = "true" className = "checkBrands" label="Any" onClick={() => this.toggleBrands("Any")}/> */}
@@ -230,7 +227,7 @@ class Styles extends React.Component {
                   </Grommet>
                 </SubMenu>
   
-                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} icon={<UserOutlined />} title="Models">
+                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} title="Models">
                 <Grommet>
                     <Box>
                     {/* <CheckBox checked = "true" className = "checkModels" label="Any" onClick={() => this.toggleModels("Any")}/> */}
@@ -239,7 +236,7 @@ class Styles extends React.Component {
                   </Grommet>
                 </SubMenu>
   
-                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} key="sub3" icon={<UserOutlined />} title="Colors">
+                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} key="sub3" title="Colors">
                 <Grommet>
                     <Box>
                     {/* <CheckBox checked = "true" className = "checkColors" label="Any" onClick={() => this.toggleColors("Any")}/> */}
@@ -248,7 +245,7 @@ class Styles extends React.Component {
                   </Grommet>
                 </SubMenu>
   
-                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} key="sub4" icon={<UserOutlined />} title="Articles">
+                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} key="sub4" title="Articles">
                 <Grommet>
                     <Box>
                     {/* <CheckBox checked = "true" className = "checkArticles" label="Any" onClick={() => this.toggleArticles("Any")}/>*/}
