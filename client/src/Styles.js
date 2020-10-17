@@ -1,25 +1,16 @@
-import React, {useState} from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 import Headers from './Header'
 import './App.css';
 import 'antd/dist/antd.css';
 import 'semantic-ui-css/semantic.min.css'
-import { Layout, Menu, Breadcrumb, Drawer, Radio, Space} from 'antd';
-import { withStyles } from '@material-ui/core/styles';
-import { Grid, Input, Pagination, Segment, Dimmer, Loader, Image, Icon } from 'semantic-ui-react'
-import { Grommet, Box, CheckBoxGroup, CheckBox, Card, CardFooter, CardBody, CardHeader, Carousel, Button} from 'grommet';
+import { Menu, Drawer, Radio, Space} from 'antd';
+import { Pagination, Segment, Dimmer, Loader, Image, Icon } from 'semantic-ui-react'
+import { Grommet, Box, Button} from 'grommet';
 import {
-  AppstoreOutlined,
-  BarChartOutlined,
-  CloudOutlined,
-  ShopOutlined,
-  TeamOutlined,
   UserOutlined,
-  UploadOutlined,
-  VideoCameraOutlined,
 } from '@ant-design/icons';
 
-const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 class Styles extends React.Component {
@@ -85,29 +76,29 @@ class Styles extends React.Component {
   }
 
   refillFilter (category, value) {
-    if (category == "brand"){
+    if (category === "brand"){
       this.setState({sBrand: value})
     }
-    if (category == "model"){
+    if (category === "model"){
       this.setState({sModel: value})
     }
-    if (category == "color"){
+    if (category === "color"){
       this.setState({sColor: value})
     }
-    if (category == "article"){
+    if (category === "article"){
       this.setState({sArticle: value})
     }
     this.setState({}, () => {
-      if (this.state.sBrand == undefined){
+      if (this.state.sBrand === undefined){
         this.setState({sBrand: "Any"})
       }
-      if (this.state.sModel == undefined){
+      if (this.state.sModel === undefined){
         this.setState({sModel: "Any"})
       }
-      if (this.state.sColor == undefined){
+      if (this.state.sColor === undefined){
         this.setState({sColor: "Any"})
       }
-      if (this.state.sArticle == undefined){
+      if (this.state.sArticle === undefined){
         this.setState({sArticle: "Any"})
       }
       console.log("above updateHandler")
@@ -174,25 +165,25 @@ class Styles extends React.Component {
   };
 
   toggleBrands (value) {
-    if (value != undefined){
+    if (value !== undefined){
       this.state.allBrands[value] = !this.state.allBrands[value]
     }
     this.refillFilter("brand", value)
   }
   toggleModels (value) {
-    if (value != undefined){
+    if (value !== undefined){
       this.state.allModels[value] = !this.state.allModels[value]
     }
     this.refillFilter("model", value)
   }
   toggleColors (value) {
-    if (value != undefined){
+    if (value !== undefined){
       this.state.allColors[value] = !this.state.allColors[value]
     }
     this.refillFilter("color", value)
   }
   toggleArticles (value) {
-    if (value != undefined){
+    if (value !== undefined){
       this.state.allArticles[value] = !this.state.allArticles[value]
     }
     this.refillFilter("article", value)

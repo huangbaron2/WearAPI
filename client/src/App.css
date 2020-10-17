@@ -193,16 +193,16 @@ ul{ list-style-type: none; }
   object-fit: contain;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   height: 170px;
-  margin-bottom: 10px;
+  margin-bottom: -15px;
 }
 .brandTitle {
   font-size: 20px;
   font-weight: bold;
-  margin-bottom: -0px;
+  margin-bottom: -23px;
 }
 .modelTitle {
   font-size: 25px;
-  margin-bottom: 5px;
+  margin-bottom: -23px;
   font-style: italic;
 }
 .colorTitle {

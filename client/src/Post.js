@@ -59,7 +59,7 @@ class Post extends Component {
         }
         else{
             newL = [e.target.value]
-            this.setState(this.state.article = newL, console.log(this.state.article))
+            this.setState({article: newL}, console.log(this.state.article))
         }
     }
     imageChange (e) {
