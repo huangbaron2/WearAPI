@@ -176,8 +176,31 @@ app.get('/brand=:brands&model=:models&color=:colors&article=:articles', async (r
                     res.send(err)
                 }
                 else{
+                    var allBrands = []
+                    var allModels = []
+                    var allColors = []
+                    var allArticles = []
+                    for (var i of clothingResult){
+                        if (!(allBrands.includes(i.brand[0]))){
+                            console.log(allBrands, i.brand[0])
+                            allBrands.push(i.brand[0])
+                        }
+                        if (!(allModels.includes(i.model[0]))){
+                            allModels.push(i.model[0])
+                        }
+                        if (!allColors.includes(i.color[0])){
+                            allColors.push(i.color[0])
+                        }
+                        if (!allArticles.includes(i.article[0])){
+                            allArticles.push(i.article[0])
+                        }
+                    }
                     const slicedClothing = clothingResult.slice(startIndex, endIndex)
                     results.results = slicedClothing
+                    results.allBrands = [...new Set(allBrands)]
+                    results.allModels = [...new Set(allModels)]
+                    results.allColors = allColors
+                    results.allArticles = allArticles
                     res.send(results);
                 }
             }
