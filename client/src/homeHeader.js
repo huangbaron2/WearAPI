@@ -41,7 +41,7 @@ class Header extends Component{
 
             </IconButton>
             <Typography variant="h6" className={this.title}>
-              <a href = "/" style = {{fontWeight: "bold", color: "purple", padding: "30px", fontSize: "30px"}}>WearAPI</a>
+                <a href = "/" style = {{fontWeight: "bold", color: "purple", padding: "30px", fontSize: "30px"}}>WearAPI</a>
             </Typography>
             <a href = "/#/Styles" style = {{marginLeft: "58%"}}><Button style = {{backgroundColor: "#f2fcff", padding: "10px", marginRight: "20px"}} padding="100px" backgroundColor="#4b00ed">Check out the styles</Button></a>
             <a href = "/#/Post"><Button style = {{backgroundColor: "#f2f2ff", padding: "10px"}} padding="100px" backgroundColor="#4b00ed">Contribute to the database</Button></a>

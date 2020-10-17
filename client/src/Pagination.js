@@ -11,7 +11,7 @@ export const Pagination = ({ totalPages, paginate, isColor }) => {
             <ul className = "paginationBox">
                 {pageNumbers.map(number => (
                 <li key = {number} className = "paginationList">
-                    <button onClick = {() => paginate(number)} className = "paginationNumbers" style={{backgroundColor: isColor(number)}}>
+                    <button onClick = {() => paginate(number)} className = "paginationNumbers" style={{backgroundColor: "blue"}}>
                         {number}
                     </button>
                 </li>
