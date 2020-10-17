@@ -5,7 +5,7 @@ import './App.css';
 import 'antd/dist/antd.css';
 import 'semantic-ui-css/semantic.min.css'
 import { Menu, Drawer, Space} from 'antd';
-import { Pagination, Segment, Dimmer, Loader, Image, Icon } from 'semantic-ui-react'
+//import { Pagination, Segment, Dimmer, Loader, Image, Icon } from 'semantic-ui-react'
 import { Grommet, Box, Button} from 'grommet';
 
 const { SubMenu } = Menu;
@@ -206,7 +206,7 @@ class Styles extends React.Component {
           <Headers/>
           <div>
           <Space>
-            <button className = "filterBTN" onClick={this.showDrawer}><Icon size = "large" aria-label = "Filter" name='angle double right'/></button>
+            <button className = "filterBTN" onClick={this.showDrawer}></button>
           </Space>
           <Drawer
             title="Filter by:"
@@ -269,27 +269,14 @@ class Styles extends React.Component {
                   ))}
             </div>
           <div className = "paging">
-          <Pagination
-            activePage={this.state.page}
-            onPageChange={this.handlePaginationChange}
-            totalPages={this.state.totalPages}
-            color="red"
-          />
+          
           </div>
         </div>  
       );
     }
     else {
       return (
-        <div><Segment>
-        <Dimmer active>
-          <Loader size='massive'>Loading</Loader>
-        </Dimmer>
-  
-        <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
-        <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
-        <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
-      </Segment></div>
+        <div>Loading</div>
       );
     }
   }
@@ -299,8 +286,12 @@ export default Styles
 ReactDOM.render(<Styles />, document.querySelector("#root"));
 
 /*
-                          <img className = "imageTitle" src = {clothes.image}></img>
-                          <h3 className = "brandTitle">{clothes.brand}</h3>
-                          <p className = "modelTitle">{clothes.model}</p>
-                          <p className = "colorTitle">{clothes.color}</p>
-                          */
+                                    <Pagination
+            activePage={this.state.page}
+            onPageChange={this.handlePaginationChange}
+            totalPages={this.state.totalPages}
+            color="red"
+          />
+
+          <Icon size = "large" aria-label = "Filter" name='angle double right'/>
+          */
