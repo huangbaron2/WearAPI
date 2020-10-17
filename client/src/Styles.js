@@ -4,7 +4,7 @@ import Headers from './Header'
 import './App.css';
 import 'antd/dist/antd.css';
 import 'semantic-ui-css/semantic.min.css'
-import { Menu, Drawer, Radio, Space} from 'antd';
+import { Menu, Drawer, Space} from 'antd';
 import { Pagination, Segment, Dimmer, Loader, Image, Icon } from 'semantic-ui-react'
 import { Grommet, Box, Button} from 'grommet';
 import {
@@ -209,8 +209,6 @@ class Styles extends React.Component {
           <Headers/>
           <div>
           <Space>
-            <Radio.Group onChange={this.onChange}>
-            </Radio.Group>
             <button className = "filterBTN" onClick={this.showDrawer}><Icon size = "large" aria-label = "Filter" name='angle double right'/></button>
           </Space>
           <Drawer

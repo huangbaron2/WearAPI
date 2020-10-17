@@ -1,0 +1,314 @@
+ul{ list-style-type: none; }
+
+.stylesBox {
+  text-align: center;
+}
+
+.filterBTN {
+  border: solid 2px rgb(236, 236, 236);
+  background-color: white;
+  margin-top: -70px;
+  padding-top: 350px;
+  padding-bottom: 400px;
+  margin-left: -9px;
+}
+
+.filterBTN:hover {
+  background-color: rgb(239, 234, 255);
+  border: solid 2px rgb(143, 112, 255);
+}
+
+#components-layout-demo-custom-trigger .trigger {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+#components-layout-demo-custom-trigger .trigger:hover {
+  color: #1890ff;
+}
+
+#components-layout-demo-custom-trigger .logo {
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
+}
+
+.site-layout {
+  background-color: rgb(255, 255, 255);
+}
+
+.discover {
+  font-size: 50px;
+  display: inline;
+  color: grey;
+}
+
+@keyframes example {
+  from {color: white;}
+  to {color: black;}
+}
+
+.wearables {
+  font-size: 50px;
+  display: inline;
+  color: black;
+  animation-name: example;
+  animation-duration: 2s;
+  font-weight: 600;
+}
+
+.homeBox {
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.headerBox {
+  font-size: 10px;
+  margin-top: 0px;
+  padding-top: 0.25px;
+  display: inline-block;
+  width: 100%;
+  height: 3%
+}
+
+.postForm {
+  align-self: center;
+  align-content: center;
+  margin-left: 40%;
+  margin-right: 40%;
+  align-items: center;
+}
+
+.postList {
+  position: relative;
+  cursor: pointer;
+  display: inline;
+  margin-left: 70%;
+  text-decoration: none;
+}
+.postLi {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  background-color: rgba(200, 200, 200, 0);
+  margin-top: -16px;
+  text-decoration: none;
+}.postLi:hover {
+  cursor: default;
+  text-decoration: none;
+}
+.postButton {
+  color: white;
+  font-size: 20px;
+  margin-left: 5%;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 10px;
+  text-decoration: none;
+  background-color: rebeccapurple;
+}
+.postButton:hover {
+  text-decoration: none;
+  background-color: rgb(60, 0, 170);
+}
+
+.paginationBox {
+  margin-top: 25px;
+  text-decoration: none;
+  position: relative;
+  text-align: center;
+  margin-left: -40px;
+}
+.paginationList {
+  text-decoration: none;
+  display: inline;
+}
+.paginationNumbers {
+  font-size: 25px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 20%;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+}
+
+.paginationNumbers:hover {
+  background-color: rgb(60, 0, 170);
+  color: rgb(11, 255, 105);
+  text-decoration: none;
+}
+
+.postBox {
+  background-color: rgba(112, 112, 112, 0.274);
+  margin-top: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  max-height: 500px;
+  min-height: 500px;
+  max-width: 1000px;
+  min-width: 1000px;
+  align-self: center;
+  align-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+}
+
+#btnAll{
+  font-weight: 500;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  color: white;
+  width: 6%;
+  background-color: rgba(195, 241, 255, 0.25);
+
+}
+
+.allBox {
+  background-color: white;
+  width: 100%;
+  margin: auto;
+  position: absolute;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+}
+
+.filterBox {
+  align-items: center;
+  text-align: center;
+  align-content: center;
+}
+
+.imageTitle {
+  border-radius: 10px;
+  object-fit: contain;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  height: 170px;
+  margin-bottom: -15px;
+}
+.brandTitle {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: -23px;
+}
+.modelTitle {
+  font-size: 25px;
+  margin-bottom: -23px;
+  font-style: italic;
+}
+.colorTitle {
+  font-size: 15px;
+}
+
+.paging {
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.listBox {
+  margin-top: -690px;
+  background-color: rgb(255, 255, 255);
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+  text-align: center;
+  align-content: center;
+  height: 600px;
+  width: 80%;
+}
+
+.bundles {
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: rgba(77, 77, 77, 0.055);
+  margin-top: 10px;
+  width: 300px;
+  height: 280px;
+  position: relative;
+  display: inline-block;
+  border-radius: 10px;
+}
+
+.bundles_1 {
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: rgb(255, 255, 255);
+  margin-top: 10px;
+  width: 300px;
+  height: 280px;
+  position: relative;
+  display: inline-block;
+  border-radius: 10px;
+}
+
+#inputButton {
+  width: 6.5%;
+  background-color:rgba(155, 255, 172, 0.2);
+  color: white;
+  transition: background-color 0.2s ease-out;
+  transition: transform 0.2s ease-out;
+  margin-bottom: 15px;
+}
+
+#inputButton:hover{
+  background-color:rgba(138, 0, 180, 0.76);
+  transform: scale(1.05);
+}
+
+
+#dropdown {
+  border: solid 3px rgba(195, 0, 255, 0.11);
+  margin: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100px;
+  color: white;
+  background-color: #0059ff46;
+  font-size: 15px;
+  border-radius: 15%;
+  background-color: rgba(77, 1, 77, 0.233);
+}
+
+div.dropdown-menu\ show{
+  background-color: rgba(0, 0, 0, 0);
+  font-size: 50px;
+}
+
+.selection {
+  align-content: center;
+  border: solid 1px blue;
+  border-radius: 10%;
+  background: rgba(148, 255, 246, 0.144);;
+  text-overflow: ellipsis;
+  margin-left: 10px;
+  margin-right: 10px;
+  display: inline-block;
+  font-size: 2px;
+  margin-top: 10px;
+  margin-bottom: -5px;
+}
+
+#label {
+  margin-top: -5px;
+  font-weight: 500;
+  display: inline-block;
+  font-size: 40px;
+  color: white;
+}
+
+.selectTitle {
+  font-size: 20px;
+  color: white;
+}
