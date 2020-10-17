@@ -1,9 +1,13 @@
-import React from 'react'
+import React, {useState} from 'react'
 import ReactDOM from 'react-dom'
-import Headers from './homeHeader'
+import Headers from './Header'
 import './App.css';
 import 'antd/dist/antd.css';
-import { Layout, Menu, Breadcrumb, Checkbox} from 'antd';
+import 'semantic-ui-css/semantic.min.css'
+import { Layout, Menu, Breadcrumb, Drawer, Radio, Space} from 'antd';
+import { withStyles } from '@material-ui/core/styles';
+import { Grid, Input, Pagination, Segment, Dimmer, Loader, Image, Icon } from 'semantic-ui-react'
+import { Grommet, Box, CheckBoxGroup, CheckBox, Card, CardFooter, CardBody, CardHeader, Carousel, Button} from 'grommet';
 import {
   AppstoreOutlined,
   BarChartOutlined,
@@ -18,8 +22,7 @@ import {
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-export default class SiderDemo extends React.Component {
-
+class Styles extends React.Component {
   constructor(props) {
     super(props);
     this.state = [
@@ -33,50 +36,105 @@ export default class SiderDemo extends React.Component {
                 {allArticles: []},
                 {allImages: []},
                 {allItems: []},
+                {displayItems: []},
                 {page: "1"},
                 {totalPages: 0},
                 {collapsed: false},
-                {loaded: false}
+                {loaded: false},
+                {visible: false},
+                {placement: 'left'},
                 ];
+                this.toggleBrands = this.toggleBrands.bind(this)
                 this.addAll = this.addAll.bind(this)
-                this.categoryAll = this.categoryAll.bind(this)
+                this.toggleModels = this.toggleModels.bind(this)
+                this.refillFilter = this.refillFilter.bind(this)
+                this.updateHandler = this.updateHandler.bind(this)
+                this.paginate = this.paginate.bind(this)
+                this.handlePaginationChange = this.handlePaginationChange.bind(this)
+                this.setPage = this.setPage.bind(this)
   };
 
-  categoryAll() {
-    this.setState({allBrands: ["Any"], allModels: ["Any"], allColors: ["Any"], allArticles: ["Any"]}, () => {    
-      for (var i of this.state.allItems){
-        for (var o of i.brand){
-          if (!this.state.allBrands.includes(o)){
-            this.state.allBrands.push(o)
-          }
-        }
-        for (var o of i.model){
-          if (!this.state.allModels.includes(o)){
-            this.state.allModels.push(o)
-          }
-        }
-        for (var o of i.color){
-          if (!this.state.allColors.includes(o)){
-            this.state.allColors.push(o)
-          }
-        }
-        for (var o of i.article){
-          if (!this.state.allArticles.includes(o)){
-            this.state.allArticles.push(o)
-          }
-        }
-        this.setState({loaded: true})
-    }})
+  setPage(){
+    this.setState({
+      displayItems: this.state.allItems[this.state.page]
+    })
   }
 
+  updateHandler() {
+    console.log("s", this.state.page, this.state.sBrand, this.state.sModel, this.state.sColor, this.state.sArticle)
+    fetch(`http://35.170.149.7:9000/brand=${this.state.sBrand}&model=${this.state.sModel}&color=${this.state.sColor}&article=${this.state.sArticle}?page=${this.state.page}&limit=6`)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          if (result){
+          this.setState({
+            displayItems: result.results[this.state.page],
+            totalPages: result.totalPages,
+            allBrands: result.allBrands,
+            allModels: result.allModels,
+            allColors: result.allColors,
+            allArticles: result.allArticles,
+          }, () => (console.log("B", result.totalPages)))}},
+        (error) => {
+          this.setState({
+            items: [],
+            error
+          });
+        }
+      )
+  }
+
+  refillFilter (category, value) {
+    if (category == "brand"){
+      this.setState({sBrand: value})
+    }
+    if (category == "model"){
+      this.setState({sModel: value})
+    }
+    if (category == "color"){
+      this.setState({sColor: value})
+    }
+    if (category == "article"){
+      this.setState({sArticle: value})
+    }
+    this.setState({}, () => {
+      if (this.state.sBrand == undefined){
+        this.setState({sBrand: "Any"})
+      }
+      if (this.state.sModel == undefined){
+        this.setState({sModel: "Any"})
+      }
+      if (this.state.sColor == undefined){
+        this.setState({sColor: "Any"})
+      }
+      if (this.state.sArticle == undefined){
+        this.setState({sArticle: "Any"})
+      }
+      console.log("above updateHandler")
+      this.setState({}, () => this.updateHandler())
+    })
+  }
+
+  //Populates allItems
   addAll() {
-    fetch("http://35.170.149.7:9000/allDB")
+    fetch(`http://35.170.149.7:9000/brand=Any&model=Any&color=Any&article=Any?page=${this.state.page}&limit=6`)
         .then(res => res.json())
           .then(
             (result) => {
+              console.log(result)
               this.setState({
-                allItems: result
-              }, () => (console.log("DB", this.state.allItems), this.categoryAll()));
+                allItems: result.results,
+                displayItems: result.results[this.state.page],
+                totalPages: result.totalPages,
+                allBrands: result.allBrands,
+                allModels: result.allModels,
+                allColors: result.allColors,
+                allArticles: result.allArticles,
+                sBrand: "Any",
+                sModel: "Any",
+                sColor: "Any",
+                sArticle: "Any",
+              }, () => (console.log("RE", this.state.totalPages), this.updateHandler(), this.setState({loaded: true})));
             },
             (error) => {
               this.setState({
@@ -86,67 +144,177 @@ export default class SiderDemo extends React.Component {
           )
   }
 
+  componentDidMount () {
+    console.log("Mounted!")
+    this.setState({
+      page: "1",
+    }, () => this.addAll())
+  }
+
   onCollapse = collapsed => {
-    console.log(collapsed);
     this.setState({ collapsed });
   };
 
-  componentDidMount () {
-    console.log("Mounted!")
-    this.addAll()
+  showDrawer = () => {
     this.setState({
-      page: "1",
-    })
+      visible: true,
+    });
+  };
+
+  onClose = () => {
+    this.setState({
+      visible: false,
+    });
+  };
+
+  onChange = e => {
+    this.setState({
+      placement: e.target.value,
+    });
+  };
+
+  toggleBrands (value) {
+    if (value != undefined){
+      this.state.allBrands[value] = !this.state.allBrands[value]
+    }
+    this.refillFilter("brand", value)
+  }
+  toggleModels (value) {
+    if (value != undefined){
+      this.state.allModels[value] = !this.state.allModels[value]
+    }
+    this.refillFilter("model", value)
+  }
+  toggleColors (value) {
+    if (value != undefined){
+      this.state.allColors[value] = !this.state.allColors[value]
+    }
+    this.refillFilter("color", value)
+  }
+  toggleArticles (value) {
+    if (value != undefined){
+      this.state.allArticles[value] = !this.state.allArticles[value]
+    }
+    this.refillFilter("article", value)
   }
 
+  paginate (e) {
+    if (e !== this.state.page){
+      this.setState ({
+        page: e
+      }, () => {
+        console.log(e, this.state.page)
+        this.updateHandler()
+      });
+    }
+  }
+  handlePaginationChange = (e, { activePage }) => this.setState({ page: activePage }, () => (console.log(this.state.page), this.setPage()))
 
   render() {
+    const { placement, visible } = this.state;
     if (this.state.loaded){
       return (
         <div>
-        <Layout  style={{ minHeight: '100vh' }}>
-          <Sider style={{overflow: 'auto',height: '100vh',left: 0,}} width = "150px" theme = "dark" collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
-            <div className="logo" />
-            <Menu  theme="dark" defaultSelectedKeys={['1']} mode="inline">
-  
-              <SubMenu key="sub1" icon={<UserOutlined />} title="Brands">
-                  { this.state.allBrands && this.state.allBrands.map(item => <div ><Checkbox defaultChecked = "true" style = {{color: "white", marginBottom: "3px", textAlign: "right", border: "solid 2px red", paddingTop: "2px", paddingBottom: "2px"}}>{item}</Checkbox></div>)}
-              </SubMenu>
-              <SubMenu key="sub2" icon={<UserOutlined />} title="Models">
-                  { this.state.allModels && this.state.allModels.map(item => <Menu.Item >{item}</Menu.Item> )}
-              </SubMenu>
-              <SubMenu key="sub3" icon={<UserOutlined />} title="Colors">
-                  { this.state.allColors && this.state.allColors.map(item => <Menu.Item >{item}</Menu.Item> )}
-              </SubMenu>
-              <SubMenu key="sub4" icon={<UserOutlined />} title="Articles">
-                  { this.state.allArticles && this.state.allArticles.map(item => <Menu.Item >{item}</Menu.Item> )}
-              </SubMenu>
-            </Menu>
-          </Sider>
-          <div>
           <Headers/>
-          <br/>
-          <div className="listBox">
-                      {this.state.allItems.map((clothes, index) => (
-                      <div key={index} className = "bundles">
-                          <img className = "imageTitle" src = {clothes.image}></img>
-                          <h3 className = "brandTitle">{clothes.brand}</h3>
-                          <p className = "modelTitle">{clothes.model}</p>
-                          <p className = "colorTitle">{clothes.color}</p>
-                      </div>
-                      ))}
-                </div>
-          </div>
-        </Layout>
+          <div>
+          <Space>
+            <Radio.Group onChange={this.onChange}>
+            </Radio.Group>
+            <button className = "filterBTN" onClick={this.showDrawer}><Icon size = "large" aria-label = "Filter" name='angle double right'/></button>
+          </Space>
+          <Drawer
+            title="Filter by:"
+            placement="left"
+            closable={false}
+            onClose={this.onClose}
+            visible={visible}
+            key={placement}
+          >
+              <Menu style = {{paddingLeft: "20px", paddingRight: "20px", paddingTop: "20px"}} theme="light" defaultSelectedKeys={['1']} mode="inline">
+                
+                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} icon={<UserOutlined />} title="Brands">
+                <Grommet>
+                    <Box>
+                    {/* <CheckBox toggle = "true" className = "checkBrands" label="Any" onClick={() => this.toggleBrands("Any")}/> */}
+                    { this.state.allBrands && this.state.allBrands.map(item => <Button style = {{border: "solid 1px #DCD3F6", marginTop: "5px", borderRadius: "1px"}} size = "small" fill = "true" className = "checkBrands" label={item} onClick={() => this.toggleBrands(item)}/> )}
+                    </Box>
+                  </Grommet>
+                </SubMenu>
+  
+                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} icon={<UserOutlined />} title="Models">
+                <Grommet>
+                    <Box>
+                    {/* <CheckBox checked = "true" className = "checkModels" label="Any" onClick={() => this.toggleModels("Any")}/> */}
+                    { this.state.allModels && this.state.allModels.map(item => <Button style = {{border: "solid 1px #DCD3F6", marginTop: "5px", borderRadius: "1px"}} size = "small" fill = "true" className = "checkBrands" label={item} onClick={() => this.toggleModels(item)}/> )}
+                    </Box>
+                  </Grommet>
+                </SubMenu>
+  
+                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} key="sub3" icon={<UserOutlined />} title="Colors">
+                <Grommet>
+                    <Box>
+                    {/* <CheckBox checked = "true" className = "checkColors" label="Any" onClick={() => this.toggleColors("Any")}/> */}
+                    { this.state.allColors && this.state.allColors.map(item => <Button style = {{border: "solid 1px #DCD3F6", marginTop: "5px", borderRadius: "1px"}} size = "small" fill = "true" className = "checkBrands" label={item} onClick={() => this.toggleColors(item)}/> )}
+                    </Box>
+                  </Grommet>
+                </SubMenu>
+  
+                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} key="sub4" icon={<UserOutlined />} title="Articles">
+                <Grommet>
+                    <Box>
+                    {/* <CheckBox checked = "true" className = "checkArticles" label="Any" onClick={() => this.toggleArticles("Any")}/>*/}
+                    { this.state.allArticles && this.state.allArticles.map(item => <Button style = {{border: "solid 1px #DCD3F6", marginTop: "5px", borderRadius: "1px"}} size = "small" fill = "true" className = "checkBrands" label={item} onClick={() => this.toggleArticles(item)}/> )}
+                    </Box>
+                  </Grommet>
+                </SubMenu>
+              </Menu>
+          </Drawer>
         </div>
+          <div className="listBox">
+                        {this.state.displayItems.map((clothes, index) => (
+                        <div key={index} className = "bundles" color = "white">                  
+                          <Box border= "true" alignContent = "center" className = "bundles_1" background="white">
+                            <img className = "imageTitle" src = {clothes.image}></img>
+                              <h1 className = "brandTitle">{clothes.brand}</h1>
+                              <h1 className = "modelTitle">{clothes.model}</h1>
+                              <h1 className = "colorTitle">{clothes.color}</h1>
+                          </Box>
+                        </div>
+                  ))}
+            </div>
+          <div className = "paging">
+          <Pagination
+            activePage={this.state.page}
+            onPageChange={this.handlePaginationChange}
+            totalPages={this.state.totalPages}
+            color="red"
+          />
+          </div>
+        </div>  
       );
     }
     else {
       return (
-        <div><h1>Loading</h1></div>
+        <div><Segment>
+        <Dimmer active>
+          <Loader size='massive'>Loading</Loader>
+        </Dimmer>
+  
+        <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
+        <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
+        <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
+      </Segment></div>
       );
     }
   }
 }
+export default Styles
 
-ReactDOM.render(<SiderDemo />, document.querySelector("#root"));
+ReactDOM.render(<Styles />, document.querySelector("#root"));
+
+/*
+                          <img className = "imageTitle" src = {clothes.image}></img>
+                          <h3 className = "brandTitle">{clothes.brand}</h3>
+                          <p className = "modelTitle">{clothes.model}</p>
+                          <p className = "colorTitle">{clothes.color}</p>
+                          */
