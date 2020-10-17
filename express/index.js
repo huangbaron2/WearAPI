@@ -32,7 +32,6 @@ app.get('/', async (req, res) => {
 
 const path = require('path');
 const { url } = require('inspector');
-const { DataUsageOutlined, DataUsage } = require('@material-ui/icons');
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files
   app.use(express.static(path.join(__dirname, 'client/build')));
