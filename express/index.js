@@ -176,31 +176,31 @@ app.get('/brand=:brands&model=:models&color=:colors&article=:articles', async (r
                     res.send(err)
                 }
                 else{
-                    var allBrands = []
-                    var allModels = []
-                    var allColors = []
-                    var allArticles = []
+                    var allBrands = ["Any"]
+                    var allModels = ["Any"]
+                    var allColors = ["Any"]
+                    var allArticles = ["Any"]
                     for (var i of clothingResult){
                         if (!(allBrands.includes(i.brand[0]))){
                             console.log(allBrands, i.brand[0])
-                            allBrands.push(i.brand[0])
+                            allBrands.push(i.brand[0].trim())
                         }
                         if (!(allModels.includes(i.model[0]))){
-                            allModels.push(i.model[0])
+                            allModels.push(i.model[0].trim())
                         }
                         if (!allColors.includes(i.color[0])){
-                            allColors.push(i.color[0])
+                            allColors.push(i.color[0].trim())
                         }
                         if (!allArticles.includes(i.article[0])){
-                            allArticles.push(i.article[0])
+                            allArticles.push(i.article[0].trim())
                         }
                     }
                     const slicedClothing = clothingResult.slice(startIndex, endIndex)
                     results.results = slicedClothing
                     results.allBrands = [...new Set(allBrands)]
                     results.allModels = [...new Set(allModels)]
-                    results.allColors = allColors
-                    results.allArticles = allArticles
+                    results.allColors = [...new Set(allColors)]
+                    results.allArticles = [...new Set(allArticles)]
                     res.send(results);
                 }
             }
