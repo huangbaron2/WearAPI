@@ -200,6 +200,7 @@ app.get('/brand=:brands&model=:models&color=:colors&article=:articles', async (r
                     results.allModels = [...new Set(allModels)]
                     results.allColors = [...new Set(allColors)]
                     results.allArticles = [...new Set(allArticles)]
+                    results.totalPages = totalPages
                     console.log("firstsend", results.results['1'][0])
                     res.send(results);
                 }
