@@ -32,6 +32,7 @@ app.get('/', async (req, res) => {
 
 const path = require('path');
 const { url } = require('inspector');
+const { DataUsageOutlined, DataUsage } = require('@material-ui/icons');
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files
   app.use(express.static(path.join(__dirname, 'client/build')));
@@ -50,13 +51,11 @@ app.use(cors(corsOptions))
 const MongoClient = require('mongodb').MongoClient;
 const uri = process.env.DATABASE_URL;
 const client = new MongoClient(uri, { useNewUrlParser: true });
-console.log(uri[14], uri[15], uri[16], uri[17], uri[18])
 client.connect(err => {
     const collection = client.db("MyAPI").collection("Clothing");
     const mongoResult = collection.find().toArray()
     console.log("connected to MongoDB!", collection.find().toArray(function(err, result) {
         if (err) throw err;
-        console.log(result)
     }));
     // perform actions on the collection object
 });
@@ -72,6 +71,10 @@ app.post('/Post', async (req, res) => {
             article: req.body[0].article,
             image: req.body[0].image
         })
+        data.brand.unshift("Any")
+        data.model.unshift("Any")
+        data.color.unshift("Any")
+        data.article.unshift("Any")
         const collection = client.db("MyAPI").collection("Clothing");
         collection.insertOne(data)
         console.log("saved!")
@@ -127,12 +130,10 @@ function removeAny(value){
 }
 
 app.get('/allDB', async (req, res) => {
-    console.log("allDB arrived")
     await client.connect(err => {
         const collection = client.db("MyAPI").collection("Clothing");
         collection.find().toArray(function(err, result) {
             if (err) throw err;
-            console.log("allDB result is ", result)
             res.send(result);
         });
     });
@@ -184,7 +185,6 @@ app.get('/brand=:brands&model=:models&color=:colors&article=:articles', async (r
         }); 
     });
 });
-
 
 //const port = process.env.PORT || 9000;
 app.listen(9000, () => console.log(`Listening on port 9000...`));
