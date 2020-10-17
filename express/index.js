@@ -145,9 +145,6 @@ app.get('/brand=:brands&model=:models&color=:colors&article=:articles', async (r
         collection.find().toArray(function(err, result) {
             const page = parseInt(req.query.page)
             const limit = parseInt(req.query.limit)
-            const startIndex = (page - 1) * limit
-            const endIndex = page * limit
-            const results = {}
             if (err) {
             res.send(err);
             } 
@@ -156,20 +153,6 @@ app.get('/brand=:brands&model=:models&color=:colors&article=:articles', async (r
                 for (var i of result){
                     if (((i.brand.includes(req.params.brands) || req.params.brands == "Any") && (i.model.includes(req.params.models) || req.params.models == "Any") && (i.color.includes(req.params.colors) || req.params.colors == "Any") && (i.article.includes(req.params.articles) || req.params.articles == "Any"))){
                         clothingResult.push({brand: removeAny(Object.values(i.brand)), model: removeAny(Object.values(i.model)), color: removeAny(Object.values(i.color)), article: removeAny(Object.values(i.article)), image: i.image});
-                    }
-                }
-                const totalP = Math.ceil(clothingResult.length / limit)
-                results.totalPages = totalP
-                if (endIndex <= clothingResult.length + 7){
-                    results.next = {
-                        page: page + 1,
-                        limit: limit
-                    }
-                }
-                if (startIndex > 0){
-                    results.prev = {
-                        page: page - 1,
-                        limit: limit
                     }
                 }
                 if (clothingResult.length == 0){
@@ -195,18 +178,57 @@ app.get('/brand=:brands&model=:models&color=:colors&article=:articles', async (r
                             allArticles.push(i.article[0].trim())
                         }
                     }
-                    const slicedClothing = clothingResult.slice(startIndex, endIndex)
+                    var slicedClothing = {}
+                    var totalPages = Math.ceil(clothingResult.length / limit)
+                    for (var pages = 1; pages < totalPages + 1; pages ++){
+                        slicedClothing[String(pages)] = []   
+                    }
+                    var pageIndex = 0;
+                    for (var count = 0; count < clothingResult.length; count ++){
+                        if ((count % limit) == 0){
+                            pageIndex += 1
+                            slicedClothing[String(pageIndex)].push(clothingResult[count])
+                        }
+                        else{
+                            console.log("Count", slicedClothing)
+                            slicedClothing[String(pageIndex)].push(clothingResult[count])
+                        }
+                    }
+                    results = {}
                     results.results = slicedClothing
                     results.allBrands = [...new Set(allBrands)]
                     results.allModels = [...new Set(allModels)]
                     results.allColors = [...new Set(allColors)]
                     results.allArticles = [...new Set(allArticles)]
+                    console.log("firstsend", results.results['1'][0])
                     res.send(results);
                 }
             }
         }); 
     });
 });
+
+/*
+            const startIndex = (page - 1) * limit
+            const endIndex = page * limit
+            const results = {}
+
+                            const totalP = Math.ceil(clothingResult.length / limit)
+                results.totalPages = totalP
+                if (endIndex <= clothingResult.length + 7){
+                    results.next = {
+                        page: page + 1,
+                        limit: limit
+                    }
+                }
+                if (startIndex > 0){
+                    results.prev = {
+                        page: page - 1,
+                        limit: limit
+                    }
+                }
+
+*/
 
 //const port = process.env.PORT || 9000;
 app.listen(9000, () => console.log(`Listening on port 9000...`));
