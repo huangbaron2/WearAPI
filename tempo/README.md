@@ -6,4 +6,8 @@ npm install react-dom
 npm install antd
 npm install @material-ui
 npm install grommet styled-components --save
-npm install semantic-ui --save
+
+
+
+notes:
+semantic is bad
