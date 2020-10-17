@@ -121,6 +121,9 @@ function removeAny(value){
         if (value[i] != "Any" && i == 0){
             newList.push(value[i])
         }
+        if (value[i] != "Any" && i > 0){
+            newList.push(" " + value[i])
+        }
     }
     return newList
 }
