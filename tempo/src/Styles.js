@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom'
 import Headers from './Header'
 import './App.css';
 import 'antd/dist/antd.css';
-import 'semantic-ui-css/semantic.min.css'
+import { DoubleRightOutlined } from '@ant-design/icons'
 import { Menu, Drawer, Space} from 'antd';
-import { Pagination } from 'semantic-ui-react'
 import { Grommet, Box, Button} from 'grommet';
+import Pagination from "react-js-pagination";
+
 
 const { SubMenu } = Menu;
 
@@ -56,6 +57,7 @@ class Styles extends React.Component {
         (result) => {
           if (result){
           this.setState({
+            allItems: result.results,
             displayItems: result.results[this.state.page],
             totalPages: result.totalPages,
             allBrands: result.allBrands,
@@ -196,17 +198,19 @@ class Styles extends React.Component {
       });
     }
   }
-  handlePaginationChange = (e, { activePage }) => this.setState({ page: activePage }, () => (console.log(this.state.page), this.setPage()))
+  handlePaginationChange (e) {
+    this.setState({page: e}, () => (console.log(e, this.state.allItems), this.setPage()) )
+  }
 
   render() {
     const { placement, visible } = this.state;
-    if (this.state.loaded){
+    if (this.state.loaded && this.state.displayItems != undefined && this.state.allItems != undefined){
       return (
         <div>
           <Headers/>
           <div>
           <Space>
-            <button className = "filterBTN" onClick={this.showDrawer}></button>
+            <button className = "filterBTN" onClick={this.showDrawer}> <DoubleRightOutlined clasName = "DRO" style={{ marginLeft: "5px", fontSize: '30px', color: 'grey' }} /></button>
           </Space>
           <Drawer
             title="Filter by:"
@@ -268,14 +272,18 @@ class Styles extends React.Component {
                         </div>
                   ))}
             </div>
-          <div className = "paging">
-          <Pagination
-            activePage={this.state.page}
-            onPageChange={this.handlePaginationChange}
-            totalPages={this.state.totalPages}
-            color="red"
-          />
+            <div className = "Pging">
+            <div className = "paging">
+              <Pagination className = "paging"
+              activePage={this.state.page}
+              itemsCountPerPage={1}
+              totalItemsCount={Object.keys(this.state.allItems).length}
+              pageRangeDisplayed={5}
+              onChange={this.handlePaginationChange}
+            />
+            <h1 style = {{fontSize: "15px"}}>Current page: {this.state.page}</h1>
           </div>
+            </div>
         </div>  
       );
     }

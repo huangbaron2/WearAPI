@@ -4,12 +4,52 @@ ul{ list-style-type: none; }
   text-align: center;
 }
 
+.pging {
+  position: absolute;
+  border: solid 5px green;
+  width: 100%;
+  height: 100%;
+}
+
+.paging.paging {
+  margin: auto;
+}
+
+.paging {
+  position: absolute;
+  width: 100%;
+  height: 5px;
+  text-align: center;
+  align-content: center;
+}
+
+.paging ul {
+  margin: auto;
+  width: 300px;
+}
+
+.paging li {
+  font-size: 20px;
+  border: solid 1px rgb(180, 200, 255);
+  margin: auto;
+}
+
+.paging a {
+  padding: 10px 15px 10px 15px;
+  text-decoration: none;
+  color: blueviolet;
+}
+
+.paging:hover {
+  color: rgb(132, 0, 255);
+}
+
 .filterBTN {
   border: solid 2px rgb(236, 236, 236);
   background-color: white;
   margin-top: -70px;
   padding-top: 350px;
-  padding-bottom: 400px;
+  padding-bottom: 350px;
   margin-left: -9px;
 }
 
@@ -114,35 +154,6 @@ ul{ list-style-type: none; }
   background-color: rgb(60, 0, 170);
 }
 
-.paginationBox {
-  margin-top: 25px;
-  text-decoration: none;
-  position: relative;
-  text-align: center;
-  margin-left: -40px;
-}
-.paginationList {
-  text-decoration: none;
-  display: inline;
-}
-.paginationNumbers {
-  font-size: 25px;
-  padding-left: 15px;
-  padding-right: 15px;
-  margin-left: 5px;
-  margin-right: 5px;
-  border-radius: 20%;
-  cursor: pointer;
-  text-decoration: none;
-  color: white;
-}
-
-.paginationNumbers:hover {
-  background-color: rgb(60, 0, 170);
-  color: rgb(11, 255, 105);
-  text-decoration: none;
-}
-
 .postBox {
   background-color: rgba(112, 112, 112, 0.274);
   margin-top: 20px;
@@ -193,32 +204,24 @@ ul{ list-style-type: none; }
   object-fit: contain;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   height: 170px;
-  margin-bottom: -15px;
+  margin-bottom: 10px;
 }
 .brandTitle {
   font-size: 20px;
   font-weight: bold;
-  margin-bottom: -23px;
+  margin-bottom: 2px;
 }
 .modelTitle {
   font-size: 25px;
-  margin-bottom: -23px;
+  margin-bottom: 2px;
   font-style: italic;
 }
 .colorTitle {
   font-size: 15px;
 }
 
-.paging {
-  align-items: center;
-  align-content: center;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .listBox {
-  margin-top: -690px;
+  margin-top: -660px;
   background-color: rgb(255, 255, 255);
   margin-left: auto;
   margin-right: auto;
