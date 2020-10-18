@@ -211,16 +211,19 @@ ul{ list-style-type: none; }
   margin-bottom: 18px;
 }
 .brandTitle {
+  overflow: unset;
   font-size: 1.25vw;
   font-weight: bold;
   margin-bottom: 5px;
 }
 .modelTitle {
+  overflow: unset;
   font-size: 1.5vw;
   margin-bottom: 5px;
   font-style: italic;
 }
 .colorTitle {
+  overflow: unset;
   font-size: 1vw;
 }
 
@@ -237,6 +240,9 @@ ul{ list-style-type: none; }
 }
 
 .bundles {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin-top: 10%;
   border: solid 1.5px rgb(172, 142, 255);
   margin: 5px;
