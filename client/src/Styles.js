@@ -232,11 +232,8 @@ class Styles extends React.Component {
         <div>
           <Headers/>
           <div className = "BGC">
-          <Space>
-            <button className = "filterBTN" onClick={this.showDrawer}> <DoubleRightOutlined clasName = "DRO" style={{ marginLeft: "5px", fontSize: '30px', color: 'grey' }} /></button>
-          </Space>
 
-
+            <button className = "filterBTN" onClick={this.showDrawer}> <DoubleRightOutlined clasName = "DRO" style={{ marginLeft: "6px", fontSize: '30px', color: 'grey' }} /></button>
 
           <Drawer
             title="Filter by:"
