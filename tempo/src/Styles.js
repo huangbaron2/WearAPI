@@ -6,7 +6,6 @@ import 'antd/dist/antd.css';
 import { DoubleRightOutlined } from '@ant-design/icons'
 import { Menu, Drawer, Space} from 'antd';
 import { Grommet, Box, Button} from 'grommet';
-import Pagination from "react-js-pagination";
 
 
 const { SubMenu } = Menu;
@@ -25,6 +24,7 @@ class Styles extends React.Component {
                 {allArticles: []},
                 {allImages: []},
                 {allItems: []},
+                {allPages: []},
                 {displayItems: []},
                 {page: "1"},
                 {totalPages: 0},
@@ -40,6 +40,7 @@ class Styles extends React.Component {
                 this.updateHandler = this.updateHandler.bind(this)
                 this.paginate = this.paginate.bind(this)
                 this.handlePaginationChange = this.handlePaginationChange.bind(this)
+                this.handlePaginationChangePN = this.handlePaginationChangePN.bind(this)
                 this.setPage = this.setPage.bind(this)
   };
 
@@ -57,6 +58,7 @@ class Styles extends React.Component {
         (result) => {
           if (result){
           this.setState({
+            allPages: result.pageList,
             allItems: result.results,
             displayItems: result.results[this.state.page],
             totalPages: result.totalPages,
@@ -113,6 +115,7 @@ class Styles extends React.Component {
             (result) => {
               console.log(result)
               this.setState({
+                allPages: result.pageList,
                 allItems: result.results,
                 displayItems: result.results[this.state.page],
                 totalPages: result.totalPages,
@@ -137,7 +140,7 @@ class Styles extends React.Component {
   componentDidMount () {
     console.log("Mounted!")
     this.setState({
-      page: "1",
+      page: 1,
     }, () => this.addAll())
   }
 
@@ -199,12 +202,25 @@ class Styles extends React.Component {
     }
   }
   handlePaginationChange (e) {
-    this.setState({page: e}, () => (console.log(e, this.state.allItems), this.setPage()) )
+    this.setState({page: e}, () => (console.log("PAGECHANGE", e, this.state.allItems), this.setPage()) )
+  }
+  handlePaginationChangePN (e) {
+    console.log("PG", e.target.value, this.state.page + 2, ((this.state.page).parseInt))
+    if (e.target.value == "next"){
+      if (this.state.page + 1 <= this.state.totalPages){
+        this.setState({page: this.state.page + 1}, () => (console.log("Cpage"), this.setPage()))
+      }
+    }
+    else if (e.target.value == "prev"){
+      if (this.state.page - 1 > 0){
+        this.setState({page: this.state.page - 1}, () => (console.log("Cpage"), this.setPage()))
+      }
+    }
   }
 
   render() {
     const { placement, visible } = this.state;
-    if (this.state.loaded && this.state.displayItems != undefined && this.state.allItems != undefined){
+    if (this.state.loaded && this.state.displayItems != undefined && this.state.allItems != undefined && this.state.page != undefined){
       return (
         <div>
           <Headers/>
@@ -272,19 +288,19 @@ class Styles extends React.Component {
                         </div>
                   ))}
             </div>
-            <div className = "Pging">
             <div className = "paging">
-              <Pagination className = "paging"
-              activePage={this.state.page}
-              itemsCountPerPage={1}
-              totalItemsCount={Object.keys(this.state.allItems).length}
-              pageRangeDisplayed={5}
-              onChange={this.handlePaginationChange}
-            />
-            <h1 style = {{fontSize: "15px"}}>Current page: {this.state.page}</h1>
+              
+              <div className = "pgingEverything">
+              <ul className = "pgingBox">
+              <button value = "prev" className = "checkBrands" onClick = {e => this.handlePaginationChangePN(e)}>prev</button> 
+              { this.state.allPages && this.state.allPages.map(item => <button onClick = {() => this.handlePaginationChange(item)}  className = "checkBrands" >{item}</button> )}
+              <button value = "next" className = "checkBrands" onClick = {e => this.handlePaginationChangePN(e)}>next</button> 
+              </ul>
+              </div>
+
+            <h1 style = {{fontSize: "15px", marginLeft: "45px", textAlign: "center"}}>Current page: {this.state.page}</h1>
           </div>
             </div>
-        </div>  
       );
     }
     else {

@@ -4,44 +4,28 @@ ul{ list-style-type: none; }
   text-align: center;
 }
 
-.pging {
-  position: absolute;
-  border: solid 5px green;
-  width: 100%;
-  height: 100%;
-}
-
-.paging.paging {
-  margin: auto;
-}
-
 .paging {
-  position: absolute;
+  height: 2px;
   width: 100%;
-  height: 5px;
+}
+
+.pgingEverything {
   text-align: center;
-  align-content: center;
+  position: relative;
+  width: 100%;
 }
 
-.paging ul {
+.checkBrands {
+  background-color: white;
+  border: solid 1px rgb(184, 171, 255);
   margin: auto;
-  width: 300px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: -5px;
 }
 
-.paging li {
-  font-size: 20px;
-  border: solid 1px rgb(180, 200, 255);
-  margin: auto;
-}
-
-.paging a {
-  padding: 10px 15px 10px 15px;
-  text-decoration: none;
-  color: blueviolet;
-}
-
-.paging:hover {
-  color: rgb(132, 0, 255);
+.checkBrands:hover {
+  border: solid 1px rgb(75, 43, 255);
 }
 
 .filterBTN {
