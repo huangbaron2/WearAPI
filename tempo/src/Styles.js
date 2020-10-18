@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom'
 import Headers from './Header'
 import './App.css';
 import 'antd/dist/antd.css';
-import { Menu } from 'antd';
+import { DoubleRightOutlined } from '@ant-design/icons'
+import { Menu, Drawer, Space} from 'antd';
+import { Grommet, Box, Button} from 'grommet';
 
 
 const { SubMenu } = Menu;
@@ -222,7 +224,60 @@ class Styles extends React.Component {
       return (
         <div>
           <Headers/>
+          
+          <div>
 
+          </div>
+          <Space>
+            <button className = "filterBTN" onClick={this.showDrawer}> <DoubleRightOutlined clasName = "DRO" style={{ marginLeft: "5px", fontSize: '30px', color: 'grey' }} /></button>
+          </Space>
+          <Drawer
+            title="Filter by:"
+            placement="left"
+            closable={false}
+            onClose={this.onClose}
+            visible={visible}
+            key={placement}
+          >
+              <Menu style = {{paddingLeft: "20px", paddingRight: "20px", paddingTop: "20px"}} theme="light" defaultSelectedKeys={['1']} mode="inline">
+                
+                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} title="Brands">
+                <Grommet>
+                    <Box>
+                  
+                    { this.state.allBrands && this.state.allBrands.map(item => <Button style = {{border: "solid 1px #DCD3F6", marginTop: "5px", borderRadius: "1px"}} size = "small" fill = "true" className = "checkBrands" label={item} onClick={() => this.toggleBrands(item)}/> )}
+                    </Box>
+                  </Grommet>
+                </SubMenu>
+  
+                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} title="Models">
+                <Grommet>
+                    <Box>
+                  
+                    { this.state.allModels && this.state.allModels.map(item => <Button style = {{border: "solid 1px #DCD3F6", marginTop: "5px", borderRadius: "1px"}} size = "small" fill = "true" className = "checkBrands" label={item} onClick={() => this.toggleModels(item)}/> )}
+                    </Box>
+                  </Grommet>
+                </SubMenu>
+  
+                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} key="sub3" title="Colors">
+                <Grommet>
+                    <Box>
+                 
+                    { this.state.allColors && this.state.allColors.map(item => <Button style = {{border: "solid 1px #DCD3F6", marginTop: "5px", borderRadius: "1px"}} size = "small" fill = "true" className = "checkBrands" label={item} onClick={() => this.toggleColors(item)}/> )}
+                    </Box>
+                  </Grommet>
+                </SubMenu>
+  
+                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} key="sub4" title="Articles">
+                <Grommet>
+                    <Box>
+                   
+                    { this.state.allArticles && this.state.allArticles.map(item => <Button style = {{border: "solid 1px #DCD3F6", marginTop: "5px", borderRadius: "1px"}} size = "small" fill = "true" className = "checkBrands" label={item} onClick={() => this.toggleArticles(item)}/> )}
+                    </Box>
+                  </Grommet>
+                </SubMenu>
+              </Menu>
+          </Drawer>
             </div>
       );
     }
