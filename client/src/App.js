@@ -11,8 +11,8 @@ function App() {
     <div >
         <HashRouter>
           <Route path = '/' exact component = { Home }/>
-          <Route path = '/Styles' exact component = { Styles }/>
           <Route path = "/Post" exact component = { Post }/>
+          <Route path = '/Styles' exact component = { Styles }/>
         </HashRouter>
     </div>
   );

@@ -3,13 +3,10 @@ import ReactDOM from 'react-dom'
 import Headers from './Header'
 import './App.css';
 import 'antd/dist/antd.css';
-import 'semantic-ui-css/semantic.min.css'
+import { DoubleRightOutlined } from '@ant-design/icons'
 import { Menu, Drawer, Space} from 'antd';
-import { Pagination, Segment, Dimmer, Loader, Image, Icon } from 'semantic-ui-react'
 import { Grommet, Box, Button} from 'grommet';
-import {
-  UserOutlined,
-} from '@ant-design/icons';
+
 
 const { SubMenu } = Menu;
 
@@ -27,6 +24,7 @@ class Styles extends React.Component {
                 {allArticles: []},
                 {allImages: []},
                 {allItems: []},
+                {allPages: []},
                 {displayItems: []},
                 {page: "1"},
                 {totalPages: 0},
@@ -34,6 +32,8 @@ class Styles extends React.Component {
                 {loaded: false},
                 {visible: false},
                 {placement: 'left'},
+                {open: true}
+
                 ];
                 this.toggleBrands = this.toggleBrands.bind(this)
                 this.addAll = this.addAll.bind(this)
@@ -42,7 +42,9 @@ class Styles extends React.Component {
                 this.updateHandler = this.updateHandler.bind(this)
                 this.paginate = this.paginate.bind(this)
                 this.handlePaginationChange = this.handlePaginationChange.bind(this)
+                this.handlePaginationChangePN = this.handlePaginationChangePN.bind(this)
                 this.setPage = this.setPage.bind(this)
+                this.switchCollapsible = this.switchCollapsible(this)
   };
 
   setPage(){
@@ -59,6 +61,8 @@ class Styles extends React.Component {
         (result) => {
           if (result){
           this.setState({
+            allPages: result.pageList,
+            allItems: result.results,
             displayItems: result.results[this.state.page],
             totalPages: result.totalPages,
             allBrands: result.allBrands,
@@ -114,6 +118,7 @@ class Styles extends React.Component {
             (result) => {
               console.log(result)
               this.setState({
+                allPages: result.pageList,
                 allItems: result.results,
                 displayItems: result.results[this.state.page],
                 totalPages: result.totalPages,
@@ -138,7 +143,7 @@ class Styles extends React.Component {
   componentDidMount () {
     console.log("Mounted!")
     this.setState({
-      page: "1",
+      page: 1,
     }, () => this.addAll())
   }
 
@@ -199,18 +204,40 @@ class Styles extends React.Component {
       });
     }
   }
-  handlePaginationChange = (e, { activePage }) => this.setState({ page: activePage }, () => (console.log(this.state.page), this.setPage()))
+  handlePaginationChange (e) {
+    this.setState({page: e}, () => (console.log("PAGECHANGE", e, this.state.allItems), this.setPage()) )
+  }
+  handlePaginationChangePN (e) {
+    console.log("PG", e.target.value, this.state.page + 2, ((this.state.page).parseInt))
+    if (e.target.value == "next"){
+      if (this.state.page + 1 <= this.state.totalPages){
+        this.setState({page: this.state.page + 1}, () => (console.log("Cpage"), this.setPage()))
+      }
+    }
+    else if (e.target.value == "prev"){
+      if (this.state.page - 1 > 0){
+        this.setState({page: this.state.page - 1}, () => (console.log("Cpage"), this.setPage()))
+      }
+    }
+  }
+
+  switchCollapsible() {
+		this.setState({ open: this.state.open ? false : true });
+	}
 
   render() {
     const { placement, visible } = this.state;
-    if (this.state.loaded){
+    if (this.state.loaded && this.state.displayItems != undefined && this.state.allItems != undefined && this.state.page != undefined){
       return (
         <div>
           <Headers/>
           <div>
           <Space>
-            <button className = "filterBTN" onClick={this.showDrawer}><Icon size = "large" aria-label = "Filter" name='angle double right'/></button>
+            <button className = "filterBTN" onClick={this.showDrawer}> <DoubleRightOutlined clasName = "DRO" style={{ marginLeft: "5px", fontSize: '30px', color: 'grey' }} /></button>
           </Space>
+
+
+
           <Drawer
             title="Filter by:"
             placement="left"
@@ -221,7 +248,7 @@ class Styles extends React.Component {
           >
               <Menu style = {{paddingLeft: "20px", paddingRight: "20px", paddingTop: "20px"}} theme="light" defaultSelectedKeys={['1']} mode="inline">
                 
-                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} icon={<UserOutlined />} title="Brands">
+                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} title="Brands">
                 <Grommet>
                     <Box>
                     {/* <CheckBox toggle = "true" className = "checkBrands" label="Any" onClick={() => this.toggleBrands("Any")}/> */}
@@ -230,7 +257,7 @@ class Styles extends React.Component {
                   </Grommet>
                 </SubMenu>
   
-                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} icon={<UserOutlined />} title="Models">
+                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} title="Models">
                 <Grommet>
                     <Box>
                     {/* <CheckBox checked = "true" className = "checkModels" label="Any" onClick={() => this.toggleModels("Any")}/> */}
@@ -239,7 +266,7 @@ class Styles extends React.Component {
                   </Grommet>
                 </SubMenu>
   
-                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} key="sub3" icon={<UserOutlined />} title="Colors">
+                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} key="sub3" title="Colors">
                 <Grommet>
                     <Box>
                     {/* <CheckBox checked = "true" className = "checkColors" label="Any" onClick={() => this.toggleColors("Any")}/> */}
@@ -248,7 +275,7 @@ class Styles extends React.Component {
                   </Grommet>
                 </SubMenu>
   
-                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} key="sub4" icon={<UserOutlined />} title="Articles">
+                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} key="sub4" title="Articles">
                 <Grommet>
                     <Box>
                     {/* <CheckBox checked = "true" className = "checkArticles" label="Any" onClick={() => this.toggleArticles("Any")}/>*/}
@@ -258,6 +285,9 @@ class Styles extends React.Component {
                 </SubMenu>
               </Menu>
           </Drawer>
+
+
+        
         </div>
           <div className="listBox">
                         {this.state.displayItems.map((clothes, index) => (
@@ -271,28 +301,24 @@ class Styles extends React.Component {
                         </div>
                   ))}
             </div>
-          <div className = "paging">
-          <Pagination
-            activePage={this.state.page}
-            onPageChange={this.handlePaginationChange}
-            totalPages={this.state.totalPages}
-            color="red"
-          />
+            <div className = "paging">
+              
+              <div className = "pgingEverything">
+              <ul className = "pgingBox">
+              <button value = "prev" className = "checkBrands" onClick = {e => this.handlePaginationChangePN(e)}>prev</button> 
+              { this.state.allPages && this.state.allPages.map(item => <button onClick = {() => this.handlePaginationChange(item)}  className = "checkBrands" >{item}</button> )}
+              <button value = "next" className = "checkBrands" onClick = {e => this.handlePaginationChangePN(e)}>next</button> 
+              </ul>
+              </div>
+
+            <h1 style = {{fontSize: "15px", marginLeft: "45px", textAlign: "center"}}>Current page: {this.state.page}</h1>
           </div>
-        </div>  
+            </div>
       );
     }
     else {
       return (
-        <div><Segment>
-        <Dimmer active>
-          <Loader size='massive'>Loading</Loader>
-        </Dimmer>
-  
-        <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
-        <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
-        <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
-      </Segment></div>
+        <div>Loading</div>
       );
     }
   }
@@ -302,8 +328,12 @@ export default Styles
 ReactDOM.render(<Styles />, document.querySelector("#root"));
 
 /*
-                          <img className = "imageTitle" src = {clothes.image}></img>
-                          <h3 className = "brandTitle">{clothes.brand}</h3>
-                          <p className = "modelTitle">{clothes.model}</p>
-                          <p className = "colorTitle">{clothes.color}</p>
-                          */
+                                    <Pagination
+            activePage={this.state.page}
+            onPageChange={this.handlePaginationChange}
+            totalPages={this.state.totalPages}
+            color="red"
+          />
+
+          <Icon size = "large" aria-label = "Filter" name='angle double right'/>
+          */
