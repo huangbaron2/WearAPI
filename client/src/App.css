@@ -1,7 +1,4 @@
-# {
-  overflow-y: hidden; 
-  overflow-x: hidden;
-}
+
 
 ul{ list-style-type: none; }
 
@@ -10,6 +7,7 @@ ul{ list-style-type: none; }
 }
 
 .logoBTN {
+  transition-duration: 200ms;
   border: none;
   font-weight: bold;
   color: purple;
@@ -38,6 +36,7 @@ ul{ list-style-type: none; }
 }
 
 .directBTN {
+  transition-duration: 200ms;
   padding-top: 5px;
   padding-bottom: 5px;
   position: relative;
@@ -63,7 +62,7 @@ ul{ list-style-type: none; }
 .paging {
   height: 2px;
   width: 100%;
-  margin-top: -59px;
+  margin-top: -30px;
 }
 
 .pgingEverything {
@@ -74,6 +73,7 @@ ul{ list-style-type: none; }
 }
 
 .checkBrands {
+  transition-duration: 200ms;
   font-weight: 500;
   background-color: white;
   border: solid 1px rgb(184, 171, 255);
@@ -90,17 +90,24 @@ ul{ list-style-type: none; }
 }
 
 .filterBTN {
+  transition-duration: 200ms;
+  border-radius: 50%;
   border: solid 2px rgb(202, 185, 255);
   background-color: white;
-  padding-top: 340px;
-  padding-bottom: 348px;
-  margin-top: -70px;
-  margin-left: -9px;
+  padding-top: 300px;
+  padding-bottom: 300px;
+  padding-right: 10px;
+  padding-left: 250px;
+  margin-top: -10px;
+  margin-left: -250px;
 }
 
 .filterBTN:hover {
-  background-color: rgb(202, 185, 255);
-  border: solid 2px rgb(202, 185, 255);
+  background-color: rgba(202, 185, 255, 0.205);
+  border: solid 2px rgb(98, 45, 255);
+  transition-duration: 200ms;
+  padding-right: 15px;
+  padding-left: 255px;
 }
 
 @keyframes disco {
@@ -219,7 +226,7 @@ ul{ list-style-type: none; }
 
 .listBox {
   position: absolute;
-  margin-top: -645px;
+  margin-top: -610px;
   background-color: rgb(255, 255, 255);
   margin-left: 11vw;
   align-items: center;
