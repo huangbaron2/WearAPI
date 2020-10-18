@@ -207,7 +207,8 @@ ul{ list-style-type: none; }
   object-fit: contain;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.158), 0 6px 20px 0 rgba(255, 0, 0, 0);
   height: 22vh;
-  margin-top: 10px;
+  max-width: 250px;
+  margin-top: 34vh;
   margin-bottom: 18px;
 }
 .brandTitle {
