@@ -13,46 +13,46 @@ ul{ list-style-type: none; }
   border: none;
   font-weight: bold;
   color: purple;
-  padding-right: 10px;
-  padding-left: 10px;
-  font-size: 32px;
+  padding-right: 0.1vw;
+  padding-left: 0.1vw;
+  font-size: 4vh;
   background-color: white;
   text-decoration: none;
-  margin-left: 25%;
+  margin-left: 4vw;
 }
 
 .logoBTN:hover::before {
   font-weight: bold;
   color: rgb(0, 122, 82);
   transition-duration: 200ms;
-  font-size: 32px;
+  font-size: 4vh;
   content: "Baron's";
 }
 
 .directBox {
   position: absolute;
-  left: 70%;
+  left: 68vw;
   display: inline;
-  width: 30%;
-  height: 100%;
+  width: 27vw;
+  height: 9vh;
 }
 
 .directBTN {
   transition-duration: 200ms;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 0.7vh;
+  padding-bottom: 0.7vh;
   position: relative;
   background-color: white;
-  margin-top: 10px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin-left: 15px;
+  margin-top: 1.8vh;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  margin-left: 1vw;
   border: solid 2px rgb(157, 150, 255);
   text-decoration: none;
   color: black;
-  font-weight: 500;
-  font-size: 20px;
-  border-radius: 3px;
+  font-weight: 6vh;
+  font-size: 2.7vh;
+  border-radius: 1vh;
 }
 
 .directBTN:hover {
@@ -61,56 +61,54 @@ ul{ list-style-type: none; }
   transition-duration: 200ms;
 }
 
-.paging {
-  height: 2px;
-  width: 100%;
-}
-
 .pgingEverything {
+  position: absolute;
   text-align: center;
-  position: relative;
   width: 100%;
-  margin-bottom: -25px;
-  bottom: 20px;
+  top: 90vh;
 }
 
 .checkBrands {
-  transition-duration: 200ms;
-  font-weight: 500;
+  font-size: 2.5vh;
+  padding-left: 0.5vw;
+  padding-right: 0.5vw;
+  border: solid 2px rgb(186, 171, 255);
   background-color: white;
-  border: solid 1px rgb(184, 171, 255);
-  margin: auto;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-bottom: -5px;
-  font-size: 17px;
-  outline:none;
+  margin-bottom: -1vh;
 }
 
 .checkBrands:hover {
-  font-weight: 700;
-  border: solid 1px rgb(75, 43, 255);
+  border: solid 2px rgb(105, 72, 255);
+}
+
+.checkBrands:active {
+  color: rgb(70, 212, 255);
 }
 
 .filterBTN {
+  position: absolute;
   transition-duration: 200ms;
   border-radius: 50%;
-  border: solid 2px rgb(202, 185, 255);
+  border: solid 0.15vw rgb(202, 185, 255);
   background-color: white;
-  padding-top: 300px;
-  padding-bottom: 300px;
-  padding-right: 10px;
-  padding-left: 250px;
-  margin-top: -10px;
-  margin-left: -250px;
+  padding-top: 40vh;
+  padding-bottom: 40vh;
+  padding-right: 1vw;
+  padding-left: 16vw;
+  margin-top: -1vh;
+  margin-left: -16vw;
 }
 
 .filterBTN:hover {
   background-color: rgba(202, 185, 255, 0.205);
-  border: solid 2px rgb(98, 45, 255);
+  border: solid 0.11vw rgb(98, 45, 255);
   transition-duration: 200ms;
-  padding-right: 15px;
-  padding-left: 255px;
+  padding-right: 1.2vw;
+  padding-left: 16.5vw;
+}
+
+.filterBTN:active {
+  background-color: rgba(112, 121, 255, 0.342);
 }
 
 @keyframes disco {
@@ -118,7 +116,7 @@ ul{ list-style-type: none; }
   to {color: grey;}
 }
 .discover {
-  font-size: 50px;
+  font-size: 7vh;
   display: inline;
   color: grey;
   animation-name: disco;
@@ -129,7 +127,7 @@ ul{ list-style-type: none; }
   to {color: black;}
 }
 .wearables {
-  font-size: 50px;
+  font-size: 7vh;
   display: inline;
   color: black;
   animation-name: wear;
@@ -140,15 +138,6 @@ ul{ list-style-type: none; }
 .homeBox {
   text-align: center;
   font-family: sans-serif;
-}
-
-.headerBox {
-  font-size: 10px;
-  margin-top: 0px;
-  padding-top: 0.25px;
-  display: inline-block;
-  width: 100%;
-  height: 3%;
 }
 
 .postForm {
@@ -206,40 +195,38 @@ ul{ list-style-type: none; }
 }
 
 .imageTitle {
-  border-radius: 10px;
+  border-radius: 1vh;
   object-fit: contain;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.158), 0 6px 20px 0 rgba(255, 0, 0, 0);
+  box-shadow: 0 0.5vh 1vh 0 rgba(0, 0, 0, 0.158), 0 6px 20px 0 rgba(255, 0, 0, 0);
   height: 22vh;
-  margin-top: 10px;
-  margin-bottom: 18px;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
   max-width: 34vh;
 }
 .brandTitle {
   overflow: unset;
   font-size: 1.25vw;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 0.4vh;
 }
 .modelTitle {
   overflow: unset;
   font-size: 1.5vw;
-  margin-bottom: 5px;
+  margin-bottom: 0.4vh;
   font-style: italic;
 }
 .colorTitle {
-  
   font-size: 1vw;
 }
 
 .listBox {
   position: absolute;
-  margin-top: -610px;
+  margin-top: 1vh;
   background-color: rgb(255, 255, 255);
   margin-left: 11vw;
   align-items: center;
   text-align: center;
   align-content: center;
-  height: 540px;
   width: 80%;
 }
 
@@ -254,6 +241,21 @@ ul{ list-style-type: none; }
   width: 20vw;
   height: 38vh;
   display: inline-block;
-  border-radius: 10px;
+  border-radius: 1vh;
 }
 
+.filterLabels {
+  min-height: 3vh;
+  background-color: white;
+  font-size: 2.5vh;
+  border: solid 0.5px rgb(104, 104, 104);
+  margin-top: 0.5vh;
+  padding: 0.2vh;
+}
+
+.filterLabels:hover {
+  background-color: white;
+  font-size: 2.5vh;
+  border: solid 2px rgb(74, 92, 255);
+  margin-top: 0.5vh;
+}

@@ -4,11 +4,20 @@ import Headers from './Header'
 import './App.css';
 import 'antd/dist/antd.css';
 import { DoubleRightOutlined } from '@ant-design/icons'
-import { Menu, Drawer, Space} from 'antd';
+import { Menu, Drawer } from 'antd';
 import { Grommet, Box, Button} from 'grommet';
 
 
 const { SubMenu } = Menu;
+
+const myTheme = {
+  text: {
+    medium: {
+      height: "100px",
+      size: '100px',
+    },
+  },
+};
 
 class Styles extends React.Component {
   constructor(props) {
@@ -229,13 +238,14 @@ class Styles extends React.Component {
     const { placement, visible } = this.state;
     if (this.state.loaded && this.state.displayItems != undefined && this.state.allItems != undefined && this.state.page != undefined){
       return (
-        <div>
+        <div className = "allStyles">
           <Headers/>
           <div className = "BGC">
 
             <button className = "filterBTN" onClick={this.showDrawer}> <DoubleRightOutlined clasName = "DRO" style={{ marginLeft: "6px", fontSize: '30px', color: 'grey' }} /></button>
 
           <Drawer
+            width = "18vw"
             title="Filter by:"
             placement="left"
             closable={false}
@@ -243,40 +253,40 @@ class Styles extends React.Component {
             visible={visible}
             key={placement}
           >
-              <Menu style = {{paddingLeft: "20px", paddingRight: "20px", paddingTop: "20px"}} theme="light" defaultSelectedKeys={['1']} mode="inline">
+              <Menu style = {{paddingLeft: "1vw", paddingRight: "1vw", paddingTop: "1vh"}} theme="light" defaultSelectedKeys={['1']} mode="inline">
                 
-                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} title="Brands">
+                <SubMenu style = {{fontWeight: "600", fontSize: "2.8vh", border: "solid 2px grey", marginBottom: "1vh"}} title="Brands">
                 <Grommet>
                     <Box>
                     {/* <CheckBox toggle = "true" className = "checkBrands" label="Any" onClick={() => this.toggleBrands("Any")}/> */}
-                    { this.state.allBrands && this.state.allBrands.map(item => <Button style = {{border: "solid 1px #DCD3F6", marginTop: "5px", borderRadius: "1px"}} size = "small" fill = "true" className = "checkBrands" label={item} onClick={() => this.toggleBrands(item)}/> )}
+                    { this.state.allBrands && this.state.allBrands.map(item => <button className = "filterLabels" label={item} onClick={() => this.toggleBrands(item)}>{item}</button>)}
                     </Box>
                   </Grommet>
                 </SubMenu>
   
-                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} title="Models">
+                <SubMenu style = {{fontWeight: "600", fontSize: "2.8vh", border: "solid 2px grey", marginBottom: "1vh"}} title="Models">
                 <Grommet>
                     <Box>
                     {/* <CheckBox checked = "true" className = "checkModels" label="Any" onClick={() => this.toggleModels("Any")}/> */}
-                    { this.state.allModels && this.state.allModels.map(item => <Button style = {{border: "solid 1px #DCD3F6", marginTop: "5px", borderRadius: "1px"}} size = "small" fill = "true" className = "checkBrands" label={item} onClick={() => this.toggleModels(item)}/> )}
+                    { this.state.allModels && this.state.allModels.map(item => <button className = "filterLabels" label={item} onClick={() => this.toggleModels(item)}>{item}</button>)}
                     </Box>
                   </Grommet>
                 </SubMenu>
   
-                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} key="sub3" title="Colors">
+                <SubMenu style = {{fontWeight: "600", fontSize: "2.8vh", border: "solid 2px grey", marginBottom: "1vh"}} key="sub3" title="Colors">
                 <Grommet>
                     <Box>
                     {/* <CheckBox checked = "true" className = "checkColors" label="Any" onClick={() => this.toggleColors("Any")}/> */}
-                    { this.state.allColors && this.state.allColors.map(item => <Button style = {{border: "solid 1px #DCD3F6", marginTop: "5px", borderRadius: "1px"}} size = "small" fill = "true" className = "checkBrands" label={item} onClick={() => this.toggleColors(item)}/> )}
+                    { this.state.allColors && this.state.allColors.map(item => <button className = "filterLabels" label={item} onClick={() => this.toggleColors(item)}>{item}</button>)}
                     </Box>
                   </Grommet>
                 </SubMenu>
   
-                <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} key="sub4" title="Articles">
+                <SubMenu style = {{fontWeight: "600", fontSize: "2.8vh", border: "solid 2px grey", marginBottom: "1vh"}} key="sub4" title="Articles">
                 <Grommet>
                     <Box>
                     {/* <CheckBox checked = "true" className = "checkArticles" label="Any" onClick={() => this.toggleArticles("Any")}/>*/}
-                    { this.state.allArticles && this.state.allArticles.map(item => <Button style = {{border: "solid 1px #DCD3F6", marginTop: "5px", borderRadius: "1px"}} size = "small" fill = "true" className = "checkBrands" label={item} onClick={() => this.toggleArticles(item)}/> )}
+                    { this.state.allArticles && this.state.allArticles.map(item => <button className = "filterLabels" label={item} onClick={() => this.toggleArticles(item)}>{item}</button>)}
                     </Box>
                   </Grommet>
                 </SubMenu>
@@ -301,9 +311,10 @@ class Styles extends React.Component {
               { this.state.allPages && this.state.allPages.map(item => <button onClick = {() => this.handlePaginationChange(item)}  className = "checkBrands" >{item}</button> )}
               <button value = "next" className = "checkBrands" onClick = {e => this.handlePaginationChangePN(e)}>next</button> 
               </ul>
+              <h1 style = {{fontSize: "15px", marginLeft: "45px", textAlign: "center"}}>Current page: {this.state.page}</h1>
               </div>
 
-            <h1 style = {{fontSize: "15px", marginLeft: "45px", textAlign: "center"}}>Current page: {this.state.page}</h1>
+            
           </div>
             </div>
       );
