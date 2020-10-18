@@ -4,19 +4,39 @@ ul{ list-style-type: none; }
   text-align: center;
 }
 
+.directBTN {
+  background-color: white;
+  padding: 0.5vh 0.5vw 0.5vh 0.5vw;
+  margin-left: 5px;
+  margin-right: 5px;
+  border: solid 2px rgb(157, 150, 255);
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  font-size: 15px;
+  border-radius: 3px;
+}
+
+.directBTN:hover {
+  background-color: rgb(188, 194, 255);
+  transition-duration: 200ms;
+}
+
 .paging {
   height: 2px;
   width: 100%;
-  margin-top: -60px;
+  margin-top: -65px;
 }
 
 .pgingEverything {
   text-align: center;
   position: relative;
   width: 100%;
+  margin-bottom: -7px;
 }
 
 .checkBrands {
+  font-weight: 500;
   background-color: white;
   border: solid 1px rgb(184, 171, 255);
   margin: auto;
@@ -26,50 +46,28 @@ ul{ list-style-type: none; }
 }
 
 .checkBrands:hover {
+  font-weight: 700;
   border: solid 1px rgb(75, 43, 255);
 }
 
 .filterBTN {
-  border: solid 2px rgb(236, 236, 236);
+  border: solid 2px rgb(202, 185, 255);
   background-color: white;
   margin-top: -70px;
   padding-top: 350px;
-  padding-bottom: 350px;
+  padding-bottom: 353px;
   margin-left: -9px;
 }
 
 .filterBTN:hover {
-  background-color: rgb(239, 234, 255);
-  border: solid 2px rgb(143, 112, 255);
-}
-
-#components-layout-demo-custom-trigger .trigger {
-  font-size: 18px;
-  line-height: 64px;
-  padding: 0 24px;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-
-#components-layout-demo-custom-trigger .trigger:hover {
-  color: #1890ff;
-}
-
-#components-layout-demo-custom-trigger .logo {
-  height: 32px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 16px;
-}
-
-.site-layout {
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(202, 185, 255);
+  border: solid 2px rgb(202, 185, 255);
 }
 
 @keyframes disco {
   from {color: black;}
   to {color: grey;}
 }
-
 .discover {
   font-size: 50px;
   display: inline;
@@ -77,12 +75,10 @@ ul{ list-style-type: none; }
   animation-name: disco;
   animation-duration: 3.5s;
 }
-
 @keyframes wear {
   from {color: white;}
   to {color: black;}
 }
-
 .wearables {
   font-size: 50px;
   display: inline;
@@ -113,7 +109,6 @@ ul{ list-style-type: none; }
   margin-right: 40%;
   align-items: center;
 }
-
 .postList {
   position: relative;
   cursor: pointer;
@@ -145,7 +140,6 @@ ul{ list-style-type: none; }
   text-decoration: none;
   background-color: rgb(60, 0, 170);
 }
-
 .postBox {
   background-color: rgba(112, 112, 112, 0.274);
   margin-top: 20px;
@@ -162,50 +156,22 @@ ul{ list-style-type: none; }
   align-items: center;
 }
 
-#btnAll{
-  font-weight: 500;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  color: white;
-  width: 6%;
-  background-color: rgba(195, 241, 255, 0.25);
-
-}
-
-.allBox {
-  background-color: white;
-  width: 100%;
-  margin: auto;
-  position: absolute;
-  height: 100%;
-  background-position: center;
-  background-size: cover;
-}
-
-.filterBox {
-  align-items: center;
-  text-align: center;
-  align-content: center;
-}
-
 .imageTitle {
   border-radius: 10px;
   object-fit: contain;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.158), 0 6px 20px 0 rgba(255, 0, 0, 0);
-  height: 20vh;
-  margin-bottom: 10px;
+  height: 22vh;
+  margin-top: 10px;
+  margin-bottom: 16px;
 }
 .brandTitle {
-  font-size: 1.5vw;
+  font-size: 1.25vw;
   font-weight: bold;
-  margin-bottom: 2px;
+  margin-bottom: 5px;
 }
 .modelTitle {
   font-size: 1.5vw;
-  margin-bottom: 2px;
+  margin-bottom: 5px;
   font-style: italic;
 }
 .colorTitle {
@@ -216,82 +182,22 @@ ul{ list-style-type: none; }
   position: absolute;
   margin-top: -660px;
   background-color: rgb(255, 255, 255);
-  margin-left: 10vw;
-  margin-right: 40vw;
+  margin-left: 11vw;
   align-items: center;
   text-align: center;
   align-content: center;
-  height: 600px;
+  height: 550px;
   width: 80%;
 }
 
 .bundles {
   margin-top: 10%;
-  border: solid 1px rgb(239, 214, 255);
+  border: solid 1.5px rgb(172, 142, 255);
   margin: 3px;
-  background-color: rgba(212, 166, 255, 0.055);
+  background-color: rgba(255, 255, 255, 0.055);
   width: 20vw;
-  height: 40vh;
+  height: 39vh;
   display: inline-block;
   border-radius: 10px;
 }
 
-#inputButton {
-  width: 6.5%;
-  background-color:rgba(155, 255, 172, 0.2);
-  color: white;
-  transition: background-color 0.2s ease-out;
-  transition: transform 0.2s ease-out;
-  margin-bottom: 15px;
-}
-
-#inputButton:hover{
-  background-color:rgba(138, 0, 180, 0.76);
-  transform: scale(1.05);
-}
-
-
-#dropdown {
-  border: solid 3px rgba(195, 0, 255, 0.11);
-  margin: auto;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100px;
-  color: white;
-  background-color: #0059ff46;
-  font-size: 15px;
-  border-radius: 15%;
-  background-color: rgba(77, 1, 77, 0.233);
-}
-
-div.dropdown-menu\ show{
-  background-color: rgba(0, 0, 0, 0);
-  font-size: 50px;
-}
-
-.selection {
-  align-content: center;
-  border: solid 1px blue;
-  border-radius: 10%;
-  background: rgba(148, 255, 246, 0.144);;
-  text-overflow: ellipsis;
-  margin-left: 10px;
-  margin-right: 10px;
-  display: inline-block;
-  font-size: 2px;
-  margin-top: 10px;
-  margin-bottom: -5px;
-}
-
-#label {
-  margin-top: -5px;
-  font-weight: 500;
-  display: inline-block;
-  font-size: 40px;
-  color: white;
-}
-
-.selectTitle {
-  font-size: 20px;
-  color: white;
-}

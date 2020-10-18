@@ -231,7 +231,7 @@ class Styles extends React.Component {
       return (
         <div>
           <Headers/>
-          <div>
+          <div className = "BGC">
           <Space>
             <button className = "filterBTN" onClick={this.showDrawer}> <DoubleRightOutlined clasName = "DRO" style={{ marginLeft: "5px", fontSize: '30px', color: 'grey' }} /></button>
           </Space>

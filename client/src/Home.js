@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Header from './homeHeader'
+import Header from './Header'
 import './App.css';
 import Carousel from 'react-bootstrap/Carousel'
 
@@ -15,7 +15,7 @@ class Home extends Component{
                     <Carousel interval="2500" touch="false" pause="false">
                         <Carousel.Item>
                             <br/>
-                            <img style = {{maxHeight: "400px", maxWidth: "1000px", objectFit: "contain"}}
+                            <img style = {{paddingTop: "25px", maxHeight: "400px", maxWidth: "1000px", objectFit: "contain"}}
                                 className="d-block w-50 m-auto h-50"
                                 src="https://cdn.bike24.net/i/mb/90/49/44/335783-00-d-708524.jpg"
                                 alt="First slide"
