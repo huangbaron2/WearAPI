@@ -12,7 +12,7 @@ class Header extends Component{
             <a href = "/#" ><button className = "logoBTN">WearAPI</button></a>
             <div className = "directBox">
             <a href = "/#/Styles"><button className = "directBTN" >Check out the styles!</button></a>
-            <a href = "/#/Post"><button button className = "directBTN" style = {{border: "solid 2px red"}}> [In progress]</button></a>
+            <a ><button button className = "directBTN" style = {{border: "solid 2px red"}}> [In progress]</button></a>
             </div>
             </Toolbar>
         </AppBar>
