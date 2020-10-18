@@ -288,18 +288,7 @@ class Styles extends React.Component {
                         </div>
                   ))}
             </div>
-            <div className = "paging">
-              
-              <div className = "pgingEverything">
-              <ul className = "pgingBox">
-              <button value = "prev" className = "checkBrands" onClick = {e => this.handlePaginationChangePN(e)}>prev</button> 
-              { this.state.allPages && this.state.allPages.map(item => <button onClick = {() => this.handlePaginationChange(item)}  className = "checkBrands" >{item}</button> )}
-              <button value = "next" className = "checkBrands" onClick = {e => this.handlePaginationChangePN(e)}>next</button> 
-              </ul>
-              </div>
 
-            <h1 style = {{fontSize: "15px", marginLeft: "45px", textAlign: "center"}}>Current page: {this.state.page}</h1>
-          </div>
             </div>
       );
     }
