@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 
 class Header extends Component{
   render(){
@@ -12,14 +9,11 @@ class Header extends Component{
         <div className={this.root}>
         <AppBar color="#4b00ed" position="static">
             <Toolbar>
-            <IconButton edge="start" className={this.menuButton} color="#4b00ed" aria-label="menu">
-
-            </IconButton>
-            <Typography variant="h6" className={this.title}>
-              <a href = "/" style = {{fontWeight: "bold", color: "purple", padding: "30px", fontSize: "30px"}}>WearAPI</a>
-            </Typography>
-            <a href = "/#/Styles" style = {{marginLeft: "58%"}}><button className = "directBTN" >Check out the styles!</button></a>
-            <a href = "/#/Post"><button button className = "directBTN">Contribute to the database [In Progress]</button></a>
+            <a href = "/#" ><button className = "logoBTN">WearAPI</button></a>
+            <div className = "directBox">
+            <a href = "/#/Styles"><button className = "directBTN" >Check out the styles!</button></a>
+            <a href = "/#/Post"><button button className = "directBTN" style = {{border: "solid 2px red"}}> [In progress]</button></a>
+            </div>
             </Toolbar>
         </AppBar>
         </div>
