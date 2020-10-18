@@ -7,7 +7,7 @@ class Header extends Component{
     return (
       <div>
         <div className={this.root}>
-        <AppBar color="#4b00ed" position="static">
+        <AppBar style = {{height: "62px"}} color="#4b00ed" position="static">
             <Toolbar>
             <a href = "/#" ><button className = "logoBTN">WearAPI</button></a>
             <div className = "directBox">
