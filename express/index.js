@@ -194,6 +194,10 @@ app.get('/brand=:brands&model=:models&color=:colors&article=:articles', async (r
                             slicedClothing[String(pageIndex)].push(clothingResult[count])
                         }
                     }
+                    var pageList = []
+                    for (var ind = 1; ind <= totalPages; ind ++){
+                        pageList.push(ind)
+                    }
                     results = {}
                     results.results = slicedClothing
                     results.allBrands = [...new Set(allBrands)]
@@ -201,6 +205,7 @@ app.get('/brand=:brands&model=:models&color=:colors&article=:articles', async (r
                     results.allColors = [...new Set(allColors)]
                     results.allArticles = [...new Set(allArticles)]
                     results.totalPages = totalPages
+                    results.pageList = pageList
                     console.log("firstsend", results.results['1'][0])
                     res.send(results);
                 }
