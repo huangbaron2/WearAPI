@@ -9,11 +9,6 @@ var Clothings = require('./models/clothings')
 require('dotenv').config()
 var cors = require('cors')
 
-module.exports.brand = []
-module.exports.model = []
-module.exports.color = []
-module.exports.article = []
-
 app.use(cors())
 app.use(bodyParser.json())
 app.use('/clothing', router)
@@ -60,7 +55,7 @@ client.connect(err => {
 });
 
 
-app.post('/Post', async (req, res) => {
+app.post('/add', async (req, res) => {
     console.log("Post Arrived with ", req.body)
     await client.connect(err => {
         const data =  new Clothings({
@@ -143,7 +138,6 @@ app.get('/brand=:brands&model=:models&color=:colors&article=:articles', async (r
     await client.connect(err => {
         const collection = client.db("MyAPI").collection("Clothing");
         collection.find().toArray(function(err, result) {
-            const page = parseInt(req.query.page)
             const limit = parseInt(req.query.limit)
             if (err) {
             res.send(err);
@@ -165,7 +159,6 @@ app.get('/brand=:brands&model=:models&color=:colors&article=:articles', async (r
                     var allArticles = ["Any"]
                     for (var i of clothingResult){
                         if (!(allBrands.includes(i.brand[0]))){
-                            console.log(allBrands, i.brand[0])
                             allBrands.push(i.brand[0].trim())
                         }
                         if (!(allModels.includes(i.model[0]))){
@@ -190,7 +183,6 @@ app.get('/brand=:brands&model=:models&color=:colors&article=:articles', async (r
                             slicedClothing[String(pageIndex)].push(clothingResult[count])
                         }
                         else{
-                            console.log("Count", slicedClothing)
                             slicedClothing[String(pageIndex)].push(clothingResult[count])
                         }
                     }
@@ -206,13 +198,103 @@ app.get('/brand=:brands&model=:models&color=:colors&article=:articles', async (r
                     results.allArticles = [...new Set(allArticles)]
                     results.totalPages = totalPages
                     results.pageList = pageList
-                    console.log("firstsend", results.results['1'][0])
                     res.send(results);
                 }
             }
         }); 
     });
 });
+
+app.post('/toggle', async (req, res) => {
+    console.log("Post Arrived with ", req.body)
+    await client.connect(err => {
+        const data = {
+            brand: req.body[0].brand,
+            model: req.body[0].model,
+            color: req.body[0].color,
+            article: req.body[0].article,
+        }
+        const collection = client.db("MyAPI").collection("Clothing");
+        collection.find().toArray(function(err, result) {
+            results = []
+            if (data.brand.length == 0 && data.model.length == 0 && data.color.length == 0 && data.article.length == 0){
+                res.send(result)
+                return 0;
+            }
+            for (var i of result){
+                for (var o of data.brand){
+                    if (i.brand.includes(o)){
+                        results.push(i)
+                    }
+                }
+            }
+            for (var i of result){
+                for (var o of data.model){
+                    if (i.brand.includes(o)){
+                        results.push(i)
+                    }
+                }
+            }
+            for (var i of result){
+                for (var o of data.color){
+                    if (i.brand.includes(o)){
+                        results.push(i)
+                    }
+                }
+            }
+            for (var i of result){
+                for (var o of data.article){
+                    if (i.brand.includes(o)){
+                        results.push(i)
+                    }
+                }
+            }
+            allBrands = []
+            allModels = []
+            allColors = []
+            allArticles = []
+            console.log("Results", results)
+            for (var i of results){
+                if (!(allBrands.includes(i.brand[1]))){
+                    allBrands.push(i.brand[1].trim())
+                }
+                if (!(allModels.includes(i.model[1]))){
+                    allModels.push(i.model[1].trim())
+                }
+                if (!allColors.includes(i.color[1])){
+                    allColors.push(i.color[1].trim())
+                }
+                if (!allArticles.includes(i.article[1])){
+                    allArticles.push(i.article[1].trim())
+                }
+            }
+            slicedClothing = {}
+            const limit = parseInt(req.query.limit)
+            var totalPages = Math.ceil(results.length / limit)
+            for (var pages = 1; pages < totalPages + 1; pages ++){
+                slicedClothing[String(pages)] = []   
+            }
+            var pageIndex = 0;
+            for (var count = 0; count < results.length; count ++){
+                if ((count % limit) == 0){
+                    pageIndex += 1
+                    slicedClothing[String(pageIndex)].push(results[count])
+                }
+                else{
+                    slicedClothing[String(pageIndex)].push(results[count])
+                }
+            }
+            results = {}
+            results.totalPages = totalPages
+            results.results = slicedClothing
+            results.allBrands = [...new Set(allBrands)]
+            results.allModels = [...new Set(allModels)]
+            results.allColors = [...new Set(allColors)]
+            results.allArticles = [...new Set(allArticles)]
+            res.send(results)
+        })
+    })
+})
 
 /*
             const startIndex = (page - 1) * limit
