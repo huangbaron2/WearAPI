@@ -29,25 +29,25 @@ class Home extends Component{
                 <br/>
                     <Carousel play="2500" controls = "arrows" initialChild = {0}>
                        
-                            <img style = {{paddingTop: "25px", maxHeight: "500px", maxWidth: "1000px", objectFit: "contain"}}
+                            <img style = {{paddingTop: "20px", maxHeight: "70vh", maxWidth: "140vw", objectFit: "contain"}}
                                 className="d-block w-50 m-auto h-50"
                                 src="https://www.thefashionisto.com/wp-content/uploads/2019/04/Acne-Studios-Navid-Logo-Print-Stretch-Jersey-T-Shirt-Men-White.jpg"
                                 alt="First slide"
                             />
      
-                            <img style = {{maxHeight: "400px", maxWidth: "1000px", objectFit: "contain"}}
+                            <img style = {{maxHeight: "53vh", maxWidth: "70vw", objectFit: "contain"}}
                                 className="d-block w-50 m-auto"
                                 src="https://process.fs.grailed.com/AJdAgnqCST4iPtnUxiGtTz/cache=expiry:max/rotate=deg:exif/resize=width:2400,fit:crop/output=quality:70/compress/https://process.fs.grailed.com/z0qM3P5pR3a9viT9MCon"
                                 alt="Third slide"
                             />
     
-                            <img style = {{maxHeight: "500px", maxWidth: "1000px", objectFit: "contain"}}
+                            <img style = {{maxHeight: "65vh", maxWidth: "140vw", objectFit: "contain"}}
                                 className="d-block w-50 m-auto"
                                 src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/FU6A2?wid=1144&hei=1144&fmt=jpeg&qlt=80&op_usm=0.5,0.5&.v=1555353617178"
                                 alt="Third slide"
                             />
 
-                            <img style = {{paddingTop: "45px", maxHeight: "430px", maxWidth: "1000px", objectFit: "contain"}}
+                            <img style = {{paddingTop: "45px", maxHeight: "60vh", maxWidth: "140vw", objectFit: "contain"}}
                                 className="d-block w-50 m-auto"
                                 src="https://cdn.bike24.net/i/mb/90/49/44/335783-00-d-708524.jpg"
                                 alt="Third slide"
