@@ -284,20 +284,15 @@ class Styles extends React.Component {
                   </Grommet>
                 </SubMenu>
               </Menu>
-          </Drawer>
-
-
-        
+          </Drawer> 
         </div>
           <div className="listBox">
                         {this.state.displayItems.map((clothes, index) => (
                         <div key={index} className = "bundles" color = "white">                  
-                          <Box border= "true" alignContent = "center" className = "bundles_1" background="white">
-                            <img className = "imageTitle" src = {clothes.image}></img>
-                              <h1 className = "brandTitle">{clothes.brand}</h1>
-                              <h1 className = "modelTitle">{clothes.model}</h1>
-                              <h1 className = "colorTitle">{clothes.color}</h1>
-                          </Box>
+                                  <img className = "imageTitle" src = {clothes.image}></img>
+                                  <h1 className = "brandTitle">{clothes.brand}</h1>
+                                  <h1 className = "modelTitle">{clothes.model}</h1>
+                                  <h1 className = "colorTitle">{clothes.color}</h1>
                         </div>
                   ))}
             </div>
