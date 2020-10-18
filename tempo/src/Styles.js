@@ -5,8 +5,7 @@ import './App.css';
 import 'antd/dist/antd.css';
 import { DoubleRightOutlined } from '@ant-design/icons'
 import { Menu, Drawer, Space} from 'antd';
-import { Grommet, Box, Button, Collapsible} from 'grommet';
-import {Icon, Sidebar, Segment} from 'semantic-ui-react'
+import { Grommet, Box, Button} from 'grommet';
 
 
 const { SubMenu } = Menu;
@@ -34,6 +33,7 @@ class Styles extends React.Component {
                 {visible: false},
                 {placement: 'left'},
                 {open: true}
+
                 ];
                 this.toggleBrands = this.toggleBrands.bind(this)
                 this.addAll = this.addAll.bind(this)
@@ -44,7 +44,7 @@ class Styles extends React.Component {
                 this.handlePaginationChange = this.handlePaginationChange.bind(this)
                 this.handlePaginationChangePN = this.handlePaginationChangePN.bind(this)
                 this.setPage = this.setPage.bind(this)
-                this.collapse = this.collapse.bind(this)
+                this.switchCollapsible = this.switchCollapsible(this)
   };
 
   setPage(){
@@ -144,7 +144,6 @@ class Styles extends React.Component {
     console.log("Mounted!")
     this.setState({
       page: 1,
-      open: false
     }, () => this.addAll())
   }
 
@@ -222,51 +221,24 @@ class Styles extends React.Component {
     }
   }
 
-  collapse = () => {
-		this.setState({ open: !this.state.open }, console.log(this.state.open));
+  switchCollapsible() {
+		this.setState({ open: this.state.open ? false : true });
 	}
 
   render() {
     const { placement, visible } = this.state;
-    if (this.state.loaded && this.state.displayItems != undefined && this.state.allItems != undefined && this.state.page != undefined && this.state.open != undefined){
+    if (this.state.loaded && this.state.displayItems != undefined && this.state.allItems != undefined && this.state.page != undefined){
       return (
         <div>
           <Headers/>
           <div>
+          <Space>
+            <button className = "filterBTN" onClick={this.showDrawer}> <DoubleRightOutlined clasName = "DRO" style={{ marginLeft: "5px", fontSize: '30px', color: 'grey' }} /></button>
+          </Space>
 
-          <button className = "filterBTN" onClick={(this.collapse, this.showDrawer)}></button>
-          
+
+
           <Drawer
-            title="Filter by:"
-            placement="left"
-            closable={false}
-            onClose={this.onClose}
-            visible={visible}
-            key={placement}
-          >
-            </Drawer>
-          
-        
- 
-
-            <h1 style = {{fontSize: "15px", marginLeft: "45px", textAlign: "center"}}>Current page: {this.state.page}</h1>
-          </div>
-            </div>
-      );
-    }
-    else {
-      return (
-        <div>Loading</div>
-      );
-    }
-  }
-}
-export default Styles
-
-ReactDOM.render(<Styles />, document.querySelector("#root"));
-
-/*
-                        <Drawer
             title="Filter by:"
             placement="left"
             closable={false}
@@ -279,7 +251,7 @@ ReactDOM.render(<Styles />, document.querySelector("#root"));
                 <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} title="Brands">
                 <Grommet>
                     <Box>
-                    
+                    {/* <CheckBox toggle = "true" className = "checkBrands" label="Any" onClick={() => this.toggleBrands("Any")}/> */}
                     { this.state.allBrands && this.state.allBrands.map(item => <Button style = {{border: "solid 1px #DCD3F6", marginTop: "5px", borderRadius: "1px"}} size = "small" fill = "true" className = "checkBrands" label={item} onClick={() => this.toggleBrands(item)}/> )}
                     </Box>
                   </Grommet>
@@ -288,7 +260,7 @@ ReactDOM.render(<Styles />, document.querySelector("#root"));
                 <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} title="Models">
                 <Grommet>
                     <Box>
-                   
+                    {/* <CheckBox checked = "true" className = "checkModels" label="Any" onClick={() => this.toggleModels("Any")}/> */}
                     { this.state.allModels && this.state.allModels.map(item => <Button style = {{border: "solid 1px #DCD3F6", marginTop: "5px", borderRadius: "1px"}} size = "small" fill = "true" className = "checkBrands" label={item} onClick={() => this.toggleModels(item)}/> )}
                     </Box>
                   </Grommet>
@@ -297,7 +269,7 @@ ReactDOM.render(<Styles />, document.querySelector("#root"));
                 <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} key="sub3" title="Colors">
                 <Grommet>
                     <Box>
-
+                    {/* <CheckBox checked = "true" className = "checkColors" label="Any" onClick={() => this.toggleColors("Any")}/> */}
                     { this.state.allColors && this.state.allColors.map(item => <Button style = {{border: "solid 1px #DCD3F6", marginTop: "5px", borderRadius: "1px"}} size = "small" fill = "true" className = "checkBrands" label={item} onClick={() => this.toggleColors(item)}/> )}
                     </Box>
                   </Grommet>
@@ -306,7 +278,7 @@ ReactDOM.render(<Styles />, document.querySelector("#root"));
                 <SubMenu style = {{fontWeight: "600", fontSize: "20px", border: "solid 1px grey", marginBottom: "5px"}} key="sub4" title="Articles">
                 <Grommet>
                     <Box>
-                
+                    {/* <CheckBox checked = "true" className = "checkArticles" label="Any" onClick={() => this.toggleArticles("Any")}/>*/}
                     { this.state.allArticles && this.state.allArticles.map(item => <Button style = {{border: "solid 1px #DCD3F6", marginTop: "5px", borderRadius: "1px"}} size = "small" fill = "true" className = "checkBrands" label={item} onClick={() => this.toggleArticles(item)}/> )}
                     </Box>
                   </Grommet>
@@ -315,7 +287,8 @@ ReactDOM.render(<Styles />, document.querySelector("#root"));
           </Drawer>
 
 
-       </div>
+        
+        </div>
           <div className="listBox">
                         {this.state.displayItems.map((clothes, index) => (
                         <div key={index} className = "bundles" color = "white">                  
@@ -338,4 +311,29 @@ ReactDOM.render(<Styles />, document.querySelector("#root"));
               </ul>
               </div>
 
+            <h1 style = {{fontSize: "15px", marginLeft: "45px", textAlign: "center"}}>Current page: {this.state.page}</h1>
+          </div>
+            </div>
+      );
+    }
+    else {
+      return (
+        <div>Loading</div>
+      );
+    }
+  }
+}
+export default Styles
+
+ReactDOM.render(<Styles />, document.querySelector("#root"));
+
+/*
+                                    <Pagination
+            activePage={this.state.page}
+            onPageChange={this.handlePaginationChange}
+            totalPages={this.state.totalPages}
+            color="red"
+          />
+
+          <Icon size = "large" aria-label = "Filter" name='angle double right'/>
           */
