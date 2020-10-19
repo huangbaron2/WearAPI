@@ -63,13 +63,13 @@ class Styles extends React.Component {
   };
 
   postToggle(){
+    console.log("payload", this.state.sBrand, this.state.sModel, this.state.sColor, this.state.sArticle)
     var payLoad = [{
       brand: this.state.sBrand,
       model: this.state.sModel, 
       color: this.state.sColor, 
       article: this.state.sArticle
     }]
-    console.log("payLoad", payLoad)
     //35.170.149.7:9000
     fetch('http://35.170.149.7:9000/toggle?page=1&limit=6', {
         method: 'POST',
@@ -83,7 +83,6 @@ class Styles extends React.Component {
     .then(res => res.json())
       .then(
         (result) => {
-          console.log("POST", result)
           this.setState({
               allItems: result.allItems,
               allPages: result.pageList,
@@ -106,14 +105,16 @@ class Styles extends React.Component {
     if (category === "brand"){
       if (e){
         this.state.sBrand.push(value)
-        console.log("true", this.state.sBrand)
         this.setState({sBrand: this.state.sBrand}, () => (this.postToggle()))
       }
       else if (!e){
-        const index = this.state.sBrand.indexOf(value);
-        this.state.sBrand.splice(index, 1)
-        console.log("false", this.state.sBrand)
-        this.setState({sBrand: this.state.sBrand}, () => (this.postToggle()))
+        var newBrand = []
+        for (var i of this.state.sBrand){
+          if (i != value){
+            newBrand.push(i)
+          }
+        }
+        this.setState({sBrand: newBrand}, () => (this.postToggle()))
       }
     }
     if (category === "model"){
@@ -122,19 +123,31 @@ class Styles extends React.Component {
         this.setState({sModel: this.state.sModel}, () => (this.postToggle()))
       }
       else if (!e){
-        const index = this.state.sModels.indexOf(value);
-        this.state.sModels.splice(index, 1)
+        var newModel = []
+        for (var i of this.state.sModel){
+          if (i != value){
+            newModel.push(i)
+          }
+        }
+        this.setState({sModel: newModel}, () => (this.postToggle()))
       }
     }
     if (category === "color"){
       if (e){
+        console.log("allColors+", this.state.sColor)
         this.state.sColor.push(value)
         this.setState({sColor: this.state.sColor}, () => (this.postToggle()))
       }
       else if (!e){
-        const index = this.state.sColors.indexOf(value);
-        this.state.sColors.splice(index, 1)
-        console.log("allColors", this.state.sColors)
+        var newColor = []
+        console.log("allColors-", this.state.sColor)
+        for (var i of this.state.sColor){
+          console.log("i", i)
+          if (i != value){
+            newColor.push(i)
+          }
+        }
+        this.setState({sColor: newColor}, () => (console.log(this.state.sColor, newColor), this.postToggle()))
       }
     }
     if (category === "article"){
@@ -143,8 +156,13 @@ class Styles extends React.Component {
         this.setState({sArticle: this.state.sArticle}, () => (this.postToggle()))
       }
       else if (!e){
-        const index = this.state.sArticles.indexOf(value);
-        this.state.sArticles.splice(index, 1)
+        var newArticle = []
+        for (var i of this.state.sArticle){
+          if (i != value){
+            newArticle.push(i)
+          }
+        }
+        this.setState({sArticle: newArticle}, () => (this.postToggle()))
       }
     }
   }
@@ -236,8 +254,8 @@ class Styles extends React.Component {
   }
   
   displayPage() {
-    console.log("DISPLAY", this.state.displayItems)
-    if (this.state.displayItems.length > 0){
+    if (this.state.displayItems != undefined && this.state.displayItems.length > 0){
+      console.log("displayItems", this.state.displayItems)
       return (<div className="listBox">
                         {this.state.displayItems.map((clothes, index) => (
                         <div key={index} className = "bundles" color = "white">                  
@@ -289,7 +307,6 @@ class Styles extends React.Component {
   }
 
   sortBy(value){
-    console.log(this.state.allItems)
     var newItem = {}
     if (value == "b+"){
       newItem = this.state.allItems.sort((a, b) => (a.brand < b.brand) ? 1 : -1)
