@@ -14,6 +14,7 @@ class API extends Component{
                     <Box animation = "slideLeft" style = {{fontSize: "3vh", margin: "auto", width: "80vw"}}>
                         The API is on port 9000 of this website.
                         <br/>
+                        <br/>
                         For all items in the database, use a GET request here:
                         <br/>
                         <Box style = {{border: "solid 1px black", borderRadius: "10vh", width: "20.5vw", display: "inline"}}><p style = {{marginBottom: "-1vh", marginLeft: "1vw", fontSize: "2.5vh"}}>baronswearapi.com:9000/alldb<CopyOutlined style = {{backgroundColor: "white", marginLeft: "1vw", borderRadius: "50%", border: "solid 1px black", padding: "0.85vh"}}/></p></Box>
