@@ -29,8 +29,10 @@ class API extends Component{
                         "color": [], 
                         "article": []
                         ]
-                        <p>You can add strings of you want to filter by in the brackets. If all of the brackets are left blank, then all items in the databse is returned.</p>
-                        
+                        <p>You can add strings of you want to filter by in the brackets. If all of the brackets are left blank, then all items in the databse are returned.</p>
+                        <br/>
+                        <br/>
+                        <p> *While allDB returns all elements in a array of objects, the toggle request will call that along with total pages, pages mapped to corresponding items according to the per page limit, arrays of all categories, and other useful categories for displaying data.*</p>
                         </p>
                         
                     </Box>
