@@ -216,9 +216,11 @@ app.post('/toggle', async (req, res) => {
         collection.find().toArray(function(err, result) {
             results = []
             if (data.brand.length == 0 && data.model.length == 0 && data.color.length == 0 && data.article.length == 0){
+                console.log("empty")
                 results = result
             }
             else{
+                console.log("not empty", result, data)
                 for (var i of result){
                     for (var o of data.brand){
                         if (i.brand.includes(o) && o != undefined){
@@ -227,27 +229,28 @@ app.post('/toggle', async (req, res) => {
                     }
                 }
                 for (var i of result){
-                    for (var o of data.model){
-                        if (i.brand.includes(o) && o != undefined){
+                    for (var o of data.model){                                      
+                        if (i.model.includes(o) && o != undefined){
                             results.push(i)
                         }
                     }
                 }
                 for (var i of result){
                     for (var o of data.color){
-                        if (i.brand.includes(o) && o != undefined){
+                        if (i.color.includes(o) && o != undefined){
                             results.push(i)
                         }
                     }
                 }
                 for (var i of result){
                     for (var o of data.article){
-                        if (i.brand.includes(o) && o != undefined){
+                        if (i.article.includes(o) && o != undefined){
                             results.push(i)
                         }
                     }
                 }
             }
+            console.log(results)
             results = [...new Set(results)]
             displayBrands = []
             displayModels = []
@@ -294,7 +297,6 @@ app.post('/toggle', async (req, res) => {
                 pageList.push(ind)
             }
             resulting = {}
-            console.log(result)
             resulting.allItems = allItems
             resulting.totalPages = totalPages
             resulting.results = slicedClothing

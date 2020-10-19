@@ -70,6 +70,7 @@ class Styles extends React.Component {
       article: this.state.sArticle
     }]
     console.log("payLoad", payLoad)
+    //35.170.149.7:9000
     fetch('http://35.170.149.7:9000/toggle?page=1&limit=6', {
         method: 'POST',
         mode: 'cors',
@@ -97,7 +98,7 @@ class Styles extends React.Component {
               allColors: result.allColors,
               allArticles: result.allArticles,
               totalPages: result.totalPages
-          }, () => (this.setState({loaded: true}, console.log("display", this.state.displayItems, "ad", this.state.adItems, "all", this.state.allItems))))
+          }, () => (this.setState({loaded: true})))
         })
   }
 
@@ -123,7 +124,6 @@ class Styles extends React.Component {
       else if (!e){
         const index = this.state.sModels.indexOf(value);
         this.state.sModels.splice(index, 1)
-        console.log("allModels", this.state.sModels)
       }
     }
     if (category === "color"){
@@ -145,7 +145,6 @@ class Styles extends React.Component {
       else if (!e){
         const index = this.state.sArticles.indexOf(value);
         this.state.sArticles.splice(index, 1)
-        console.log("allArticles", this.state.sArticles)
       }
     }
   }
@@ -221,7 +220,6 @@ class Styles extends React.Component {
   }
   handlePaginationChangePN (e) {
     if (e.target.value == "next"){
-      console.log(this.state.totalPages)
       if (this.state.page + 1 <= this.state.totalPages){
         this.setState({page: this.state.page + 1}, () => (this.setPage()))
       }
@@ -238,6 +236,7 @@ class Styles extends React.Component {
   }
   
   displayPage() {
+    console.log("DISPLAY", this.state.displayItems)
     if (this.state.displayItems.length > 0){
       return (<div className="listBox">
                         {this.state.displayItems.map((clothes, index) => (
@@ -266,21 +265,21 @@ class Styles extends React.Component {
       }
     }
     if (category == "model") {
-      for (var i of this.state.adItems){
+      for (var i of this.state.allItems){
         if (i.model.includes(item)){
           amount += 1
         }
       }
     }
     if (category == "color") {
-      for (var i of this.state.adItems){
+      for (var i of this.state.allItems){
         if (i.color.includes(item)){
           amount += 1
         }
       }
     }
     if (category == "article") {
-      for (var i of this.state.adItems){
+      for (var i of this.state.allItems){
         if (i.article.includes(item)){
           amount += 1
         }
@@ -368,7 +367,7 @@ class Styles extends React.Component {
                 <SubMenu style = {{fontWeight: "600", fontSize: "2.8vh", border: "solid 2px grey", marginBottom: "1vh"}} title="Models">
                 <Grommet>
                     <Box>
-                    { this.state.allModels && this.state.allModels.map(item => <CheckBox toggle = {true} reverse = {false} className = "filterLabels" label={item} onChange={(event) => this.toggleModels(item, event.target.checked)}/>)}
+                    { this.state.allModels && this.state.allModels.map(item => <CheckBox toggle = {true} reverse = {false} className = "filterLabels" label={this.amountProducts("model", item)} onChange={(event) => this.toggleModels(item, event.target.checked)}/>)}
                     </Box>
                   </Grommet>
                 </SubMenu>
@@ -376,7 +375,7 @@ class Styles extends React.Component {
                 <SubMenu style = {{fontWeight: "600", fontSize: "2.8vh", border: "solid 2px grey", marginBottom: "1vh"}} key="sub3" title="Colors">
                 <Grommet>
                     <Box>
-                    { this.state.allColors && this.state.allColors.map(item => <CheckBox toggle = {true} reverse = {false} className = "filterLabels" label={item} onChange={(event) => this.toggleColors(item, event.target.checked)}/>)}
+                    { this.state.allColors && this.state.allColors.map(item => <CheckBox toggle = {true} reverse = {false} className = "filterLabels" label={this.amountProducts("color", item)} onChange={(event) => this.toggleColors(item, event.target.checked)}/>)}
                     </Box>
                   </Grommet>
                 </SubMenu>
@@ -384,7 +383,7 @@ class Styles extends React.Component {
                 <SubMenu style = {{fontWeight: "600", fontSize: "2.8vh", border: "solid 2px grey", marginBottom: "1vh"}} key="sub4" title="Articles">
                 <Grommet>
                     <Box>
-                    { this.state.allArticles && this.state.allArticles.map(item => <CheckBox toggle = {true} reverse = {false} className = "filterLabels" label={item} onChange={(event) => this.toggleArticles(item, event.target.checked)}/>)}
+                    { this.state.allArticles && this.state.allArticles.map(item => <CheckBox toggle = {true} reverse = {false} className = "filterLabels" label = {this.amountProducts("article", item)} onChange={(event) => this.toggleArticles(item, event.target.checked)}/>)}
                     </Box>
                   </Grommet>
                 </SubMenu>
