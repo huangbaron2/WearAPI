@@ -69,6 +69,7 @@ class Styles extends React.Component {
       color: this.state.sColor, 
       article: this.state.sArticle
     }]
+    console.log("payLoad", payLoad)
     fetch('http://35.170.149.7:9000/toggle?page=1&limit=6', {
         method: 'POST',
         mode: 'cors',
@@ -85,7 +86,7 @@ class Styles extends React.Component {
           this.setState({
               allItems: result.allItems,
               allPages: result.pageList,
-              displayItems: result.results[this.state.page],
+              displayItems: result.results[String(this.state.page)],
               displayBrands: result.displayBrands,
               displayModels: result.displayModels,
               displayColors: result.displayColors,
