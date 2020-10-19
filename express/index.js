@@ -65,10 +65,6 @@ app.post('/add', async (req, res) => {
             article: req.body[0].article,
             image: req.body[0].image
         })
-        data.brand.unshift("Any")
-        data.model.unshift("Any")
-        data.color.unshift("Any")
-        data.article.unshift("Any")
         const collection = client.db("MyAPI").collection("Clothing");
         collection.insertOne(data)
         console.log("saved!")
@@ -153,10 +149,11 @@ app.get('/brand=:brands&model=:models&color=:colors&article=:articles', async (r
                     res.send(err)
                 }
                 else{
-                    var allBrands = ["Any"]
-                    var allModels = ["Any"]
-                    var allColors = ["Any"]
-                    var allArticles = ["Any"]
+                    adItems = clothingResult
+                    var allBrands = []
+                    var allModels = []
+                    var allColors = []
+                    var allArticles = []
                     for (var i of clothingResult){
                         if (!(allBrands.includes(i.brand[0]))){
                             allBrands.push(i.brand[0].trim())
@@ -198,6 +195,7 @@ app.get('/brand=:brands&model=:models&color=:colors&article=:articles', async (r
                     results.allArticles = [...new Set(allArticles)]
                     results.totalPages = totalPages
                     results.pageList = pageList
+                    resulting.adItems = adItems
                     res.send(results);
                 }
             }
@@ -218,57 +216,62 @@ app.post('/toggle', async (req, res) => {
         collection.find().toArray(function(err, result) {
             results = []
             if (data.brand.length == 0 && data.model.length == 0 && data.color.length == 0 && data.article.length == 0){
-                res.send(result)
-                return 0;
+                results = result
             }
-            for (var i of result){
-                for (var o of data.brand){
-                    if (i.brand.includes(o)){
-                        results.push(i)
+            else{
+                for (var i of result){
+                    for (var o of data.brand){
+                        if (i.brand.includes(o) && o != undefined){
+                            results.push(i)
+                        }
+                    }
+                }
+                for (var i of result){
+                    for (var o of data.model){
+                        if (i.brand.includes(o) && o != undefined){
+                            results.push(i)
+                        }
+                    }
+                }
+                for (var i of result){
+                    for (var o of data.color){
+                        if (i.brand.includes(o) && o != undefined){
+                            results.push(i)
+                        }
+                    }
+                }
+                for (var i of result){
+                    for (var o of data.article){
+                        if (i.brand.includes(o) && o != undefined){
+                            results.push(i)
+                        }
                     }
                 }
             }
-            for (var i of result){
-                for (var o of data.model){
-                    if (i.brand.includes(o)){
-                        results.push(i)
-                    }
-                }
+            results = [...new Set(results)]
+            displayBrands = []
+            displayModels = []
+            displayColors = []
+            displayArticles = []
+            for (var i of results){
+                displayBrands.push(i.brand[0])
+                displayModels.push(i.model[0])
+                displayColors.push(i.color[0])
+                displayArticles.push(i.article[0])
             }
-            for (var i of result){
-                for (var o of data.color){
-                    if (i.brand.includes(o)){
-                        results.push(i)
-                    }
-                }
-            }
-            for (var i of result){
-                for (var o of data.article){
-                    if (i.brand.includes(o)){
-                        results.push(i)
-                    }
-                }
-            }
+            adItems = results
             allBrands = []
             allModels = []
             allColors = []
             allArticles = []
-            console.log("Results", results)
-            for (var i of results){
-                if (!(allBrands.includes(i.brand[1]))){
-                    allBrands.push(i.brand[1].trim())
-                }
-                if (!(allModels.includes(i.model[1]))){
-                    allModels.push(i.model[1].trim())
-                }
-                if (!allColors.includes(i.color[1])){
-                    allColors.push(i.color[1].trim())
-                }
-                if (!allArticles.includes(i.article[1])){
-                    allArticles.push(i.article[1].trim())
-                }
+            for (var i of result){
+                allBrands.push(i.brand[0])
+                allModels.push(i.model[0])
+                allColors.push(i.color[0])
+                allArticles.push(i.article[0])
             }
             slicedClothing = {}
+            allItems = []
             const limit = parseInt(req.query.limit)
             var totalPages = Math.ceil(results.length / limit)
             for (var pages = 1; pages < totalPages + 1; pages ++){
@@ -279,42 +282,60 @@ app.post('/toggle', async (req, res) => {
                 if ((count % limit) == 0){
                     pageIndex += 1
                     slicedClothing[String(pageIndex)].push(results[count])
+                    allItems.push(results[count])
                 }
                 else{
                     slicedClothing[String(pageIndex)].push(results[count])
+                    allItems.push(results[count])
                 }
             }
-            results = {}
-            results.totalPages = totalPages
-            results.results = slicedClothing
-            results.allBrands = [...new Set(allBrands)]
-            results.allModels = [...new Set(allModels)]
-            results.allColors = [...new Set(allColors)]
-            results.allArticles = [...new Set(allArticles)]
-            res.send(results)
+            pageList = []
+            for (var ind = 1; ind <= totalPages; ind ++){
+                pageList.push(ind)
+            }
+            resulting = {}
+            console.log(result)
+            resulting.allItems = allItems
+            resulting.totalPages = totalPages
+            resulting.results = slicedClothing
+            resulting.adItems = slicedClothing
+            resulting.allBrands = [...new Set(allBrands)]
+            resulting.allModels = [...new Set(allModels)]
+            resulting.allColors = [...new Set(allColors)]
+            resulting.allArticles = [...new Set(allArticles)]
+            resulting.displayBrands = [...new Set(displayBrands)]
+            resulting.displayModels = [...new Set(displayModels)]
+            resulting.displayColors = [...new Set(displayColors)]
+            resulting.displayArticles = [...new Set(displayArticles)]
+            resulting.pageList = pageList
+            res.send(resulting)
         })
     })
 })
 
 /*
-            const startIndex = (page - 1) * limit
-            const endIndex = page * limit
-            const results = {}
-
-                            const totalP = Math.ceil(clothingResult.length / limit)
-                results.totalPages = totalP
-                if (endIndex <= clothingResult.length + 7){
-                    results.next = {
-                        page: page + 1,
-                        limit: limit
+            for (var i of results){
+                if (i.brand.length > 0){
+                    if (!(allBrands.includes(i.brand[0]))){
+                        allBrands.push(i.brand[0].trim())
                     }
                 }
-                if (startIndex > 0){
-                    results.prev = {
-                        page: page - 1,
-                        limit: limit
+                if (i.model.length > 0){
+                    if (!(allModels.includes(i.model[1]))){
+                        allModels.push(i.model[0].trim())
                     }
                 }
+                if (i.color.length > 0){
+                    if (!allColors.includes(i.color[1])){
+                        allColors.push(i.color[0].trim())
+                    }
+                }
+                if (i.article.length > 0){
+                    if (!allArticles.includes(i.article[1])){
+                        allArticles.push(i.article[0].trim())
+                    }
+                }
+            }
 
 */
 

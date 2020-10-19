@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import { ApiOutlined } from '@ant-design/icons'
 
 class Header extends Component{
   render(){
@@ -11,7 +12,8 @@ class Header extends Component{
             <Toolbar>
             <a href = "/#" ><button className = "logoBTN">WearAPI</button></a>
             <div className = "directBox">
-            <a href = "/#/Styles"><button className = "directBTN" >Check out the styles!</button></a>
+            <a href = "/#/API"><button className = "directBTN" ><ApiOutlined />API</button></a>
+            <a href = "/#/Styles"><button className = "directBTN" >Check out the styles!</button></a> 
             <a ><button button className = "directBTN" style = {{border: "solid 2px red"}}> [In progress]</button></a>
             </div>
             </Toolbar>

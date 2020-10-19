@@ -1,7 +1,8 @@
 import React from 'react';
 import Home from './Home'
-import Post from './Post'
+import Add from './Add'
 import Styles from './Styles'
+import API from './API'
 import './App.css';
 import { Route, HashRouter,  } from 'react-router-dom'
 
@@ -11,8 +12,9 @@ function App() {
     <div >
         <HashRouter>
           <Route path = '/' exact component = { Home }/>
-          <Route path = "/Post" exact component = { Post }/>
+          <Route path = "/Add" exact component = { Add }/>
           <Route path = '/Styles' exact component = { Styles }/>
+          <Route path = '/API' exact component = { API }/>
         </HashRouter>
     </div>
   );

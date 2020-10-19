@@ -27,7 +27,7 @@ class Home extends Component{
                 <br/>
                 <h1 className = "discover">Discover new <h1 className = "wearables">{textThatChanges}</h1></h1>
                 <br/>
-                    <Carousel play="2500" controls = "arrows" initialChild = {0}>
+                    <Carousel play="2500" controls = "none" initialChild = {0}>
                        
                             <img style = {{paddingTop: "20px", maxHeight: "70vh", maxWidth: "140vw", objectFit: "contain"}}
                                 className="d-block w-50 m-auto h-50"

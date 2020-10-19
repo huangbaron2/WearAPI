@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-class Post extends Component {
+class Add extends Component {
     constructor(props) {
         super(props);
         this.state = [
@@ -70,7 +70,7 @@ class Post extends Component {
     }
 
     nextPost(clothing){
-        fetch('http://35.170.149.7:9000/Post', {
+        fetch('http://35.170.149.7:9000/Add', {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -95,20 +95,6 @@ class Post extends Component {
 
     goatChange (event) {
         console.log(event.target.value)
-    }
-
-    submitLink (event) {
-        event.preventDefault()
-        fetch('http://35.170.149.7:9000/Link', {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-            body: JSON.stringify({something: "More"})
-        })
-        console.log("Submit")
     }
 
     render(){
@@ -137,4 +123,4 @@ class Post extends Component {
     }
 }
 
-export default Post;
+export default Add;

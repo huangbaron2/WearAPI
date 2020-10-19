@@ -15,25 +15,25 @@ ul{ list-style-type: none; }
   color: purple;
   padding-right: 0.1vw;
   padding-left: 0.1vw;
-  font-size: 4vh;
+  font-size: 5vh;
   background-color: white;
   text-decoration: none;
-  margin-left: 4vw;
+  margin-left: 7vw;
 }
 
 .logoBTN:hover::before {
   font-weight: bold;
   color: rgb(0, 122, 82);
   transition-duration: 200ms;
-  font-size: 4vh;
+  font-size: 5vh;
   content: "Baron's";
 }
 
 .directBox {
   position: absolute;
-  left: 68vw;
+  left: 60vw;
   display: inline;
-  width: 27vw;
+  width: 37vw;
   height: 9vh;
 }
 
@@ -245,17 +245,12 @@ ul{ list-style-type: none; }
 }
 
 .filterLabels {
-  min-height: 3vh;
   background-color: white;
   font-size: 2.5vh;
-  border: solid 0.5px rgb(104, 104, 104);
-  margin-top: 0.5vh;
-  padding: 0.2vh;
+  border: solid 0.5px rgb(197, 197, 197);
 }
 
 .filterLabels:hover {
   background-color: white;
   font-size: 2.5vh;
-  border: solid 2px rgb(74, 92, 255);
-  margin-top: 0.5vh;
 }

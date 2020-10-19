@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom'
 import Headers from './Header'
 import './App.css';
 import 'antd/dist/antd.css';
-import { DoubleRightOutlined } from '@ant-design/icons'
+import { DoubleRightOutlined, LoadingOutlined , SortAscendingOutlined , SortDescendingOutlined } from '@ant-design/icons'
 import { Menu, Drawer } from 'antd';
-import { Grommet, Box, Button} from 'grommet';
+import { Grommet, Box, CheckBox} from 'grommet';
 
 
 const { SubMenu } = Menu;
@@ -23,10 +23,10 @@ class Styles extends React.Component {
   constructor(props) {
     super(props);
     this.state = [
-                {sBrand:"Any"},
-                {sModel:"Any"},
-                {sColor:"Any"},
-                {sArticle:"Any"},
+                {sBrand: []},
+                {sModel: []},
+                {sColor: []},
+                {sArticle: []},
                 {allBrands: []},
                 {allModels: []},
                 {allColors: []}, 
@@ -34,7 +34,12 @@ class Styles extends React.Component {
                 {allImages: []},
                 {allItems: []},
                 {allPages: []},
+                {adItems: []},
                 {displayItems: []},
+                {displayBrands: []},
+                {displayModels: []},
+                {displayColors: []}, 
+                {displayArticles: []},
                 {page: "1"},
                 {totalPages: 0},
                 {collapsed: false},
@@ -45,115 +50,128 @@ class Styles extends React.Component {
 
                 ];
                 this.toggleBrands = this.toggleBrands.bind(this)
-                this.addAll = this.addAll.bind(this)
                 this.toggleModels = this.toggleModels.bind(this)
                 this.refillFilter = this.refillFilter.bind(this)
-                this.updateHandler = this.updateHandler.bind(this)
-                this.paginate = this.paginate.bind(this)
                 this.handlePaginationChange = this.handlePaginationChange.bind(this)
                 this.handlePaginationChangePN = this.handlePaginationChangePN.bind(this)
                 this.setPage = this.setPage.bind(this)
                 this.switchCollapsible = this.switchCollapsible(this)
+                this.postToggle = this.postToggle.bind(this)
+                this.displayPage = this.displayPage.bind(this)
+                this.amountProducts = this.amountProducts.bind(this)
+                this.sortBy = this.sortBy.bind(this)
   };
 
-  setPage(){
-    this.setState({
-      displayItems: this.state.allItems[this.state.page]
+  postToggle(){
+    var payLoad = [{
+      brand: this.state.sBrand,
+      model: this.state.sModel, 
+      color: this.state.sColor, 
+      article: this.state.sArticle
+    }]
+    fetch('http://35.170.149.7:9000/toggle?page=1&limit=6', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+        body: JSON.stringify(payLoad)
     })
-  }
-
-  updateHandler() {
-    console.log("s", this.state.page, this.state.sBrand, this.state.sModel, this.state.sColor, this.state.sArticle)
-    fetch(`http://35.170.149.7:9000/brand=${this.state.sBrand}&model=${this.state.sModel}&color=${this.state.sColor}&article=${this.state.sArticle}?page=${this.state.page}&limit=6`)
-      .then(res => res.json())
+    .then(res => res.json())
       .then(
         (result) => {
-          if (result){
+          console.log("POST", result)
           this.setState({
-            allPages: result.pageList,
-            allItems: result.results,
-            displayItems: result.results[this.state.page],
-            totalPages: result.totalPages,
-            allBrands: result.allBrands,
-            allModels: result.allModels,
-            allColors: result.allColors,
-            allArticles: result.allArticles,
-          }, () => (console.log("B", result.totalPages)))}},
-        (error) => {
-          this.setState({
-            items: [],
-            error
-          });
-        }
-      )
+              allItems: result.allItems,
+              allPages: result.pageList,
+              displayItems: result.results[this.state.page],
+              displayBrands: result.displayBrands,
+              displayModels: result.displayModels,
+              displayColors: result.displayColors,
+              displayArticles: result.displayArticles,
+              adItems: result.adItems,
+              allBrands: result.allBrands,
+              allModels: result.allModels,
+              allColors: result.allColors,
+              allArticles: result.allArticles,
+              totalPages: result.totalPages
+          }, () => (this.setState({loaded: true}, console.log("display", this.state.displayItems, "ad", this.state.adItems, "all", this.state.allItems))))
+        })
   }
 
-  refillFilter (category, value) {
+  refillFilter (category, value, e) {
     if (category === "brand"){
-      this.setState({sBrand: value})
+      if (e){
+        this.state.sBrand.push(value)
+        console.log("true", this.state.sBrand)
+        this.setState({sBrand: this.state.sBrand}, () => (this.postToggle()))
+      }
+      else if (!e){
+        const index = this.state.sBrand.indexOf(value);
+        this.state.sBrand.splice(index, 1)
+        console.log("false", this.state.sBrand)
+        this.setState({sBrand: this.state.sBrand}, () => (this.postToggle()))
+      }
     }
     if (category === "model"){
-      this.setState({sModel: value})
+      if (e){
+        this.state.sModel.push(value)
+        this.setState({sModel: this.state.sModel}, () => (this.postToggle()))
+      }
+      else if (!e){
+        const index = this.state.sModels.indexOf(value);
+        this.state.sModels.splice(index, 1)
+        console.log("allModels", this.state.sModels)
+      }
     }
     if (category === "color"){
-      this.setState({sColor: value})
+      if (e){
+        this.state.sColor.push(value)
+        this.setState({sColor: this.state.sColor}, () => (this.postToggle()))
+      }
+      else if (!e){
+        const index = this.state.sColors.indexOf(value);
+        this.state.sColors.splice(index, 1)
+        console.log("allColors", this.state.sColors)
+      }
     }
     if (category === "article"){
-      this.setState({sArticle: value})
+      if (e){
+        this.state.sArticle.push(value)
+        this.setState({sArticle: this.state.sArticle}, () => (this.postToggle()))
+      }
+      else if (!e){
+        const index = this.state.sArticles.indexOf(value);
+        this.state.sArticles.splice(index, 1)
+        console.log("allArticles", this.state.sArticles)
+      }
     }
-    this.setState({}, () => {
-      if (this.state.sBrand === undefined){
-        this.setState({sBrand: "Any"})
-      }
-      if (this.state.sModel === undefined){
-        this.setState({sModel: "Any"})
-      }
-      if (this.state.sColor === undefined){
-        this.setState({sColor: "Any"})
-      }
-      if (this.state.sArticle === undefined){
-        this.setState({sArticle: "Any"})
-      }
-      console.log("above updateHandler")
-      this.setState({}, () => this.updateHandler())
-    })
-  }
-
-  //Populates allItems
-  addAll() {
-    fetch(`http://35.170.149.7:9000/brand=Any&model=Any&color=Any&article=Any?page=${this.state.page}&limit=6`)
-        .then(res => res.json())
-          .then(
-            (result) => {
-              console.log(result)
-              this.setState({
-                allPages: result.pageList,
-                allItems: result.results,
-                displayItems: result.results[this.state.page],
-                totalPages: result.totalPages,
-                allBrands: result.allBrands,
-                allModels: result.allModels,
-                allColors: result.allColors,
-                allArticles: result.allArticles,
-                sBrand: "Any",
-                sModel: "Any",
-                sColor: "Any",
-                sArticle: "Any",
-              }, () => (console.log("RE", this.state.totalPages), this.updateHandler(), this.setState({loaded: true})));
-            },
-            (error) => {
-              this.setState({
-                error
-              });
-            }
-          )
   }
 
   componentDidMount () {
     console.log("Mounted!")
     this.setState({
+      sBrand: [],
+      sModel: [],
+      sColor: [],
+      sArticle: [],
+      allBrands: [],
+      allModels: [],
+      allColors: [], 
+      allArticles: [],
+      allImages: [],
+      allItems: [],
+      allPages: [],
+      adItems: [],
+      displayItems: [],
+      displayBrands: [],
+      displayModels: [],
+      displayColors: [], 
+      displayArticles: [],
       page: 1,
-    }, () => this.addAll())
+      totalPages: 0,
+    }, () => this.postToggle())
   }
 
   onCollapse = collapsed => {
@@ -178,71 +196,143 @@ class Styles extends React.Component {
     });
   };
 
-  toggleBrands (value) {
-    if (value !== undefined){
-      this.state.allBrands[value] = !this.state.allBrands[value]
-    }
-    this.refillFilter("brand", value)
+  toggleBrands (value, event) {
+    this.refillFilter("brand", value, event)
   }
-  toggleModels (value) {
-    if (value !== undefined){
-      this.state.allModels[value] = !this.state.allModels[value]
-    }
-    this.refillFilter("model", value)
+  toggleModels (value, event) {
+    this.refillFilter("model", value, event)
   }
-  toggleColors (value) {
-    if (value !== undefined){
-      this.state.allColors[value] = !this.state.allColors[value]
-    }
-    this.refillFilter("color", value)
+  toggleColors (value, event) {
+    this.refillFilter("color", value, event)
   }
-  toggleArticles (value) {
-    if (value !== undefined){
-      this.state.allArticles[value] = !this.state.allArticles[value]
-    }
-    this.refillFilter("article", value)
+  toggleArticles (value, event) {
+    this.refillFilter("article", value, event)
   }
 
-  paginate (e) {
-    if (e !== this.state.page){
-      this.setState ({
-        page: e
-      }, () => {
-        console.log(e, this.state.page)
-        this.updateHandler()
-      });
-    }
+  setPage(){
+    this.setState({
+      displayItems: this.state.adItems[this.state.page]
+    })
   }
+
   handlePaginationChange (e) {
-    this.setState({page: e}, () => (console.log("PAGECHANGE", e, this.state.allItems), this.setPage()) )
+    this.setState({page: e}, () => (this.setPage()))
   }
   handlePaginationChangePN (e) {
-    console.log("PG", e.target.value, this.state.page + 2, ((this.state.page).parseInt))
     if (e.target.value == "next"){
+      console.log(this.state.totalPages)
       if (this.state.page + 1 <= this.state.totalPages){
-        this.setState({page: this.state.page + 1}, () => (console.log("Cpage"), this.setPage()))
+        this.setState({page: this.state.page + 1}, () => (this.setPage()))
       }
     }
     else if (e.target.value == "prev"){
       if (this.state.page - 1 > 0){
-        this.setState({page: this.state.page - 1}, () => (console.log("Cpage"), this.setPage()))
+        this.setState({page: this.state.page - 1}, () => (this.setPage()))
       }
     }
   }
 
   switchCollapsible() {
 		this.setState({ open: this.state.open ? false : true });
-	}
+  }
+  
+  displayPage() {
+    if (this.state.displayItems.length > 0){
+      return (<div className="listBox">
+                        {this.state.displayItems.map((clothes, index) => (
+                        <div key={index} className = "bundles" color = "white">                  
+                                  <img className = "imageTitle" src = {clothes.image}></img>
+                                  <h1 className = "brandTitle">{clothes.brand}</h1>
+                                  <h1 className = "modelTitle">{clothes.model}</h1>
+                                  <h1 className = "colorTitle">{clothes.color}</h1>
+                        </div>
+                  ))}
+            </div>)
+      
+    }
+    else{
+      return (<h1>No items available</h1>)
+    }
+  }
+
+  amountProducts (category, item) {
+    var amount = 0
+    if (category == "brand") {
+      for (var i of this.state.allItems){
+        if (i.brand.includes(item)){
+          amount += 1
+        }
+      }
+    }
+    if (category == "model") {
+      for (var i of this.state.adItems){
+        if (i.model.includes(item)){
+          amount += 1
+        }
+      }
+    }
+    if (category == "color") {
+      for (var i of this.state.adItems){
+        if (i.color.includes(item)){
+          amount += 1
+        }
+      }
+    }
+    if (category == "article") {
+      for (var i of this.state.adItems){
+        if (i.article.includes(item)){
+          amount += 1
+        }
+      }
+    }
+    return (item + "  " + "(" + amount + ")")
+  }
+
+  sortBy(value){
+    console.log(this.state.allItems)
+    var newItem = {}
+    if (value == "b+"){
+      newItem = this.state.allItems.sort((a, b) => (a.brand < b.brand) ? 1 : -1)
+    }
+    else if (value == "b-"){
+      newItem = this.state.allItems.sort((a, b) => (a.brand > b.brand) ? 1 : -1)
+    }
+    else if (value == "m+"){
+      newItem = this.state.allItems.sort((a, b) => (a.model< b.model) ? 1 : -1)
+    }
+    else if (value == "m-"){
+      newItem = this.state.allItems.sort((a, b) => (a.model > b.model) ? 1 : -1)
+    }
+    this.setState({allItems: newItem}, () => {
+    var sortedADItems = []
+    const limit = 6
+    var totalPages = Math.ceil(this.state.allItems.length / limit)
+    for (var pages = 1; pages < totalPages + 1; pages ++){
+        sortedADItems[String(pages)] = []   
+    }
+    var pageIndex = 0;
+    for (var count = 0; count < this.state.allItems.length; count ++){
+        if ((count % limit) == 0){
+            pageIndex += 1
+            sortedADItems[String(pageIndex)].push(this.state.allItems[count])
+        }
+        else{
+          sortedADItems[String(pageIndex)].push(this.state.allItems[count])
+        }
+    }
+    this.setState({adItems: sortedADItems}, () => this.setState({displayItems: this.state.adItems[this.state.page]}))
+  })
+  }
 
   render() {
     const { placement, visible } = this.state;
-    if (this.state.loaded && this.state.displayItems != undefined && this.state.allItems != undefined && this.state.page != undefined){
+    if (this.state.loaded && this.state.allItems != undefined && this.state.page != undefined){
       return (
         <div className = "allStyles">
           <Headers/>
           <div className = "BGC">
 
-            <button className = "filterBTN" onClick={this.showDrawer}> <DoubleRightOutlined clasName = "DRO" style={{ marginLeft: "6px", fontSize: '30px', color: 'grey' }} /></button>
+            <button className = "filterBTN" onClick={this.showDrawer}> <DoubleRightOutlined className = "DRO" style={{ marginLeft: "6px", fontSize: '30px', color: 'grey' }} /></button>
 
           <Drawer
             width = "18vw"
@@ -254,12 +344,22 @@ class Styles extends React.Component {
             key={placement}
           >
               <Menu style = {{paddingLeft: "1vw", paddingRight: "1vw", paddingTop: "1vh"}} theme="light" defaultSelectedKeys={['1']} mode="inline">
+
+              <SubMenu style = {{fontWeight: "600", fontSize: "2.8vh", border: "solid 2px grey", marginBottom: "1vh"}} title="Sort By">
+              <Grommet>
+                <Box>
+                  <button className = "filterLabels" onClick = {() => this.sortBy("b+")}>Sort by brands <SortDescendingOutlined style = {{fontSize: "3vh"}}/></button>
+                  <button className = "filterLabels" onClick = {() => this.sortBy("b-")}>Sort by brands <SortAscendingOutlined style = {{fontSize: "3vh"}}/></button>
+                  <button className = "filterLabels" onClick = {() => this.sortBy("m+")}>Sort by models <SortDescendingOutlined style = {{fontSize: "3vh"}}/></button>
+                  <button className = "filterLabels" onClick = {() => this.sortBy("m-")}>Sort by models <SortAscendingOutlined style = {{fontSize: "3vh"}}/></button>
+                </Box>
+                </Grommet>
+                </SubMenu>
                 
-                <SubMenu style = {{fontWeight: "600", fontSize: "2.8vh", border: "solid 2px grey", marginBottom: "1vh"}} title="Brands">
+              <SubMenu style = {{fontWeight: "600", fontSize: "2.8vh", border: "solid 2px grey", marginBottom: "1vh"}} title="Brands">
                 <Grommet>
                     <Box>
-                    {/* <CheckBox toggle = "true" className = "checkBrands" label="Any" onClick={() => this.toggleBrands("Any")}/> */}
-                    { this.state.allBrands && this.state.allBrands.map(item => <button className = "filterLabels" label={item} onClick={() => this.toggleBrands(item)}>{item}</button>)}
+                    { this.state.allBrands && this.state.allBrands.map(item => <CheckBox toggle = {true} reverse = {false} className = "filterLabels" label={this.amountProducts("brand", item)} onChange={(event) => this.toggleBrands(item, event.target.checked)}/>)}
                     </Box>
                   </Grommet>
                 </SubMenu>
@@ -267,8 +367,7 @@ class Styles extends React.Component {
                 <SubMenu style = {{fontWeight: "600", fontSize: "2.8vh", border: "solid 2px grey", marginBottom: "1vh"}} title="Models">
                 <Grommet>
                     <Box>
-                    {/* <CheckBox checked = "true" className = "checkModels" label="Any" onClick={() => this.toggleModels("Any")}/> */}
-                    { this.state.allModels && this.state.allModels.map(item => <button className = "filterLabels" label={item} onClick={() => this.toggleModels(item)}>{item}</button>)}
+                    { this.state.allModels && this.state.allModels.map(item => <CheckBox toggle = {true} reverse = {false} className = "filterLabels" label={item} onChange={(event) => this.toggleModels(item, event.target.checked)}/>)}
                     </Box>
                   </Grommet>
                 </SubMenu>
@@ -276,8 +375,7 @@ class Styles extends React.Component {
                 <SubMenu style = {{fontWeight: "600", fontSize: "2.8vh", border: "solid 2px grey", marginBottom: "1vh"}} key="sub3" title="Colors">
                 <Grommet>
                     <Box>
-                    {/* <CheckBox checked = "true" className = "checkColors" label="Any" onClick={() => this.toggleColors("Any")}/> */}
-                    { this.state.allColors && this.state.allColors.map(item => <button className = "filterLabels" label={item} onClick={() => this.toggleColors(item)}>{item}</button>)}
+                    { this.state.allColors && this.state.allColors.map(item => <CheckBox toggle = {true} reverse = {false} className = "filterLabels" label={item} onChange={(event) => this.toggleColors(item, event.target.checked)}/>)}
                     </Box>
                   </Grommet>
                 </SubMenu>
@@ -285,24 +383,14 @@ class Styles extends React.Component {
                 <SubMenu style = {{fontWeight: "600", fontSize: "2.8vh", border: "solid 2px grey", marginBottom: "1vh"}} key="sub4" title="Articles">
                 <Grommet>
                     <Box>
-                    {/* <CheckBox checked = "true" className = "checkArticles" label="Any" onClick={() => this.toggleArticles("Any")}/>*/}
-                    { this.state.allArticles && this.state.allArticles.map(item => <button className = "filterLabels" label={item} onClick={() => this.toggleArticles(item)}>{item}</button>)}
+                    { this.state.allArticles && this.state.allArticles.map(item => <CheckBox toggle = {true} reverse = {false} className = "filterLabels" label={item} onChange={(event) => this.toggleArticles(item, event.target.checked)}/>)}
                     </Box>
                   </Grommet>
                 </SubMenu>
               </Menu>
           </Drawer> 
         </div>
-          <div className="listBox">
-                        {this.state.displayItems.map((clothes, index) => (
-                        <div key={index} className = "bundles" color = "white">                  
-                                  <img className = "imageTitle" src = {clothes.image}></img>
-                                  <h1 className = "brandTitle">{clothes.brand}</h1>
-                                  <h1 className = "modelTitle">{clothes.model}</h1>
-                                  <h1 className = "colorTitle">{clothes.color}</h1>
-                        </div>
-                  ))}
-            </div>
+        {this.displayPage()}
             <div className = "paging">
               
               <div className = "pgingEverything">
@@ -321,7 +409,7 @@ class Styles extends React.Component {
     }
     else {
       return (
-        <div>Loading</div>
+        <div><LoadingOutlined /></div>
       );
     }
   }
