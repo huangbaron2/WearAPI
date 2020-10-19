@@ -343,7 +343,7 @@ class Styles extends React.Component {
 
   render() {
     const { placement, visible } = this.state;
-    if (this.state.loaded && this.state.allItems != undefined && this.state.page != undefined){
+    if (this.state.loaded && this.state.allItems != undefined && this.state.page != undefined && this.state.displayItems != undefined && this.state.adItems != undefined){
       return (
         <div className = "allStyles">
           <Headers/>
