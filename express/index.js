@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const https = require('https')
 const fs = require('fs')
 var Clothings = require('./models/clothings')
+var Users = require('./models/users')
 require('dotenv').config()
 var cors = require('cors')
 
@@ -207,10 +208,10 @@ app.post('/toggle', async (req, res) => {
     console.log("Post Arrived with ", req.body)
     await client.connect(err => {
         const data = {
-            brand: req.body[0].brand,
-            model: req.body[0].model,
-            color: req.body[0].color,
-            article: req.body[0].article,
+            brand: req.body.brand,
+            model: req.body.model,
+            color: req.body.color,
+            article: req.body.article,
         }
         const collection = client.db("MyAPI").collection("Clothing");
         collection.find().toArray(function(err, result) {
@@ -314,6 +315,44 @@ app.post('/toggle', async (req, res) => {
         })
     })
 })
+
+app.post('/login', async (req, res) => {
+    console.log("Post Arrived with ", req.body)
+    await client.connect(err => {
+        const payLoad = new Users({
+            email: req.body.email,
+            password: req.body.password,
+            mode: req.body.mode
+        })
+        const users = client.db("MyAPI").collection("Users");
+        users.find().toArray(function(err, result) {
+            var userExists = false
+            for (var i of result){
+                if (i.email == payLoad.email && i.password == payLoad.password){
+                    userExists == true
+                }
+            }
+            if (payLoad.mode == "signup") {
+                if (userExists){
+                    res.send("signup failed")
+                }
+                else {
+                    users.insertOne(payLoad)
+                    res.send("signup successful")
+                }
+            }
+            else if (payLoad.mode == "login"){
+                if (userExists){
+                    res.send("login successful")
+                }
+                else {
+                    res.send("login failed")
+                }
+            }
+        })
+    })
+})
+
 
 /*
             for (var i of results){
