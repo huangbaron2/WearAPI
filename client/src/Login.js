@@ -37,7 +37,7 @@ class Login extends Component{
             mode: e
           }
           //35.170.149.7:9000
-          fetch('http://localhost:9000/login', {
+          fetch('http://35.170.149.7:9000/login', {
               method: 'POST',
               mode: 'cors',
               headers: {
