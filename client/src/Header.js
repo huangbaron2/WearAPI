@@ -14,7 +14,7 @@ class Header extends Component{
             <div className = "directBox">
             <a href = "/#/API"><button className = "directBTN" ><ApiOutlined />API</button></a>
             <a href = "/#/Styles"><button className = "directBTN" >Check out the styles!</button></a> 
-            <a ><button button className = "directBTN" style = {{border: "solid 2px red"}}> [In progress]</button></a>
+            <a href = "/#/Login"><button button className = "directBTN" style = {{border: "solid 2px red"}}> [In progress]</button></a>
             </div>
             </Toolbar>
         </AppBar>

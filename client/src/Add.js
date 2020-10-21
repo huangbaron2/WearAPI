@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import './App.css';
+import Header from './Header'
+import { TextInput } from 'grommet'
+import { Button } from 'antd';
+import './Add.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class Add extends Component {
@@ -19,7 +22,6 @@ class Add extends Component {
         this.imageChange = this.imageChange.bind(this)
         this.submitPost = this.submitPost.bind(this)
         this.goatChange = this.goatChange.bind(this)
-        this.submitLink = this.submitLink.bind(this)
     };
 
     brandChange (e) {
@@ -99,25 +101,24 @@ class Add extends Component {
 
     render(){
         return(
-            <div className = 'postBox'>
+            <div>
+                <Header/>
+                <div className = 'postBox'>
                     <form className = 'postForm' onSubmit = { this.submitPost }>
-                        Enter the brand <input type="text" id = "brandInput" placeholder = "Brand" onChange={ this.brandChange }/>
+                        Enter the brand <TextInput placeholder="Brand" onChange = {this.brandChange }/>
                         <br/>
-                        Enter the model <input type="text" id = "modelInput" placeholder = "Model" onChange={ this.modelChange }/>
+                        Enter the model <TextInput placeholder="Model" onChange = {this.modelChange }/>
                         <br/>
-                        Enter the color <input type="text" id = "colorInput" placeholder = "Color" onChange={ this.colorChange }/>
+                        Enter the color <TextInput placeholder="Color" onChange = {this.colorChange }/>
                         <br/>
-                        Enter the article <input type="text" id = "articleInput" placeholder = "Article" onChange={ this.articleChange }/>
+                        Enter the article <TextInput placeholder="Artice" onChange = {this.articleChange }/>
                         <br/>
-                        Enter the image <input type="text" id = "imageInput" placeholder = "Image" onChange={ this.imageChange }/>
-                        <button type = "submit" name = "submit">Submit</button>
+                        Enter the image <TextInput placeholder="Image Link" onChange = {this.imageChange}/>
+                        <br/>
+                        <Button style = {{textAlign: "center", margin: "auto" }} type = "submit" name = "submit">Submit</Button>
                     </form>
                     <br/>
-                    <form className = 'postForm' onSubmit = { this.submitLink }>
-                        Or use a Goat link <input type="text" id = "goatInput" placeholder = "Link" onChange = { this.goatChange }/>
-                        <button type = "submit" name = "submit">Submit</button>
-                    </form>
-                    <a href = "/"><button className = "postButton">Home</button></a>
+            </div>
             </div>
         );
     }

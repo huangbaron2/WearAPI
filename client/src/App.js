@@ -3,6 +3,7 @@ import Home from './Home'
 import Add from './Add'
 import Styles from './Styles'
 import API from './API'
+import LOGIN from './Login'
 import './App.css';
 import { Route, HashRouter,  } from 'react-router-dom'
 
@@ -15,6 +16,7 @@ function App() {
           <Route path = "/Add" exact component = { Add }/>
           <Route path = '/Styles' exact component = { Styles }/>
           <Route path = '/API' exact component = { API }/>
+          <Route path = '/Login' exact component = { LOGIN }/>
         </HashRouter>
     </div>
   );

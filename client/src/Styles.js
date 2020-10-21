@@ -63,13 +63,13 @@ class Styles extends React.Component {
   };
 
   postToggle(){
-    console.log("payload", this.state.sBrand, this.state.sModel, this.state.sColor, this.state.sArticle)
-    var payLoad = [{
+    var payLoad = {
       brand: this.state.sBrand,
       model: this.state.sModel, 
       color: this.state.sColor, 
       article: this.state.sArticle
-    }]
+    }
+    console.log("payload", payLoad)
     //35.170.149.7:9000
     fetch('http://35.170.149.7:9000/toggle?page=1&limit=6', {
         method: 'POST',

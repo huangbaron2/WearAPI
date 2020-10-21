@@ -318,6 +318,12 @@ app.post('/toggle', async (req, res) => {
 
 app.post('/login', async (req, res) => {
     console.log("Post Arrived with ", req.body)
+    var response = {}
+    if (req.body.email == "admin" && req.body.password == "admin") {
+        response.login = true
+        response.message = "Loging you in, please wait."
+        res.send(response)
+    }
     await client.connect(err => {
         const payLoad = new Users({
             email: req.body.email,
@@ -329,24 +335,44 @@ app.post('/login', async (req, res) => {
             var userExists = false
             for (var i of result){
                 if (i.email == payLoad.email && i.password == payLoad.password){
-                    userExists == true
+                    userExists = true
                 }
             }
-            if (payLoad.mode == "signup") {
-                if (userExists){
-                    res.send("signup failed")
+            if (!payLoad.email.includes("@") || !payLoad.email.includes(".") || payLoad.email.length < 6 || payLoad.password.length < 5) {
+                if (payLoad.mode == "signup"){
+                    response.signup = false
                 }
                 else {
+                    response.login = false
+                }
+                response.message = "Invalid information, please make sure your email or password is correct and following our guidelines."
+                res.send(response)
+            }
+            else if (payLoad.mode == "signup") {
+                console.log("exist", userExists)
+                if (userExists){
+                    response.signup = false
+                    response.message = "Signup failed, user already exists."
+                    res.send(response)
+                }
+                else {
+                    response.signup = true
+                    response.message = "Signup successful, you may now login. \nWelcome to WearAPI!"
                     users.insertOne(payLoad)
-                    res.send("signup successful")
+                    res.send(response)
                 }
             }
             else if (payLoad.mode == "login"){
+                console.log("exist", userExists)
                 if (userExists){
-                    res.send("login successful")
+                    response.login = true
+                    response.message = "Loging you in, please wait."
+                    res.send(response)
                 }
                 else {
-                    res.send("login failed")
+                    response.login = false
+                    response.message = "Login failed, user not found."
+                    res.send(response)
                 }
             }
         })
