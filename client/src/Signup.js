@@ -2,15 +2,16 @@ import React, {Component} from 'react';
 import { TextInput, Button } from 'grommet'
 import Header from './Header'
 import './Login.css';
-import logged from './Seller'
+import { message } from 'antd'
 
-class Login extends Component{ 
+class Signup extends Component{ 
 
     constructor(props) {
         super(props);
         this.state = [
                     {email: ""},
                     {password: ""},
+                    {username: ""},
                     {error: ""}
                     ];
                     this.setValue = this.setValue.bind(this)
@@ -25,35 +26,41 @@ class Login extends Component{
         else if (which == "pw"){
             this.setState({password: e})
         }
+        else if (which == "un"){
+            this.setState({username: e})
+        }
     }
 
-    onSubmit (e) {
-        console.log(this.state.email, ":", this.state.password)
+    onSubmit (event, e) {
+        event.preventDefault()
         var payLoad = {
             email: this.state.email,
             password: this.state.password,
+            userName: this.state.username,
             mode: e
-          }
-          //35.170.149.7:9000
-          fetch(`http://${process.env.REACT_APP_HOME_URL}/API/login`, {
-              method: 'POST',
-              mode: 'cors',
-              headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json'
+            }
+            //35.170.149.7:9000
+            fetch(`http://${process.env.REACT_APP_HOME_URL}/API/login`, {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
-              body: JSON.stringify(payLoad)
-          })
-    .then(res => res.json())
-      .then(
-        (result) => {
-          if (result.login){
-            this.props.Store.loggingIn(result.email, result.name, result.id)
-            this.setState({logged: true}, localStorage.setItem('loggedIn', result.id), window.location.reload())
-          }
-          else if (!result.login){
-            this.setState({error: result.message}, () => console.log("error"))
-          }
+                body: JSON.stringify(payLoad)
+            })
+        .then(res => res.json())
+        .then(
+            (result) => {
+            if (result.signup){
+                this.setState({logged: true}, localStorage.setItem('loggedIn', JSON.stringify(1)), localStorage.setItem('user', JSON.stringify([result.id, result.userName, result.email])), message.success('Successfully signed up!'), 
+                this.props.history.push({
+                    pathname: `/profile`,
+                }))
+            }
+            else if (!result.signup){
+                this.setState({error: result.message}, () => console.log("error"))
+            }
         })
     }
 
@@ -62,6 +69,7 @@ class Login extends Component{
         this.setState({
             email: "",
             password: "",
+            username: "",
             error: ""
         })
       }
@@ -72,26 +80,36 @@ class Login extends Component{
       }
 
     render(){
-        if (localStorage.getItem('loggedIn') == 'none'){
+        if (JSON.parse(localStorage.getItem('loggedIn')) == 0){
             return(
                 <div>
                     <Header/>
+                    <div className = "logBox">
+                    <form id = "loginForm" onSubmit = {(e) => this.onSubmit(e, "login")}>
                     <div style = {{margin: "auto", textAlign: "center", marginTop: "15vh", width: "25vw"}}>
-                        *Regristrations are closed for the time being.*
                         <TextInput
                         placeholder="Email"
                         type = "email"
                         onChange={event => this.setValue(event.target.value, "em")}
-                        />
-                            <br/>
+                        required/>
+                        <br/>
+                        <TextInput
+                        placeholder="Username"
+                        onChange={event => this.setValue(event.target.value, "un")}
+                        required/>
+                        <br/>
                         <TextInput
                         placeholder="Password"
                         type = "password"
                         onChange={event => this.setValue(event.target.value, "pw")}
-                        />
-                        <Button primary label="Login" active = "false" onClick = {() => this.onSubmit("login")}/>
+                        required/>
+                        <br/>
+                        <button form = "loginForm" className = "loginBTN" type = "submit" onClick = {(e) => this.onSubmit(e, "signup")}>Signup</button>
                     </div>
+                    </form>
+                    <br/>
                     <h1>{this.returnError()}</h1>
+                    </div>
                 </div>
             );
         }
@@ -99,11 +117,13 @@ class Login extends Component{
             return(
                 <div>
                     <Header/>
+                    <div className = "logBox">
                     <h1 style = {{margin: "auto", textAlign: "center"}}> YOUR LOGGED IN </h1>
+                    </div>
                 </div>
             );
         }
     }
 }
 
-export default Login;
+export default Signup;

@@ -226,16 +226,17 @@ app.post('/API/products', async (req, res) => {
 app.post('/API/login', async (req, res) => {
     console.log("LOGIN Post Arrived with ", req.body)
     var response = {}
-    if (req.body.email == "admin" && req.body.password == "admin") {
-        response.login = true
-        response.message = "Loging you in, please wait."
-        res.send(response)
-    }
     await client.connect(err => {
         const payLoad = new Users({
+            userName: req.body.userName,
             email: req.body.email,
             password: req.body.password,
-            mode: req.body.mode
+            watchList: {},
+            cart: [],
+            sold: {},
+            bought: {},
+            history: [],
+            joined: ""
         })
         const users = client.db("MyAPI").collection("Users");
         users.find().toArray(function(err, result) {
@@ -243,13 +244,13 @@ app.post('/API/login', async (req, res) => {
             for (var i of result){
                 if (i.email == payLoad.email && i.password == payLoad.password){
                     userExists = true
-                    var userName = i.name
+                    var userName = i.userName
                     var userEmail = i.email
                     var userID = i._id
                 }
             }
             if (!payLoad.email.includes("@") || !payLoad.email.includes(".") || payLoad.email.length < 6 || payLoad.password.length < 5) {
-                if (payLoad.mode == "signup"){
+                if (req.body.mode == "signup"){
                     response.signup = false
                 }
                 else {
@@ -258,7 +259,7 @@ app.post('/API/login', async (req, res) => {
                 response.message = "Invalid email or password, please try again."
                 res.send(response)
             }
-            else if (payLoad.mode == "signup") {
+            else if (req.body.mode == "signup") {
                 if (userExists){
                     response.signup = false
                     response.message = "Signup failed, user already exists."
@@ -267,14 +268,21 @@ app.post('/API/login', async (req, res) => {
                 else {
                     response.signup = true
                     response.message = "Signup successful, you may now login. \nWelcome to WearAPI!"
-                    users.insertOne(payLoad)
+                    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                    var d = new Date();
+                    payLoad.joined = months[d.getMonth()] + " " +d.getDate() + ", " + d.getFullYear()
+                    users.insertOne(payLoad, function(err,docsInserted){
+                        response.id = docsInserted;
+                    });
+                    response.userName = payLoad.userName,
+                    response.email = payLoad.email
                     res.send(response)
                 }
             }
-            else if (payLoad.mode == "login"){
+            else if (req.body.mode == "login"){
                 if (userExists){
                     response.login = true
-                    response.name = userName
+                    response.userName = userName
                     response.email = userEmail
                     response.id = userID
                     response.message = "Loging you in, please wait."

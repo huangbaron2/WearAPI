@@ -75,6 +75,10 @@ class Product extends Component{
                                     <div><h1>Condition: {this.state.item.condition}</h1></div>
                                     <div><h1>Price: ${this.state.item.price}</h1></div>
                                     <div><h1>{this.state.item.description}</h1></div>
+                                    <div>
+                                        <button>Add to Cart</button>
+                                        <button>Add to Watchlist</button>
+                                    </div>
                                 </div>
                         </div>
                     </div>

@@ -49,9 +49,9 @@ class Login extends Component{
             (result) => {
             console.log("logIN result", result)
             if (result.login){
-                this.setState({logged: true}, localStorage.setItem('loggedIn', JSON.stringify(1)), localStorage.setItem('user', JSON.stringify([result.id, result.name, result.email])), message.success('Successfully signed in!'), 
+                this.setState({logged: true}, localStorage.setItem('loggedIn', JSON.stringify(1)), localStorage.setItem('user', JSON.stringify([result.id, result.userName, result.email])), message.success('Successfully signed in!'), 
                 this.props.history.push({
-                    pathname: `/`,
+                    pathname: `/profile`,
                 }))
             }
             else if (!result.login){
@@ -82,7 +82,6 @@ class Login extends Component{
                     <div className = "logBox">
                     <form id = "loginForm" onSubmit = {(e) => this.onSubmit(e, "login")}>
                     <div style = {{margin: "auto", textAlign: "center", marginTop: "15vh", width: "25vw"}}>
-                        *Regristrations are closed for the time being.*
                         <TextInput
                         placeholder="Email"
                         type = "email"
@@ -95,7 +94,7 @@ class Login extends Component{
                         onChange={event => this.setValue(event.target.value, "pw")}
                         required/>
                         <br/>
-                        <button form = "loginForm" className = "loginBTN" type = "submit" onClick = {(e) => this.onSubmit(e, "login")}>Submit</button>
+                        <button form = "loginForm" className = "loginBTN" type = "submit" onClick = {(e) => this.onSubmit(e, "login")}>Login</button>
                     </div>
                     </form>
                     <br/>

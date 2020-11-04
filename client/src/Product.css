@@ -1,4 +1,9 @@
 .productBox {
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, 0);
+    text-align: center;
+    top: 60px;
     width: 1200px;
     border: solid 1px black;
     margin: auto;

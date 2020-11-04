@@ -1,0 +1,21 @@
+.logBox {
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, 0);
+    text-align: center;
+}
+
+.loginBTN {
+    border-radius: 2px;
+    border: solid 1px black;
+    background: white;
+    font-size: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    transition: 200ms;
+}
+
+.loginBTN:hover {
+    border: solid 1px rgb(105, 105, 255);
+    transition: 200ms;
+}
