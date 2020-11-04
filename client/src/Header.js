@@ -49,6 +49,7 @@ class Header extends Component{
                 <a href = "/Sell"><button className = "directBTN" >Sell</button></a> 
                 <a href = "/Login"><button className = "logBTN" >LogIn</button></a> 
                 <a href = "/Signup"><button className = "logBTN" >SignUp</button></a> 
+                <a className = "shoppingBTN" href = "/Cart"><ShoppingCartOutlined className = "shoppingIcon"/></a> 
               </div>
           </div>
         </div>
@@ -66,7 +67,7 @@ class Header extends Component{
                 <a href = "/Sell"><button className = "directBTN" >Sell</button></a> 
                 <a ><button onClick = { () => (this.signOut()) }className = "logBTN" >Signout</button></a> 
                 <a href = "/Profile"><button className = "logBTN" >Profile</button></a> 
-                <a className = "shoppingBTN" href = "/#/Cart"><ShoppingCartOutlined className = "shoppingIcon"/></a> 
+                <a className = "shoppingBTN" href = "/Cart"><ShoppingCartOutlined className = "shoppingIcon"/></a> 
               </div>
           </div>
         </div>
