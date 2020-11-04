@@ -1,0 +1,144 @@
+* {
+    outline: 0!important;
+}
+
+ul{ list-style-type: none; }
+
+.stylesBox {
+    text-align: center;
+}
+
+.checkBrands {
+    font-size: 2.5vh;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+    border: solid 2px rgb(186, 171, 255);
+    background-color: white;
+    margin-bottom: -1vh;
+}
+
+.checkBrands:hover {
+    border: solid 2px rgb(0, 26, 255);
+}
+
+.checkBrands:active {
+    color: rgb(70, 212, 255);
+}
+
+.filterLabels {
+    background-color: white;
+    font-size: 2.5vh;
+    border: solid 0.5px rgb(197, 197, 197);
+}
+
+.filterLabels:hover {
+    border: solid 0.5px rgba(21, 146, 255, 0.808);
+    background-color: white;
+    font-size: 2.5vh;
+}
+  
+.filterBox {
+    height: 1500px;
+    width: 250px;
+}
+
+.rightBox {
+    margin-left: 50px;
+    height: 1500px;
+    width: 1000px;
+}
+
+.stylesBox {
+    text-align: center;
+    display: flex;
+    margin: auto;
+    align-items: center;
+    align-content: center;
+    width: 1200px;
+}
+
+.productsBox {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 70px;
+    height: 1300px;
+    width: 900px;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.products {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    border: solid 2px rgba(0, 0, 0, 0.055);
+    width: 200px;
+    height: 220px;
+}
+
+.products:hover{
+    border: solid 2px rgba(0, 52, 165, 0.418);
+    cursor: pointer;
+}
+
+.imageCard {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.brandCard {
+    flex-wrap: wrap;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 0.4vh;
+}
+
+.nameCard {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    height: 39px;
+    flex-wrap: wrap;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 0.4vh;
+}
+
+.colorCard {
+    font-style: italic;
+    flex-wrap: wrap;
+    font-size: 10px;
+    font-weight: bold;
+    margin-bottom: 0.4vh;
+}
+
+.costCard {
+    flex-wrap: wrap;
+    font-size: 15px;
+    font-weight: 900;
+    margin-bottom: 0.4vh;
+}
+
+@keyframes errorIn {
+    0% {
+      opacity: 0%;
+    }
+    99% {
+        opacity: 0%;
+    }
+    100% {
+      opacity: 100%;
+    }
+  }
+
+.errorMSG {
+    font-size: 15px;
+    animation: errorIn 2s;
+}

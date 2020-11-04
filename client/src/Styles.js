@@ -1,15 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Headers from './Header'
-import './App.css';
+import './Styles.css'
 import 'antd/dist/antd.css';
 import { DoubleRightOutlined, LoadingOutlined , SortAscendingOutlined , SortDescendingOutlined } from '@ant-design/icons'
-import { Menu, Drawer } from 'antd';
-import { Grommet, Box, CheckBox} from 'grommet';
+import { Menu, Drawer, Spin, Checkbox as CB, message } from 'antd';
+import { Grommet, Box, CheckBox, Header} from 'grommet';
+const dotenv = require('dotenv');
 
 
 const { SubMenu } = Menu;
-
+const CheckboxGroup = CB.Group;
+const topOptions = ['XS', 'S', 'M', 'L', 'xL'];
+const bottomOptions = ['XS', 'S', 'M', 'L', 'xL'];
+const footwearOptions = ['XS', 'S', 'M', 'L', 'xL'];
 const myTheme = {
   text: {
     medium: {
@@ -22,35 +26,37 @@ const myTheme = {
 class Styles extends React.Component {
   constructor(props) {
     super(props);
-    this.state = [
-                {sBrand: []},
-                {sModel: []},
-                {sColor: []},
-                {sArticle: []},
-                {allBrands: []},
-                {allModels: []},
-                {allColors: []}, 
-                {allArticles: []},
-                {allImages: []},
-                {allItems: []},
-                {allPages: []},
-                {adItems: []},
-                {displayItems: []},
-                {displayBrands: []},
-                {displayModels: []},
-                {displayColors: []}, 
-                {displayArticles: []},
-                {page: "1"},
-                {totalPages: 0},
-                {collapsed: false},
-                {loaded: false},
-                {visible: false},
-                {placement: 'left'},
-                {open: true}
+    this.state = {
+      //Select Toggles
+                sBrand: [],
+                sArticle: [],
+                sPrice: ["0", "999999"],
+                sCondition: [],
+                sSize: [],
+      //All
+                allBrands: [],
+                allBrandsCount: 0,
+                allArticles: [],
+                allArticlesCount: 0,
+                topPrice: "",
+                allItems: [],
+                totalItems: 0,
+                pageItems: {},
 
-                ];
+                page: "1",
+                totalPages: 0,
+                pageList: [],
+                collapsed: false,
+                loaded: false,
+                visible: false,
+                placement: 'left',
+                open: true,
+                limit: "20"
+
+                };
                 this.toggleBrands = this.toggleBrands.bind(this)
-                this.toggleModels = this.toggleModels.bind(this)
+                this.toggleArticles = this.toggleArticles.bind(this)
+                this.toggleConditions = this.toggleConditions.bind(this)
                 this.refillFilter = this.refillFilter.bind(this)
                 this.handlePaginationChange = this.handlePaginationChange.bind(this)
                 this.handlePaginationChangePN = this.handlePaginationChangePN.bind(this)
@@ -65,13 +71,16 @@ class Styles extends React.Component {
   postToggle(){
     var payLoad = {
       brand: this.state.sBrand,
-      model: this.state.sModel, 
-      color: this.state.sColor, 
-      article: this.state.sArticle
+      name: this.state.sname, 
+      article: this.state.sArticle,
+      price: ["0", "99999"],
+      condition: this.state.sCondition,
+      size: this.state.sSize,
+      limit: this.state.limit
     }
-    console.log("payload", payLoad)
-    //35.170.149.7:9000
-    fetch('http://35.170.149.7:9000/toggle?page=1&limit=6', {
+    console.log("PAYLOAD", payLoad)
+    const env = dotenv.config().parsed;
+    fetch(`http://${process.env.REACT_APP_HOME_URL}/API/products`, {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -84,20 +93,16 @@ class Styles extends React.Component {
       .then(
         (result) => {
           this.setState({
-              allItems: result.allItems,
-              allPages: result.pageList,
-              displayItems: result.results[String(this.state.page)],
-              displayBrands: result.displayBrands,
-              displayModels: result.displayModels,
-              displayColors: result.displayColors,
-              displayArticles: result.displayArticles,
-              adItems: result.adItems,
-              allBrands: result.allBrands,
-              allModels: result.allModels,
-              allColors: result.allColors,
-              allArticles: result.allArticles,
-              totalPages: result.totalPages
-          }, () => (this.setState({loaded: true})))
+            allBrands: Object.keys(result.allBrands),
+            allArticles: Object.keys(result.allArticles),
+            allBrandsCount: result.allBrands,
+            allArticlesCount: result.allArticles,
+            totalItems: result.totalItems,
+            totalPages: result.totalPages,
+            allItems: result.allItems,
+            pageItems: result.pageItems,
+            pageList: result.pageList
+          }, () => (this.setState({loaded: true}, console.log("ProductPostResult", result))))
         })
   }
 
@@ -117,43 +122,11 @@ class Styles extends React.Component {
         this.setState({sBrand: newBrand}, () => (this.postToggle()))
       }
     }
-    if (category === "model"){
-      if (e){
-        this.state.sModel.push(value)
-        this.setState({sModel: this.state.sModel}, () => (this.postToggle()))
-      }
-      else if (!e){
-        var newModel = []
-        for (var i of this.state.sModel){
-          if (i != value){
-            newModel.push(i)
-          }
-        }
-        this.setState({sModel: newModel}, () => (this.postToggle()))
-      }
-    }
-    if (category === "color"){
-      if (e){
-        console.log("allColors+", this.state.sColor)
-        this.state.sColor.push(value)
-        this.setState({sColor: this.state.sColor}, () => (this.postToggle()))
-      }
-      else if (!e){
-        var newColor = []
-        console.log("allColors-", this.state.sColor)
-        for (var i of this.state.sColor){
-          console.log("i", i)
-          if (i != value){
-            newColor.push(i)
-          }
-        }
-        this.setState({sColor: newColor}, () => (console.log(this.state.sColor, newColor), this.postToggle()))
-      }
-    }
     if (category === "article"){
       if (e){
-        this.state.sArticle.push(value)
-        this.setState({sArticle: this.state.sArticle}, () => (this.postToggle()))
+        var articleARR = this.state.sArticle
+        articleARR.push(value)
+        this.setState({sArticle: articleARR}, () => (this.postToggle()))
       }
       else if (!e){
         var newArticle = []
@@ -165,48 +138,50 @@ class Styles extends React.Component {
         this.setState({sArticle: newArticle}, () => (this.postToggle()))
       }
     }
+    if (category === "condition"){
+      if (e){
+        var conditionARR = this.state.sCondition
+        conditionARR.push(value)
+        this.setState({sCondition: conditionARR}, () => (this.postToggle()))
+      }
+      else if (!e){
+        var newCondition = []
+        for (var i of this.state.sCondition){
+          if (i != value){
+            newCondition.push(i)
+          }
+        }
+        this.setState({sCondition: newCondition}, () => (this.postToggle()))
+      }
+    }
   }
 
   componentDidMount () {
-    console.log("Mounted!")
     this.setState({
-      sBrand: [],
-      sModel: [],
-      sColor: [],
-      sArticle: [],
-      allBrands: [],
-      allModels: [],
-      allColors: [], 
-      allArticles: [],
-      allImages: [],
-      allItems: [],
-      allPages: [],
-      adItems: [],
-      displayItems: [],
-      displayBrands: [],
-      displayModels: [],
-      displayColors: [], 
-      displayArticles: [],
-      page: 1,
-      totalPages: 0,
+                sBrand: [],
+                sArticle: [],
+                sPrice: ["0", "999999"],
+                sCondition: [],
+                sSize: [],
+      //All
+                allBrands: [],
+                allArticles: [],
+                topPrice: "",
+                allItems: [],
+                totalItems: 0,
+                pageItems: [],
+
+                page: "1",
+                totalPages: 0,
+                pageList: [],
+                collapsed: false,
+                loaded: false,
+                visible: false,
+                placement: 'left',
+                open: true,
+                limit: "20"
     }, () => this.postToggle())
   }
-
-  onCollapse = collapsed => {
-    this.setState({ collapsed });
-  };
-
-  showDrawer = () => {
-    this.setState({
-      visible: true,
-    });
-  };
-
-  onClose = () => {
-    this.setState({
-      visible: false,
-    });
-  };
 
   onChange = e => {
     this.setState({
@@ -217,14 +192,13 @@ class Styles extends React.Component {
   toggleBrands (value, event) {
     this.refillFilter("brand", value, event)
   }
-  toggleModels (value, event) {
-    this.refillFilter("model", value, event)
-  }
-  toggleColors (value, event) {
-    this.refillFilter("color", value, event)
-  }
+
   toggleArticles (value, event) {
     this.refillFilter("article", value, event)
+  }
+
+  toggleConditions (value, event) {
+    this.refillFilter("condition", value, event)
   }
 
   setPage(){
@@ -253,16 +227,17 @@ class Styles extends React.Component {
 		this.setState({ open: this.state.open ? false : true });
   }
   
-  displayPage() {
-    if (this.state.displayItems != undefined && this.state.displayItems.length > 0){
-      console.log("displayItems", this.state.displayItems)
-      return (<div className="listBox">
-                        {this.state.displayItems.map((clothes, index) => (
-                        <div key={index} className = "bundles" color = "white">                  
-                                  <img className = "imageTitle" src = {clothes.image}></img>
-                                  <h1 className = "brandTitle">{clothes.brand}</h1>
-                                  <h1 className = "modelTitle">{clothes.model}</h1>
-                                  <h1 className = "colorTitle">{clothes.color}</h1>
+  displayPage() {//remember that _id for onClick
+    if (this.state.pageItems != undefined && Object.keys(this.state.pageItems).length > 0){
+      return (<div className="productsBox">
+                        {this.state.pageItems[this.state.page].map((clothes, index) => (
+                        <div key={index} className = "products" color = "white" onClick = {() => this.props.history.push({
+                                                                                                  pathname: `/styles/${clothes._id}`,
+                                                                                                  })}>                  
+                                  <img className = "imageCard" src = "google.com"></img>
+                                  <h1 className = "brandCard">{clothes.brand.join(' x ')}</h1>
+                                  <h1 className = "nameCard">{clothes.name}</h1>
+                                  <h1 className = "costCard">${clothes.price}</h1>
                         </div>
                   ))}
             </div>)
@@ -276,34 +251,14 @@ class Styles extends React.Component {
   amountProducts (category, item) {
     var amount = 0
     if (category == "brand") {
-      for (var i of this.state.allItems){
-        if (i.brand.includes(item)){
-          amount += 1
-        }
-      }
-    }
-    if (category == "model") {
-      for (var i of this.state.allItems){
-        if (i.model.includes(item)){
-          amount += 1
-        }
-      }
-    }
-    if (category == "color") {
-      for (var i of this.state.allItems){
-        if (i.color.includes(item)){
-          amount += 1
-        }
-      }
+      return (item + "  " + "(" + this.state.allBrandsCount[item] + ")")
     }
     if (category == "article") {
-      for (var i of this.state.allItems){
-        if (i.article.includes(item)){
-          amount += 1
-        }
-      }
-    }
-    return (item + "  " + "(" + amount + ")")
+      return (item + "  " + "(" + this.state.allArticlesCount[item] + ")")
+    }  
+    if (category == "condition") {
+      return (item + "  " + "(" + this.state.allArticlesCount[item] + ")")
+    }  
   }
 
   sortBy(value){
@@ -315,14 +270,14 @@ class Styles extends React.Component {
       newItem = this.state.allItems.sort((a, b) => (a.brand > b.brand) ? 1 : -1)
     }
     else if (value == "m+"){
-      newItem = this.state.allItems.sort((a, b) => (a.model< b.model) ? 1 : -1)
+      newItem = this.state.allItems.sort((a, b) => (a.name< b.name) ? 1 : -1)
     }
     else if (value == "m-"){
-      newItem = this.state.allItems.sort((a, b) => (a.model > b.model) ? 1 : -1)
+      newItem = this.state.allItems.sort((a, b) => (a.name > b.name) ? 1 : -1)
     }
     this.setState({allItems: newItem}, () => {
     var sortedADItems = []
-    const limit = 6
+    const limit = 20
     var totalPages = Math.ceil(this.state.allItems.length / limit)
     for (var pages = 1; pages < totalPages + 1; pages ++){
         sortedADItems[String(pages)] = []   
@@ -343,36 +298,14 @@ class Styles extends React.Component {
 
   render() {
     const { placement, visible } = this.state;
-    if (this.state.loaded && this.state.allItems != undefined && this.state.page != undefined && this.state.displayItems != undefined && this.state.adItems != undefined){
+    if (Object.keys(this.state.pageItems).length){
       return (
         <div className = "allStyles">
           <Headers/>
-          <div className = "BGC">
-
-            <button className = "filterBTN" onClick={this.showDrawer}> <DoubleRightOutlined className = "DRO" style={{ marginLeft: "6px", fontSize: '30px', color: 'grey' }} /></button>
-
-          <Drawer
-            width = "18vw"
-            title="Filter by:"
-            placement="left"
-            closable={false}
-            onClose={this.onClose}
-            visible={visible}
-            key={placement}
-          >
+        <div className = "stylesBox">
+          <div className = "filterBox">
               <Menu style = {{paddingLeft: "1vw", paddingRight: "1vw", paddingTop: "1vh"}} theme="light" defaultSelectedKeys={['1']} mode="inline">
 
-              <SubMenu style = {{fontWeight: "600", fontSize: "2.8vh", border: "solid 2px grey", marginBottom: "1vh"}} title="Sort By">
-              <Grommet>
-                <Box>
-                  <button className = "filterLabels" onClick = {() => this.sortBy("b+")}>Sort by brands <SortDescendingOutlined style = {{fontSize: "3vh"}}/></button>
-                  <button className = "filterLabels" onClick = {() => this.sortBy("b-")}>Sort by brands <SortAscendingOutlined style = {{fontSize: "3vh"}}/></button>
-                  <button className = "filterLabels" onClick = {() => this.sortBy("m+")}>Sort by models <SortDescendingOutlined style = {{fontSize: "3vh"}}/></button>
-                  <button className = "filterLabels" onClick = {() => this.sortBy("m-")}>Sort by models <SortAscendingOutlined style = {{fontSize: "3vh"}}/></button>
-                </Box>
-                </Grommet>
-                </SubMenu>
-                
               <SubMenu style = {{fontWeight: "600", fontSize: "2.8vh", border: "solid 2px grey", marginBottom: "1vh"}} title="Brands">
                 <Grommet>
                     <Box>
@@ -381,52 +314,112 @@ class Styles extends React.Component {
                   </Grommet>
                 </SubMenu>
   
-                <SubMenu style = {{fontWeight: "600", fontSize: "2.8vh", border: "solid 2px grey", marginBottom: "1vh"}} title="Models">
-                <Grommet>
-                    <Box>
-                    { this.state.allModels && this.state.allModels.map(item => <CheckBox toggle = {true} reverse = {false} className = "filterLabels" label={this.amountProducts("model", item)} onChange={(event) => this.toggleModels(item, event.target.checked)}/>)}
-                    </Box>
-                  </Grommet>
-                </SubMenu>
-  
-                <SubMenu style = {{fontWeight: "600", fontSize: "2.8vh", border: "solid 2px grey", marginBottom: "1vh"}} key="sub3" title="Colors">
-                <Grommet>
-                    <Box>
-                    { this.state.allColors && this.state.allColors.map(item => <CheckBox toggle = {true} reverse = {false} className = "filterLabels" label={this.amountProducts("color", item)} onChange={(event) => this.toggleColors(item, event.target.checked)}/>)}
-                    </Box>
-                  </Grommet>
-                </SubMenu>
-  
                 <SubMenu style = {{fontWeight: "600", fontSize: "2.8vh", border: "solid 2px grey", marginBottom: "1vh"}} key="sub4" title="Articles">
+            <Grommet>
+                <Box>
+                { this.state.allArticles && this.state.allArticles.map(item => <CheckBox toggle = {true} reverse = {false} className = "filterLabels" label = {this.amountProducts("article", item)} onChange={(event) => this.toggleArticles(item, event.target.checked)}/>)}
+                </Box>
+              </Grommet>
+            </SubMenu>
+
+                <SubMenu style = {{fontWeight: "600", fontSize: "2.8vh", border: "solid 2px grey", marginBottom: "1vh"}} title="Conditions">
                 <Grommet>
                     <Box>
-                    { this.state.allArticles && this.state.allArticles.map(item => <CheckBox toggle = {true} reverse = {false} className = "filterLabels" label = {this.amountProducts("article", item)} onChange={(event) => this.toggleArticles(item, event.target.checked)}/>)}
+                      <CheckBox toggle = {true} reverse = {false} className = "filterLabels" label = 'Used' onChange={(event) => this.toggleConditions('Used', event.target.checked)}/>
+                      <CheckBox toggle = {true} reverse = {false} className = "filterLabels" label = 'New' onChange={(event) => this.toggleConditions('New', event.target.checked)}/>
                     </Box>
                   </Grommet>
                 </SubMenu>
               </Menu>
-          </Drawer> 
         </div>
-        {this.displayPage()}
-            <div className = "paging">
-              
-              <div className = "pgingEverything">
-              <ul className = "pgingBox">
-              <button value = "prev" className = "checkBrands" onClick = {e => this.handlePaginationChangePN(e)}>prev</button> 
-              { this.state.allPages && this.state.allPages.map(item => <button onClick = {() => this.handlePaginationChange(item)}  className = "checkBrands" >{item}</button> )}
-              <button value = "next" className = "checkBrands" onClick = {e => this.handlePaginationChangePN(e)}>next</button> 
-              </ul>
-              <h1 style = {{fontSize: "15px", marginLeft: "45px", textAlign: "center"}}>Current page: {this.state.page}</h1>
-              </div>
 
-            
+          <div className = "rightBox">
+            <Menu style = {{height: "1px", width: "1px", padding: "1px", marginTop: "10px", marginLeft: "708px"}} theme="light" defaultSelectedKeys={['1']} mode="inline">
+              <SubMenu size = "small" style = {{padding: "1px", height: "50px", position: "absolute", width: "200px", fontWeight: "600", fontSize: "15px", border: "solid 1px grey"}} title="Sort By">
+                <Grommet>
+                 <Box>
+                  <button className = "filterLabels" onClick = {() => this.sortBy("b+")}>Sort by brands <SortDescendingOutlined style = {{fontSize: "3vh"}}/></button>
+                  <button className = "filterLabels" onClick = {() => this.sortBy("b-")}>Sort by brands <SortAscendingOutlined style = {{fontSize: "3vh"}}/></button>
+                  <button className = "filterLabels" onClick = {() => this.sortBy("m+")}>Sort by names <SortDescendingOutlined style = {{fontSize: "3vh"}}/></button>
+                  <button className = "filterLabels" onClick = {() => this.sortBy("m-")}>Sort by names <SortAscendingOutlined style = {{fontSize: "3vh"}}/></button>
+                </Box>
+                </Grommet>
+              </SubMenu>
+            </Menu>
+            {this.displayPage()}
+              <div className = "paging">
+                    <ul className = "pgingBox">
+                    <button value = "prev" className = "checkBrands" onClick = {e => this.handlePaginationChangePN(e)}>prev</button> 
+                    { this.state.allPages && this.state.allPages.map(item => <button style = {{border: "solid 2px purple"}} onClick = {() => this.handlePaginationChange(item)}  className = "checkBrands" >{item}</button> )}
+                    <button value = "next" className = "checkBrands" onClick = {e => this.handlePaginationChangePN(e)}>next</button> 
+                    </ul>
+                  <h1 style = {{fontSize: "15px", marginLeft: "45px", textAlign: "center"}}>Current page: {this.state.page}</h1>
+              </div>
+ 
           </div>
-            </div>
+
+          </div>
+        </div>
       );
     }
     else {
       return (
-        <div><LoadingOutlined /></div>
+      <div className = "allStyles">
+      <Headers/>
+    <div className = "stylesBox">
+      <div className = "filterBox">
+          <Menu style = {{paddingLeft: "1vw", paddingRight: "1vw", paddingTop: "1vh"}} theme="light" defaultSelectedKeys={['1']} mode="inline">
+
+          <SubMenu style = {{fontWeight: "600", fontSize: "2.8vh", border: "solid 2px grey", marginBottom: "1vh"}} title="Brands">
+            <Grommet>
+                <Box>
+                { this.state.allBrands && this.state.allBrands.map(item => <CheckBox toggle = {true} reverse = {false} className = "filterLabels" label={this.amountProducts("brand", item)} onChange={(event) => this.toggleBrands(item, event.target.checked)}/>)}
+                </Box>
+              </Grommet>
+            </SubMenu>
+
+            <SubMenu style = {{fontWeight: "600", fontSize: "2.8vh", border: "solid 2px grey", marginBottom: "1vh"}} key="sub4" title="Articles">
+            <Grommet>
+                <Box>
+                { this.state.allArticles && this.state.allArticles.map(item => <CheckBox toggle = {true} reverse = {false} className = "filterLabels" label = {this.amountProducts("article", item)} onChange={(event) => this.toggleArticles(item, event.target.checked)}/>)}
+                </Box>
+              </Grommet>
+            </SubMenu>
+
+            <SubMenu style = {{fontWeight: "600", fontSize: "2.8vh", border: "solid 2px grey", marginBottom: "1vh"}} title="Conditions">
+                <Grommet>
+                    <Box>
+                      <CheckBox toggle = {true} reverse = {false} className = "filterLabels" label = 'Used' onChange={(event) => this.toggleConditions('Used', event.target.checked)}/>
+                      <CheckBox toggle = {true} reverse = {false} className = "filterLabels" label = 'New' onChange={(event) => this.toggleConditions('New', event.target.checked)}/>
+                    </Box>
+                  </Grommet>
+                </SubMenu>
+            
+          </Menu>
+    </div>
+      <div className = "rightBox">
+        <Menu style = {{height: "1px", width: "1px", padding: "1px", marginTop: "10px", marginLeft: "708px"}} theme="light" defaultSelectedKeys={['1']} mode="inline">
+          <SubMenu size = "small" style = {{padding: "1px", height: "50px", position: "absolute", width: "200px", fontWeight: "600", fontSize: "15px", border: "solid 1px grey"}} title="Sort By">
+            <Grommet>
+             <Box>
+              <button className = "filterLabels" onClick = {() => this.sortBy("b+")}>Sort by brands <SortDescendingOutlined style = {{fontSize: "3vh"}}/></button>
+              <button className = "filterLabels" onClick = {() => this.sortBy("b-")}>Sort by brands <SortAscendingOutlined style = {{fontSize: "3vh"}}/></button>
+              <button className = "filterLabels" onClick = {() => this.sortBy("m+")}>Sort by names <SortDescendingOutlined style = {{fontSize: "3vh"}}/></button>
+              <button className = "filterLabels" onClick = {() => this.sortBy("m-")}>Sort by names <SortAscendingOutlined style = {{fontSize: "3vh"}}/></button>
+            </Box>
+            </Grommet>
+            </SubMenu>
+            </Menu>
+            <div style = {{marginLeft: "auto", marginRight: "auto", textAlign: "center"}}>
+            <Spin style = {{marginTop: "50px", marginLeft: "auto", marginRight: "auto", textAlign: "center"}} size = "large"/>
+            <br/>
+            <br/>
+            <h4 className = "errorMSG">No data retrieved, please change the filters or refresh the page.</h4>
+            <h4 className = "errorMSG">If this persists, there may be a problem with the server.</h4>
+            </div>
+        </div>
+      </div>
+    </div>
       );
     }
   }
@@ -444,4 +437,15 @@ ReactDOM.render(<Styles />, document.querySelector("#root"));
           />
 
           <Icon size = "large" aria-label = "Filter" name='angle double right'/>
+
+
+
+<div className = "paging">
+                    <ul className = "pgingBox">
+                    <button value = "prev" className = "checkBrands" onClick = {e => this.handlePaginationChangePN(e)}>prev</button> 
+                    { this.state.allPages && this.state.allPages.map(item => <button onClick = {() => this.handlePaginationChange(item)}  className = "checkBrands" >{item}</button> )}
+                    <button value = "next" className = "checkBrands" onClick = {e => this.handlePaginationChangePN(e)}>next</button> 
+                    </ul>
+                  <h1 style = {{fontSize: "15px", marginLeft: "45px", textAlign: "center"}}>Current page: {this.state.page}</h1>
+              </div>
           */

@@ -11,3 +11,5 @@ npm install grommet styled-components --save
 
 notes:
 semantic is bad
+
+react-app-rewired

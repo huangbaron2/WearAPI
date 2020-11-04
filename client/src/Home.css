@@ -1,0 +1,58 @@
+.homeBox {
+    text-align: center;
+    font-family: sans-serif;
+  }
+  
+@keyframes disco {
+    from {color: black;}
+    to {color: grey;}
+}
+.discover {
+    font-size: 40px;
+    display: inline;
+    color: grey;
+    animation-name: disco;
+    animation-duration: 3.5s;
+}
+@keyframes wear {
+    from {color: white;}
+    to {color: black;}
+}
+.wearables {
+    font-size: 40px;
+    display: inline;
+    color: black;
+    animation-name: wear;
+    animation-duration: 3.5s;
+    font-weight: 600;
+}
+
+.byBox {
+    text-align: center;
+    height: 150px;
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.byImg {
+    margin-left: 20px;
+    margin-right: 20px;
+    height: 150px;
+}
+
+.byText {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.byBoxList {
+    margin: auto;
+    display: flex;
+    width: 1020px;
+}
+
+.byBoxProps {
+    text-align: center;
+    margin: auto;
+}

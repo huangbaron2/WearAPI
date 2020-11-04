@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { TextInput, Button } from 'grommet'
 import Header from './Header'
 import './Login.css';
-import { message } from 'antd'
+import logged from './Seller'
 
 class Login extends Component{ 
 
@@ -27,36 +27,33 @@ class Login extends Component{
         }
     }
 
-    onSubmit (event, e) {
-        event.preventDefault()
+    onSubmit (e) {
+        console.log(this.state.email, ":", this.state.password)
         var payLoad = {
             email: this.state.email,
             password: this.state.password,
             mode: e
-            }
-            //35.170.149.7:9000
-            fetch(`http://${process.env.REACT_APP_HOME_URL}/API/login`, {
-                method: 'POST',
-                mode: 'cors',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+          }
+          //35.170.149.7:9000
+          fetch(`http://${process.env.REACT_APP_HOME_URL}/API/login`, {
+              method: 'POST',
+              mode: 'cors',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(payLoad)
-            })
-        .then(res => res.json())
-        .then(
-            (result) => {
-            console.log("logIN result", result)
-            if (result.login){
-                this.setState({logged: true}, localStorage.setItem('loggedIn', JSON.stringify(1)), localStorage.setItem('user', JSON.stringify([result.id, result.name, result.email])), message.success('Successfully signed in!'), 
-                this.props.history.push({
-                    pathname: `/`,
-                }))
-            }
-            else if (!result.login){
-                this.setState({error: result.message}, () => console.log("error"))
-            }
+              body: JSON.stringify(payLoad)
+          })
+    .then(res => res.json())
+      .then(
+        (result) => {
+          if (result.login){
+            this.props.Store.loggingIn(result.email, result.name, result.id)
+            this.setState({logged: true}, localStorage.setItem('loggedIn', result.id), window.location.reload())
+          }
+          else if (!result.login){
+            this.setState({error: result.message}, () => console.log("error"))
+          }
         })
     }
 
@@ -75,29 +72,25 @@ class Login extends Component{
       }
 
     render(){
-        if (JSON.parse(localStorage.getItem('loggedIn')) == 0){
+        if (localStorage.getItem('loggedIn') == 'none'){
             return(
                 <div>
                     <Header/>
-                    <form id = "loginForm" onSubmit = {(e) => this.onSubmit(e, "login")}>
                     <div style = {{margin: "auto", textAlign: "center", marginTop: "15vh", width: "25vw"}}>
                         *Regristrations are closed for the time being.*
                         <TextInput
                         placeholder="Email"
                         type = "email"
                         onChange={event => this.setValue(event.target.value, "em")}
-                        required/>
+                        />
                             <br/>
                         <TextInput
                         placeholder="Password"
                         type = "password"
                         onChange={event => this.setValue(event.target.value, "pw")}
-                        required/>
-                        <br/>
-                        <button form = "loginForm" className = "loginBTN" type = "submit" onClick = {(e) => this.onSubmit(e, "login")}>Submit</button>
+                        />
+                        <Button primary label="Login" active = "false" onClick = {() => this.onSubmit("login")}/>
                     </div>
-                    </form>
-                    <br/>
                     <h1>{this.returnError()}</h1>
                 </div>
             );

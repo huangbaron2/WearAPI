@@ -5,7 +5,7 @@ const app = express();
 const mongoose = require('mongoose')
 const https = require('https')
 const fs = require('fs')
-var Clothings = require('./models/clothings')
+var Products = require('./models/products')
 var Users = require('./models/users')
 require('dotenv').config()
 var cors = require('cors')
@@ -21,10 +21,6 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
   });
-
-app.get('/', async (req, res) => {
-    res.send("INDEX")
-})
 
 const path = require('path');
 const { url } = require('inspector');
@@ -47,65 +43,38 @@ const MongoClient = require('mongodb').MongoClient;
 const uri = process.env.DATABASE_URL;
 const client = new MongoClient(uri, { useNewUrlParser: true });
 client.connect(err => {
-    const collection = client.db("MyAPI").collection("Clothing");
+    const collection = client.db("MyAPI").collection("Products");
     const mongoResult = collection.find().toArray()
-    console.log("connected to MongoDB!", collection.find().toArray(function(err, result) {
-        if (err) throw err;
-    }));
+    console.log("connected to MongoDB!")
     // perform actions on the collection object
 });
 
 
-app.post('/add', async (req, res) => {
+app.post('/API/sell', async (req, res) => {
     console.log("Post Arrived with ", req.body)
-    await client.connect(err => {
-        const data =  new Clothings({
-            brand: req.body[0].brand,
-            model: req.body[0].model,
-            color: req.body[0].color,
-            article: req.body[0].article,
-            image: req.body[0].image
+    await client.connect((error, result) => {
+        const data =  new Products({
+            name: req.body.name,
+            brand: req.body.brand,
+            color: req.body.color,
+            article: req.body.article,
+            size: req.body.size,
+            description: req.body.description,
+            condition: req.body.condition,
+            userID: req.body.userID,
+            price: req.body.price
         })
-        const collection = client.db("MyAPI").collection("Clothing");
+        const collection = client.db("MyAPI").collection("Products");
         collection.insertOne(data)
         console.log("saved!")
+        if (error){
+            res.send(error)
+        }
+        else {
+            res.send("OOO")
+        }  
     });
 })
-
-app.post('/Link', async (req, res) => {
-    module.exports.link = [{link: "link"}]
-})
-
-app.get('/all=brand', (req, res) => {
-    
-    //if (!this.brand.includes("Any")){
-        //this.brand.unshift("Any")
-    //}
-    res.send(this.brand)
-});
-
-app.get('/all=model', (req, res) => {
-    
-    //if (!this.model.includes("Any")){
-        //this.model.unshift("Any")
-    //}
-    res.send(this.model)
-});
-
-app.get('/all=color', (req, res) => {
-    
-    //if (!this.color.includes("Any")){
-        //this.color.unshift("Any")
-    //}
-    res.send(this.color)
-});
-app.get('/all=article', (req, res) => {
-    
-    //if (!this.article.includes("Any")){
-        //this.article.unshift("Any")
-    //}
-    res.send(this.article)
-});
 
 function removeAny(value){
     let newList = []
@@ -120,170 +89,111 @@ function removeAny(value){
     return newList
 }
 
-app.get('/allDB', async (req, res) => {
+app.get('/API/allProducts', async (req, res) => {
     await client.connect(err => {
-        const collection = client.db("MyAPI").collection("Clothing");
+        const collection = client.db("MyAPI").collection("Products");
         collection.find().toArray(function(err, result) {
             if (err) throw err;
             res.send(result);
         });
     });
 })
-
-//http://localhost:9000/brand=Any&model=Any&color=Any&article=Any&?page=1&limit=5
-app.get('/brand=:brands&model=:models&color=:colors&article=:articles', async (req, res) => {
+var ObjectId = require('mongodb').ObjectID;
+app.get('/API/products/:id', async (req, res) => {
     await client.connect(err => {
-        const collection = client.db("MyAPI").collection("Clothing");
-        collection.find().toArray(function(err, result) {
-            const limit = parseInt(req.query.limit)
-            if (err) {
-            res.send(err);
-            } 
+        const collection = client.db("MyAPI").collection("Products");
+        collection.findOne({ _id: ObjectId(req.params.id) }, (function(err, result) {
+            if (err) throw err;
             else {
-                var clothingResult = []
-                for (var i of result){
-                    if (((i.brand.includes(req.params.brands) || req.params.brands == "Any") && (i.model.includes(req.params.models) || req.params.models == "Any") && (i.color.includes(req.params.colors) || req.params.colors == "Any") && (i.article.includes(req.params.articles) || req.params.articles == "Any"))){
-                        clothingResult.push({brand: removeAny(Object.values(i.brand)), model: removeAny(Object.values(i.model)), color: removeAny(Object.values(i.color)), article: removeAny(Object.values(i.article)), image: i.image});
-                    }
-                }
-                if (clothingResult.length == 0){
-                    res.send(err)
-                }
-                else{
-                    adItems = clothingResult
-                    var allBrands = []
-                    var allModels = []
-                    var allColors = []
-                    var allArticles = []
-                    for (var i of clothingResult){
-                        if (!(allBrands.includes(i.brand[0]))){
-                            allBrands.push(i.brand[0].trim())
-                        }
-                        if (!(allModels.includes(i.model[0]))){
-                            allModels.push(i.model[0].trim())
-                        }
-                        if (!allColors.includes(i.color[0])){
-                            allColors.push(i.color[0].trim())
-                        }
-                        if (!allArticles.includes(i.article[0])){
-                            allArticles.push(i.article[0].trim())
-                        }
-                    }
-                    var slicedClothing = {}
-                    var totalPages = Math.ceil(clothingResult.length / limit)
-                    for (var pages = 1; pages < totalPages + 1; pages ++){
-                        slicedClothing[String(pages)] = []   
-                    }
-                    var pageIndex = 0;
-                    for (var count = 0; count < clothingResult.length; count ++){
-                        if ((count % limit) == 0){
-                            pageIndex += 1
-                            slicedClothing[String(pageIndex)].push(clothingResult[count])
-                        }
-                        else{
-                            slicedClothing[String(pageIndex)].push(clothingResult[count])
-                        }
-                    }
-                    var pageList = []
-                    for (var ind = 1; ind <= totalPages; ind ++){
-                        pageList.push(ind)
-                    }
-                    results = {}
-                    results.results = slicedClothing
-                    results.allBrands = [...new Set(allBrands)]
-                    results.allModels = [...new Set(allModels)]
-                    results.allColors = [...new Set(allColors)]
-                    results.allArticles = [...new Set(allArticles)]
-                    results.totalPages = totalPages
-                    results.pageList = pageList
-                    resulting.adItems = adItems
-                    res.send(results);
+                res.send(result)
+            }
+        }));
+    });
+})
+
+/*
+app.get('/API/popular', async (req, res) => {
+    await client.connect(err => {
+        const collection = client.db("MyAPI").collection("Products");
+        console.log(collection.aggregate([
+            {
+                $group: {
+                    _id: '$color',
+                    count: { $sum: 1 }
                 }
             }
-        }); 
-    });
-});
+        ])), function(err, result) {
+            if (err){console.log(err)}
+            console.log(result)
+        }
+    })
+})
+*/
 
-app.post('/toggle', async (req, res) => {
-    console.log("Post Arrived with ", req.body)
+function capitalize(str)
+{
+ return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
+
+app.post('/API/products', async (req, res) => {
+    console.log("TOGGLE Post Arrived with ", req.body, "\n")
     await client.connect(err => {
         const data = {
-            brand: req.body.brand,
-            model: req.body.model,
-            color: req.body.color,
-            article: req.body.article,
+            brand: req.body.brand,  //["nike", "adidas"]
+            article: req.body.article,  //["footwear", "top"]
+            price: req.body.price,  //["0", "50"]
+            condition: req.body.condition,  //["used", "new"]
+            size: req.body.size, //["m", "s"]
+            limit: req.body.limit
         }
-        const collection = client.db("MyAPI").collection("Clothing");
+        console.log("DATA\n", data)
+        const collection = client.db("MyAPI").collection("Products");
         collection.find().toArray(function(err, result) {
             results = []
-            if (data.brand.length == 0 && data.model.length == 0 && data.color.length == 0 && data.article.length == 0){
-                console.log("empty")
-                results = result
+            if (data.brand.length == 0 && data.article.length == 0 && data.condition.length == 0 && data.size.length == 0){
+                for (var i of result){
+                    if (i.price >= data.price[0] && i.price <= data.price[1]){
+                        results.push(i)
+                    }
+                }
             }
             else{
-                console.log("not empty", result, data)
                 for (var i of result){
-                    for (var o of data.brand){
-                        if (i.brand.includes(o) && o != undefined){
-                            results.push(i)
-                        }
-                    }
-                }
-                for (var i of result){
-                    for (var o of data.model){                                      
-                        if (i.model.includes(o) && o != undefined){
-                            results.push(i)
-                        }
-                    }
-                }
-                for (var i of result){
-                    for (var o of data.color){
-                        if (i.color.includes(o) && o != undefined){
-                            results.push(i)
-                        }
-                    }
-                }
-                for (var i of result){
-                    for (var o of data.article){
-                        if (i.article.includes(o) && o != undefined){
+                    if ((i.brand).some(v => data.brand.includes(v)) || data.brand.length == 0){
+                        if ((i.price >= data.price[0] && i.price <= data.price[1]) && (data.article.includes(i.article) || data.article.length == 0) && (data.condition.includes(i.condition) || data.condition.length == 0) && (data.size.includes(i.size) || data.size.length == 0)){
                             results.push(i)
                         }
                     }
                 }
             }
-            console.log(results)
-            results = [...new Set(results)]
-            displayBrands = []
-            displayModels = []
-            displayColors = []
-            displayArticles = []
+            allBrands = {}
+            allArticles = {"Top": 0, "Bottom": 0, "Footwear": 0, "Accessory": 0}
+            for (var i of result){
+                for (var o of i.brand) {
+                    if (!(Object.keys(allBrands).includes(capitalize(o)))){
+                        allBrands[capitalize(o)] = 1
+                    }
+                    else{
+                        allBrands[capitalize(o)] = allBrands[capitalize(o)] += 1
+                    }
+                }
+            }
             for (var i of results){
-                displayBrands.push(i.brand[0])
-                displayModels.push(i.model[0])
-                displayColors.push(i.color[0])
-                displayArticles.push(i.article[0])
+                if (Object.keys(allArticles).includes(capitalize(i.article))){
+                    allArticles[capitalize(i.article)] = allArticles[capitalize(i.article)] += 1
+                }
             }
             adItems = results
-            allBrands = []
-            allModels = []
-            allColors = []
-            allArticles = []
-            for (var i of result){
-                allBrands.push(i.brand[0])
-                allModels.push(i.model[0])
-                allColors.push(i.color[0])
-                allArticles.push(i.article[0])
-            }
             slicedClothing = {}
+            allSliced = []
             allItems = []
-            const limit = parseInt(req.query.limit)
-            var totalPages = Math.ceil(results.length / limit)
+            var totalPages = Math.ceil(results.length / data.limit)
             for (var pages = 1; pages < totalPages + 1; pages ++){
                 slicedClothing[String(pages)] = []   
             }
-            var pageIndex = 0;
+            var pageIndex = 1;
             for (var count = 0; count < results.length; count ++){
-                if ((count % limit) == 0){
+                if ((count % data.limit) == 0 && count != 0){
                     pageIndex += 1
                     slicedClothing[String(pageIndex)].push(results[count])
                     allItems.push(results[count])
@@ -298,26 +208,20 @@ app.post('/toggle', async (req, res) => {
                 pageList.push(ind)
             }
             resulting = {}
-            resulting.allItems = allItems
             resulting.totalPages = totalPages
-            resulting.results = slicedClothing
-            resulting.adItems = slicedClothing
-            resulting.allBrands = [...new Set(allBrands)]
-            resulting.allModels = [...new Set(allModels)]
-            resulting.allColors = [...new Set(allColors)]
-            resulting.allArticles = [...new Set(allArticles)]
-            resulting.displayBrands = [...new Set(displayBrands)]
-            resulting.displayModels = [...new Set(displayModels)]
-            resulting.displayColors = [...new Set(displayColors)]
-            resulting.displayArticles = [...new Set(displayArticles)]
+            resulting.totalItems = allItems.length
+            resulting.allItems = allItems
+            resulting.pageItems = slicedClothing
+            resulting.allBrands = allBrands
+            resulting.allArticles = allArticles
             resulting.pageList = pageList
             res.send(resulting)
         })
     })
 })
 
-app.post('/login', async (req, res) => {
-    console.log("Post Arrived with ", req.body)
+app.post('/API/login', async (req, res) => {
+    console.log("LOGIN Post Arrived with ", req.body)
     var response = {}
     if (req.body.email == "admin" && req.body.password == "admin") {
         response.login = true
@@ -336,6 +240,9 @@ app.post('/login', async (req, res) => {
             for (var i of result){
                 if (i.email == payLoad.email && i.password == payLoad.password){
                     userExists = true
+                    var userName = i.name
+                    var userEmail = i.email
+                    var userID = i._id
                 }
             }
             if (!payLoad.email.includes("@") || !payLoad.email.includes(".") || payLoad.email.length < 6 || payLoad.password.length < 5) {
@@ -345,11 +252,10 @@ app.post('/login', async (req, res) => {
                 else {
                     response.login = false
                 }
-                response.message = "Invalid information, please make sure your email or password is correct and following our guidelines."
+                response.message = "Invalid email or password, please try again."
                 res.send(response)
             }
             else if (payLoad.mode == "signup") {
-                console.log("exist", userExists)
                 if (userExists){
                     response.signup = false
                     response.message = "Signup failed, user already exists."
@@ -363,9 +269,11 @@ app.post('/login', async (req, res) => {
                 }
             }
             else if (payLoad.mode == "login"){
-                console.log("exist", userExists)
                 if (userExists){
                     response.login = true
+                    response.name = userName
+                    response.email = userEmail
+                    response.id = userID
                     response.message = "Loging you in, please wait."
                     res.send(response)
                 }

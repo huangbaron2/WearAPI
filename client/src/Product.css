@@ -1,0 +1,21 @@
+.productBox {
+    width: 1200px;
+    border: solid 1px black;
+    margin: auto;
+    height: 1000px;
+    display: flex;
+}
+
+.productIMG {
+    margin-top: 20px;
+    border: solid 1px grey;
+    height: 600px;
+    width: 600px;
+}
+
+.productDes {
+    margin-top: 20px;
+    border: solid 1px green;
+    height: 600px;
+    width: 600px;
+}

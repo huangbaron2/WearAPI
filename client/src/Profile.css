@@ -1,0 +1,40 @@
+.profileBox {
+    margin-top: -5px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1100px;
+}
+
+.personalInfo {
+    display: flex;
+    margin-top: 20px;
+    border-bottom: solid 1px rgb(160, 160, 160);
+    height: 140px;
+}
+
+.orderInfo {
+    height: 500px;
+}
+
+.profilePic {
+    border-radius: 100%;
+    width: 100px;
+    height: 100px;
+    border: solid 1px rgb(82, 82, 82);
+    margin-top: 20px;
+    margin-left: 40px;
+}
+
+.userName {
+    margin-left: 20px;
+    font-size: 25px;
+    margin-top: 40px;
+}
+
+.vl {
+    border-left: 1px solid grey;
+    height: 60px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 15px;
+  }
