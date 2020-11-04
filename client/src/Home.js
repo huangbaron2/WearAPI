@@ -30,7 +30,7 @@ class Home extends Component{
                 <br/>
 
                     <div className = "carouselBox">
-                    <Carousel play="2500" initialChild = {0}>
+                    <Carousel play="2500" initialChild = {0} controls = {false}>
                        
                             <img style = {{maxHeight: "400px", maxWidth: "500px", objectFit: "contain"}}
                                 className="d-block w-50 m-auto"
