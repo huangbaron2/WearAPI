@@ -25,7 +25,7 @@ class App extends React.Component {
   } 
   render() {
   return (
-    <div >
+    <div className = "allBox">
 
         <BrowserRouter>
           <Route path = '/' exact component = { Home }/>

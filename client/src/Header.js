@@ -39,8 +39,9 @@ class Header extends Component{
   render(){
     if (JSON.parse(localStorage.getItem('loggedIn')) == 0){
       return (
-        <div>
+        <div className = "beforeHeader">
           <div className = "headerBox">
+            <div className = "headerSmallBox">
               <a href = "/"><button className = "logoBTN" >Baron's Market</button></a> 
               <input className = "searchBox" placeholder="Search Clothes" ></input>
               <div className = "directBox">
@@ -51,13 +52,14 @@ class Header extends Component{
                 <a href = "/Signup"><button className = "logBTN" >SignUp</button></a> 
                 <a className = "shoppingBTN" href = "/Cart"><ShoppingCartOutlined className = "shoppingIcon"/></a> 
               </div>
+              </div>
           </div>
         </div>
       );
     }
     else {
       return (
-        <div>
+        <div className = "beforeHeader">
           <div className = "headerBox">
               <a href = "/" ><button className = "logoBTN">Baron's Market</button></a>
               <input className = "searchBox" placeholder="Search Clothes" ></input>

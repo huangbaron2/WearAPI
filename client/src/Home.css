@@ -1,6 +1,10 @@
 .homeBox {
+    position: absolute;
     text-align: center;
     font-family: sans-serif;
+    top: 60px;
+    left: 50%;
+    transform: translate(-50%, 0);
   }
   
 @keyframes disco {

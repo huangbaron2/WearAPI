@@ -79,6 +79,7 @@ class Login extends Component{
             return(
                 <div>
                     <Header/>
+                    <div className = "logBox">
                     <form id = "loginForm" onSubmit = {(e) => this.onSubmit(e, "login")}>
                     <div style = {{margin: "auto", textAlign: "center", marginTop: "15vh", width: "25vw"}}>
                         *Regristrations are closed for the time being.*
@@ -99,6 +100,7 @@ class Login extends Component{
                     </form>
                     <br/>
                     <h1>{this.returnError()}</h1>
+                    </div>
                 </div>
             );
         }
@@ -106,7 +108,9 @@ class Login extends Component{
             return(
                 <div>
                     <Header/>
+                    <div className = "logBox">
                     <h1 style = {{margin: "auto", textAlign: "center"}}> YOUR LOGGED IN </h1>
+                    </div>
                 </div>
             );
         }

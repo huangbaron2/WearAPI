@@ -5,16 +5,19 @@
 ul{ list-style-type: none; }
 
 .stylesBox {
+    top: 65px;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, 0);
     text-align: center;
 }
 
 .checkBrands {
-    font-size: 2.5vh;
-    padding-left: 0.5vw;
-    padding-right: 0.5vw;
+    font-size: 15px;
+    padding-left: 5px;
+    padding-right: 5px;
     border: solid 2px rgb(186, 171, 255);
     background-color: white;
-    margin-bottom: -1vh;
 }
 
 .checkBrands:hover {

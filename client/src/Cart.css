@@ -1,0 +1,7 @@
+.cartBox {
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, 0);
+    text-align: center;
+    top: 60px;
+}

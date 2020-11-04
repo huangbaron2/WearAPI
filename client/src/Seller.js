@@ -209,6 +209,7 @@ class Seller extends Component {
                 <div>
                     <Header/>
                     <div className = 'postBox'>
+                        <div className = 'infoPostBox'>
                         <form id = "sellForm" className = 'postForm' onSubmit = { (e) => this.submitPost (e) }>
                             <h4 style = {{fontWeight: "bold"}}>Add a new product</h4>
                             <h4 style = {{fontSize: "19px"}}>Product Details</h4>
@@ -250,9 +251,10 @@ class Seller extends Component {
                                 <br/>
                                 <div><textarea type = "text" style = {{height: "80px", width: "830px", marginLeft: "50px"}} className = "productInput" placeholder="Description" onChange = {this.descriptionChange }  required/></div>
                             </div>
+                            </form>
+                            </div>
                             <br/>
-                            <div style = {{left: "0", height:"50px", bottom: "0px", width: "100%", position: "fixed", backgroundColor: "black"}}><button form = "sellForm" className = "submitBTN" type="submit" onSubmit = {(e) => this.submitPost(e)}>Submit</button></div>
-                        </form>
+                            <div style = {{left: "0", height:"80px", bottom: "0px", width: "100%", position: "fixed", backgroundColor: "black"}}><button form = "sellForm" className = "submitBTN" type="submit" onSubmit = {(e) => this.submitPost(e)}>Submit</button></div>
                         <br/>
                 </div>
                 </div>

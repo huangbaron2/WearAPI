@@ -59,7 +59,7 @@ class Home extends Component{
                     </Carousel>
                     </div>
                     <div className = "byBox">
-                        <div style = {{display: "flex"}}><h1 style = {{textAlign:"left", fontSize: "20px"}}>Shop By Category</h1><a style = {{marginLeft: "850px", fontSize: "13px", fontWeight: "600", color: "navy"}}>See More</a></div>
+                        <div style = {{display: "flex"}}><h1 style = {{textAlign:"left", fontSize: "20px"}}>Shop By Category</h1><a style = {{marginLeft: "970px", fontSize: "13px", fontWeight: "600", color: "navy"}}>See More</a></div>
                             <div className = "byBoxList">
                                 <div className = "byBoxProps">
                                     <img className = "byImg" src = "https://process.fs.grailed.com/AJdAgnqCST4iPtnUxiGtTz/auto_image/cache=expiry:max/rotate=deg:exif/output=quality:70/compress/https://www.filepicker.io/api/file/TbSXDerBQLuINlutawvQ"></img>
@@ -83,7 +83,7 @@ class Home extends Component{
                                 </div>
                             </div>
 
-                            <div style = {{marginTop: "50px", display: "flex"}}><h1 style = {{textAlign:"left", fontSize: "20px"}}>Popular Brands</h1><a style = {{textAlign: "left", marginLeft: "875px", fontSize: "13px", fontWeight: "600", color: "navy"}}>See More</a></div>
+                            <div style = {{marginTop: "50px", display: "flex"}}><h1 style = {{textAlign:"left", fontSize: "20px"}}>Popular Brands</h1><a style = {{textAlign: "left", marginLeft: "995px", fontSize: "13px", fontWeight: "600", color: "navy"}}>See More</a></div>
                             <div className = "byBoxList">
                                 <div className = "byBoxProps">
                                     <img style = {{borderRadius: "50%", height: "170px"}} className = "byImg" src = "https://w7.pngwing.com/pngs/475/281/png-transparent-adidas-logo-adidas-logo-adidas-text-photography-shoes.png"></img>
@@ -103,7 +103,7 @@ class Home extends Component{
                                 </div>
                             </div>
 
-                            <div style = {{marginTop: "50px", display: "flex"}}><h1 style = {{textAlign:"left", fontSize: "20px"}}>Recently Added</h1><a style = {{marginLeft: "870px", fontSize: "13px", fontWeight: "600", color: "navy"}}>See More</a></div>
+                            <div style = {{marginTop: "50px", display: "flex"}}><h1 style = {{textAlign:"left", fontSize: "20px"}}>Recently Added</h1><a style = {{marginLeft: "990px", fontSize: "13px", fontWeight: "600", color: "navy"}}>See More</a></div>
                             <div className = "byBoxList">
                                 <div className = "byBoxProps">
                                     <img style = {{borderRadius: "50%"}} className = "byImg" src = "https://w7.pngwing.com/pngs/475/281/png-transparent-adidas-logo-adidas-logo-adidas-text-photography-shoes.png"></img>

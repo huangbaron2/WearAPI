@@ -44,19 +44,24 @@
   background-color: rgb(60, 0, 170);
 }
 .postBox {
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, 0);
+  text-align: center;
   background-color: rgba(255, 255, 255, 0.274);
   margin-top: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
-  max-height: 500px;
-  min-height: 500px;
-  max-width: 1000px;
-  min-width: 1000px;
-  align-self: center;
-  align-content: center;
-  margin-left: auto;
-  margin-right: auto;
-  align-items: center;
+  height: 720px;
+  min-width: 1520px;
+}
+
+.infoPostBox {
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, 0);
+  text-align: left;
+  width: 1000px;
 }
 
 .productInput {

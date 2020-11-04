@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { TextInput, Button } from 'grommet'
 import Header from './Header'
-import './Product.css';
+import './Cart.css';
 
 class Cart extends Component{ 
 
@@ -35,7 +35,9 @@ class Cart extends Component{
             return(
                 <div>
                     <Header/>
-                    Please login
+                    <div className = "cartBox">
+                        <h1>Shopping Cart</h1>
+                    </div>
                 </div>
             );
         }
@@ -43,7 +45,9 @@ class Cart extends Component{
             return (
                 <div>
                     <Header/>
-                    <h1>Shopping cart contents:</h1>
+                    <div className = "cartBox">
+                        <h1>Shopping Cart</h1>
+                    </div>
                 </div>
             );
         }

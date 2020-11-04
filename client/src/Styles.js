@@ -353,7 +353,7 @@ class Styles extends React.Component {
                     { this.state.allPages && this.state.allPages.map(item => <button style = {{border: "solid 2px purple"}} onClick = {() => this.handlePaginationChange(item)}  className = "checkBrands" >{item}</button> )}
                     <button value = "next" className = "checkBrands" onClick = {e => this.handlePaginationChangePN(e)}>next</button> 
                     </ul>
-                  <h1 style = {{fontSize: "15px", marginLeft: "45px", textAlign: "center"}}>Current page: {this.state.page}</h1>
+                  <h1 style = {{fontSize: "15px", marginLeft: "45px", textAlign: "center"}}>Current page: {this.state.page} of {this.state.totalPages}</h1>
               </div>
  
           </div>

@@ -1,3 +1,10 @@
+.logBox {
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, 0);
+    text-align: center;
+}
+
 .loginBTN {
     border-radius: 2px;
     border: solid 1px black;
