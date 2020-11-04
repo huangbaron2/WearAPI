@@ -270,13 +270,15 @@ app.post('/API/login', async (req, res) => {
                     response.message = "Signup successful, you may now login. \nWelcome to WearAPI!"
                     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
                     var d = new Date();
+                    var docId = 0;
                     payLoad.joined = months[d.getMonth()] + " " +d.getDate() + ", " + d.getFullYear()
                     users.insertOne(payLoad, function(err,docsInserted){
-                        response.id = docsInserted;
+                        docId = docsInserted['insertedId'].toString();
+                        response.id = docId
+                        response.userName = payLoad.userName
+                        response.email = payLoad.email
+                        res.send(response)
                     });
-                    response.userName = payLoad.userName,
-                    response.email = payLoad.email
-                    res.send(response)
                 }
             }
             else if (req.body.mode == "login"){

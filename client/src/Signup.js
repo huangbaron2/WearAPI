@@ -53,10 +53,13 @@ class Signup extends Component{
         .then(
             (result) => {
             if (result.signup){
-                this.setState({logged: true}, localStorage.setItem('loggedIn', JSON.stringify(1)), localStorage.setItem('user', JSON.stringify([result.id, result.userName, result.email])), message.success('Successfully signed up!'), 
+                console.log("RRR", result)
+                this.setState({logged: true}, console.log(result), localStorage.setItem('loggedIn', JSON.stringify(1)), localStorage.setItem('user', JSON.stringify([result.id, result.userName, result.email])), message.success('Successfully signed up!'), 
+                /*
                 this.props.history.push({
                     pathname: `/profile`,
-                }))
+                })
+                */)
             }
             else if (!result.signup){
                 this.setState({error: result.message}, () => console.log("error"))
