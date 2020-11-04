@@ -49,6 +49,9 @@ client.connect(err => {
     // perform actions on the collection object
 });
 
+app.get('/', async (req, res) => {
+    res.send("Server's up")
+})
 
 app.post('/API/sell', async (req, res) => {
     console.log("Post Arrived with ", req.body)
