@@ -1,12 +1,109 @@
+
 .headerBox {
+  border-bottom: solid 1px grey;
+  margin: auto;
+  text-align: center;
+  height: 53px;
+  width: 100%;
+}
+
+.logoBTN {
+  margin-top: 3px;
+  font-weight: 500;
+  border: solid 0px white;
+  transition-duration: 200ms;
+  background-color: white;
+  text-decoration: none;
+  color: rgb(47, 0, 158);
+  font-size: 25px;
+  background-color: white;
+  text-decoration: none;
+  margin-left: -40px;
+}
+
+.directBox {
+  position: relative;
+  display: inline;
+  width: 500px;
+  height: 60px;
+}
+
+.directBTN {
+  font-weight: 500;
+  border: solid 0px white;
+  transition-duration: 200ms;
+  background-color: white;
+  text-decoration: none;
+  color: black;
+  font-size: 15px;
+  border-radius: 4px;
+  margin-left: 15px;
+  margin-right: 10px;
+}
+
+.directBTN:hover {
+  color: rgb(60, 46, 255);
+  transition-duration: 200ms;
+}
+
+.logBTN {
+  transition-duration: 200ms;
+  background-color: white;
+  border: solid 2px black;
+  text-decoration: none;
+  color: black;
+  font-weight: 6vh;
+  font-size: 15px;
+  border-radius: 4px;
+  margin-left: 15px;
+  margin-right: 5px;
+}
+
+.logBTN:hover {
+  background-color: rgb(242, 255, 255);
+  color: rgb(0, 40, 116);
+  border: solid 2px rgb(114, 114, 114);
+  transition-duration: 200ms;
+}
+
+
+.searchBox {
+  border: solid 1px #000000; 
+  width: 370px;
+  font-size: 18px;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 100px;
+  margin-right: 100px;
+  border-radius: 1px;
+  padding-left: 25px;
+}
+
+.shoppingBTN {
+  position: absolute;
+  margin-top: 0px;
+  margin-left: 13px;
+  font-size: 25px;
+  color: black;
+}
+
+.shoppingBTN:hover {
+  font-size: 25px;
+  color: rgb(60, 46, 255);
+}
+
+
+@media only screen and (max-width: 450px) {
+  
+  .headerBox {
     border-bottom: solid 1px grey;
     margin: auto;
     text-align: center;
     height: 53px;
     width: 100%;
-}
+  }
 
-.logoBTN {
+  .logoBTN {
     margin-top: 3px;
     font-weight: 500;
     border: solid 0px white;
@@ -19,14 +116,14 @@
     text-decoration: none;
     margin-left: -40px;
   }
-  
+
   .directBox {
     position: relative;
     display: inline;
     width: 500px;
     height: 60px;
   }
-  
+
   .directBTN {
     font-weight: 500;
     border: solid 0px white;
@@ -39,7 +136,7 @@
     margin-left: 15px;
     margin-right: 10px;
   }
-  
+
   .directBTN:hover {
     color: rgb(60, 46, 255);
     transition-duration: 200ms;
@@ -57,7 +154,7 @@
     margin-left: 15px;
     margin-right: 5px;
   }
-  
+
   .logBTN:hover {
     background-color: rgb(242, 255, 255);
     color: rgb(0, 40, 116);
@@ -90,3 +187,7 @@
     font-size: 25px;
     color: rgb(60, 46, 255);
   }
+
+
+}
+

@@ -58,14 +58,14 @@ class Header extends Component{
       return (
         <div>
           <div className = "headerBox">
-              <a href = "/#" ><button className = "logoBTN">Baron's Market</button></a>
+              <a href = "/" ><button className = "logoBTN">Baron's Market</button></a>
               <input className = "searchBox" placeholder="Search Clothes" ></input>
               <div className = "directBox">
-                <a href = "/#/API"><button className = "directBTN" ><ApiOutlined />API</button></a>
-                <a href = "/#/Styles"><button className = "directBTN" >Browse</button></a> 
-                <a href = "/#/Sell"><button className = "directBTN" >Sell</button></a> 
+                <a href = "/API"><button className = "directBTN" ><ApiOutlined />API</button></a>
+                <a href = "/Styles"><button className = "directBTN" >Browse</button></a> 
+                <a href = "/Sell"><button className = "directBTN" >Sell</button></a> 
                 <a ><button onClick = { () => (this.signOut()) }className = "logBTN" >Signout</button></a> 
-                <a href = "/#/Profile"><button className = "logBTN" >Profile</button></a> 
+                <a href = "/Profile"><button className = "logBTN" >Profile</button></a> 
                 <a className = "shoppingBTN" href = "/#/Cart"><ShoppingCartOutlined className = "shoppingIcon"/></a> 
               </div>
           </div>
