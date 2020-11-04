@@ -3,15 +3,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { HashRouter } from "react-router-dom";
+import { HashRouter, BrowserRouter } from "react-router-dom";
 import { useRadioGroup } from '@material-ui/core';
 require('dotenv').config()
 
 
 ReactDOM.render(
-    <HashRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
         < App />
-    </HashRouter>, 
+    </BrowserRouter>, 
 document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change

@@ -9,7 +9,7 @@ import Profile from './Profile'
 import Product from './Product'
 import Cart from './Cart'
 import './App.css';
-import { Route, HashRouter,  } from 'react-router-dom'
+import { Route, HashRouter, BrowserRouter} from 'react-router-dom'
 
 
 
@@ -27,7 +27,7 @@ class App extends React.Component {
   return (
     <div >
 
-        <HashRouter>
+        <BrowserRouter>
           <Route path = '/' exact component = { Home }/>
           <Route path = "/Sell" exact component = { Seller }/>
           <Route path = '/Styles' exact component = { Styles }/>
@@ -37,7 +37,7 @@ class App extends React.Component {
           <Route path = '/Signup' exact component = { Signup }/>
           <Route path = '/Profile' exact component = { Profile }/>
           <Route path = '/Cart' exact component = { Cart }/>
-        </HashRouter>
+        </BrowserRouter>
 
     </div>
   );
