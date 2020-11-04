@@ -41,14 +41,14 @@ class Header extends Component{
       return (
         <div>
           <div className = "headerBox">
-              <a href = "/#"><button className = "logoBTN" >Baron's Market</button></a> 
+              <a href = "/"><button className = "logoBTN" >Baron's Market</button></a> 
               <input className = "searchBox" placeholder="Search Clothes" ></input>
               <div className = "directBox">
-                <a href = "/#/API"><button className = "directBTN" ><ApiOutlined />API</button></a>
-                <a href = "/#/Styles"><button className = "directBTN" >Browse</button></a> 
-                <a href = "/#/Sell"><button className = "directBTN" >Sell</button></a> 
-                <a href = "/#/Login"><button className = "logBTN" >LogIn</button></a> 
-                <a href = "/#/Signup"><button className = "logBTN" >SignUp</button></a> 
+                <a href = "/API"><button className = "directBTN" ><ApiOutlined />API</button></a>
+                <a href = "/Styles"><button className = "directBTN" >Browse</button></a> 
+                <a href = "/Sell"><button className = "directBTN" >Sell</button></a> 
+                <a href = "/Login"><button className = "logBTN" >LogIn</button></a> 
+                <a href = "/Signup"><button className = "logBTN" >SignUp</button></a> 
               </div>
           </div>
         </div>
